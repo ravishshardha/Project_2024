@@ -1,12 +1,12 @@
 # CSCE 435 Group project
 
-## 0. Group number: 
+## 0. Group number: 13
 
 ## 1. Group members:
-1. First
-2. Second
-3. Third
-4. Fourth
+1. Ravish Shardha
+2. Lydia Harding
+3. Brack Harmon
+4. Jack Hoppe
 
 ## 2. Project topic (e.g., parallel sorting algorithms)
 
