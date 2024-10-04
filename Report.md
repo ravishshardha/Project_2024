@@ -13,7 +13,11 @@
 ### 2a. Brief project description (what algorithms will you be comparing and on what architectures)
 
 - Bitonic Sort:
-- Sample Sort: Brack Harmon
+- Sample Sort: 
+
+Sample sort is a parallelized version of bucket sort. Each processor takes a chunk of the data and sorts locally. 
+Then each processor takes s samples and those samples get combined into a buffer and sorted. Global splitters or pivots are selected form the sorted samples and define endpoints for buckets. each processor takes its data and filters it into each respective bucket. The buckets are sorted and combined. Finally the endpoints of each bucket are checked to verify the whole dataset is sorted. 
+
 - Merge Sort:
 - Radix Sort:
 
@@ -26,6 +30,7 @@ Sample Sort:
     MPI_Init
     MPI_Comm_rank
     MPI_Comm_world
+    etc.
 
     // Set Number of elements per processor
    data_size = total_size / num_processors
