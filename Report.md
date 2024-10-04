@@ -48,26 +48,26 @@ Sample Sort:
 	set samples_list empty
 	samples_list[i] = sample an index from local_data
    
-    // Step 3: Gather all the samples at rank 0 
+    // Step 3: Gather all the samples at rank 0 (rank 0 handles the samples)
 	call MPI_Gather with sample data to fill gathered_samples
 	
 
-    // Step 4: Rank 0 sorts the samples and selects pivots
+    // Step 4: Rank 0 sorts the samples and selects splitters
 	if(rank == 0)
 		sort gathered_samples
 		for each sample
-			pivots[i] = sample from gathered_samples
+			splitters[i] = sample from gathered_samples
 	
 
-    // Step 5: Broadcast the pivots to all processes 
-	call MPI_Bcast with pivots and num_samples
+    // Step 5: Broadcast the splitters to all processes 
+	call MPI_Bcast with splitters and num_samples
 
-    // Step 6: Partition the local data based on the pivots
+    // Step 6: Partition the local data based on the splitters
 	
 	create send_counts, send_offsets, and partitioned_data arrays
 	populate partitioned_data with info from data based on offsets and send counts
 	
-    // Step 7: Send partitioned data to respective processors 
+    // Step 7: Send partitioned data to respective processor buckets
 	use MPI_Alltoall with send_counts and recv_counts
 	create recv_data array and populate with received information using MPI_Alltoallv
     
