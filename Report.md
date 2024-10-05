@@ -21,8 +21,14 @@ All algorithms are going to be written and tested on grace cluster using MPI
     - Bitonic sort will make the same number of comparisons for any input array, with a complexity of O(log^2n), where n is the number of elements to be sorted.
    
 - Sample Sort:
-  Sample sort is a parallelized version of bucket sort. Each processor takes a chunk of the data and sorts locally. 
-Then each processor takes s samples and those samples get combined into a buffer and sorted. Global splitters or pivots are selected form the sorted samples and define endpoints for buckets. each processor takes its data and filters it into each respective bucket. The buckets are sorted and combined. Finally the endpoints of each bucket are checked to verify the whole dataset is sorted. 
+  - Sample sort is a parallelized version of bucket sort. 
+  - Each processor takes a chunk of the data and sorts locally. 
+  - Then each processor takes s samples and those samples get combined into a buffer and sorted. 
+  - Global splitters or pivots are selected form the sorted samples and define endpoints for buckets. 
+  - each processor takes its data and filters it into each respective bucket. 
+  - The buckets are sorted and combined. 
+  - Finally the endpoints of each bucket are checked to verify the whole dataset is sorted.
+  - Uses quicksort to sort partitioned buckets, so works well with random and in-order data.  
 
 - Merge Sort:
   - Divide-and-conquer sorting algorithm that splits the array into halves recursively until each sub-array contains a single element, then merges the sub-arrays to produce a sorted array.
@@ -148,6 +154,8 @@ Bitonic Sort:
 
 
 Sample Sort:
+
+```
     // Starting MPI commands 
     MPI_Init
     MPI_Comm_rank
@@ -155,7 +163,7 @@ Sample Sort:
     etc.
 
     // Set Number of elements per processor
-   data_size = total_size / num_processors
+    data_size = total_size / num_processors
 
     // Fill local data with random integers
     for each element in data from rank * data_size to (rank + 1) * data_size:
@@ -201,7 +209,7 @@ Sample Sort:
     // print sorted data (optional)
 
     // Ending MPI commands (MPI_Finalize)
-
+```
 
 
 
