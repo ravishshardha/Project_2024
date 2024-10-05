@@ -28,7 +28,9 @@ Bitonic Sort:
 ```
 ////////////////////
 // MAIN
-// Initialize MPI, get num_proc and rank
+// MPI_Init, 
+// MPI_Comm_size(num_procs)
+// MPI_Comm_rank(rank)
 
 // Generate the input array on each processor (rand, in-order, reverse-order, or perturbed)
 
@@ -51,7 +53,8 @@ Bitonic Sort:
 
 // free array 
 
-// Finalize MPI
+// MPI Finalize
+// RETURN
 // END MAIN
 
 ////////////////////
@@ -60,36 +63,38 @@ Bitonic Sort:
 ////////////////////
 // COMP EXCHANGE MIN (j)
 // partner process = rank XOR (1 << j)
-// Send MAX of array to partner (A)
-// Receive MIN from partner (B)
+// MPI_Send MAX of array to partner (A)
+// MPI_Recv MIN from partner (B)
 
 // copy all values in array larger than MIN to send_buffer
 
-// Send send_buffer array to partner (C)
-// Receive array from partner, store in receive_buffer (D)
+// MPI_Send send_buffer array to partner (C)
+// MPI_Recv array from partner, store in receive_buffer (D)
 
 // store smallest value from receive_buffer at end of array
 // sort array
 
 // free buffers
+// RETURN
 // END COMP EXCHANGE MIN
 ////////////////////
 
 ////////////////////
 // COMP EXCHANGE MAX (j)
 // partner process = rank XOR (1 << j)
-// Receive MAX from partner (A)
-// Send MIN of array to partner (B)
+// MPI_Recv MAX from partner (A)
+// MPI_Send MIN of array to partner (B)
 
 // copy all values in array smaller than MAX to send_buffer
 
-// Receive array from partner, store in receive_buffer (C)
-// Send send_buffer array to partner (D)
+// MPI_Recv array from partner, store in receive_buffer (C)
+// MPI_Send send_buffer array to partner (D)
 
 // store largest value from receive_buffer at start of array
 // sort array
 
 // free buffers
+// RETURN
 // END COMP EXCHANGE MAX
 ////////////////////
 ```
