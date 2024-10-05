@@ -20,6 +20,9 @@ All algorithms are going to be written and tested on grace cluster using MPI
     - Bitonic sort only works on input arrays of size 2^n.
     - Bitonic sort will make the same number of comparisons for any input array, with a complexity of O(log^2n), where n is the number of elements to be sorted.
 - Sample Sort:
+  Sample sort is a parallelized version of bucket sort. Each processor takes a chunk of the data and sorts locally. 
+Then each processor takes s samples and those samples get combined into a buffer and sorted. Global splitters or pivots are selected form the sorted samples and define endpoints for buckets. each processor takes its data and filters it into each respective bucket. The buckets are sorted and combined. Finally the endpoints of each bucket are checked to verify the whole dataset is sorted. 
+
 - Merge Sort:
   - Divide-and-conquer sorting algorithm that splits the array into halves recursively until each sub-array contains a single element, then merges the sub-arrays to produce a sorted array.
   - Best and Worst case time complexity is O(nlogn) and space complexity is O(n).
@@ -133,6 +136,65 @@ Bitonic Sort:
 // END COMP EXCHANGE MAX
 ////////////////////
 ```
+
+
+Sample Sort:
+    // Starting MPI commands 
+    MPI_Init
+    MPI_Comm_rank
+    MPI_Comm_world
+    etc.
+
+    // Set Number of elements per processor
+   data_size = total_size / num_processors
+
+    // Fill local data with random integers
+    for each element in data from rank * data_size to (rank + 1) * data_size:
+	data[i] = random int from 1 to 999
+
+    // Here is where we start timing the Samplesort algorithm
+
+    // Step 1: Sort the local data
+	sort local_data 
+    
+    // Step 2: Select local data samples
+	set samples_list empty
+	samples_list[i] = sample an index from local_data
+   
+    // Step 3: Gather all the samples at rank 0 (rank 0 handles the samples)
+	call MPI_Gather with sample data to fill gathered_samples
+	
+
+    // Step 4: Rank 0 sorts the samples and selects splitters
+	if(rank == 0)
+		sort gathered_samples
+		for each sample
+			splitters[i] = sample from gathered_samples
+	
+
+    // Step 5: Broadcast the splitters to all processes 
+	call MPI_Bcast with splitters and num_samples
+
+    // Step 6: Partition the local data based on the splitters
+	
+	create send_counts, send_offsets, and partitioned_data arrays
+	populate partitioned_data with info from data based on offsets and send counts
+	
+    // Step 7: Send partitioned data to respective processor buckets
+	use MPI_Alltoall with send_counts and recv_counts
+	create recv_data array and populate with received information using MPI_Alltoallv
+    
+    // Step 8: Sort the received data locally
+	sort recv_data
+
+    // Here is where we end timing the Samplesort algorithm
+	
+    // print sorted data (optional)
+
+    // Ending MPI commands (MPI_Finalize)
+
+
+
 
 ### 2c. Evaluation plan - what and how will you measure and compare
 - Input sizes, Input types:
