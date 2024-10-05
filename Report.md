@@ -19,6 +19,7 @@ All algorithms are going to be written and tested on grace cluster using MPI
     - Parallel sorting algorithm that repeatedly sorts segments of a sequence of numbers into bitonic sequences. A bitonic sequence consists of a list of numbers which is first increasing, then decreasing. In the parallel version, for each i round, sorting is done with the partner that differs in the ith bit, alternating between collecting the lower half of all elements, and collecting the higher half of all elements, then sorting in order. Once all rounds have completed, the full array is sorted.
     - Bitonic sort only works on input arrays of size 2^n.
     - Bitonic sort will make the same number of comparisons for any input array, with a complexity of O(log^2n), where n is the number of elements to be sorted.
+   
 - Sample Sort:
   Sample sort is a parallelized version of bucket sort. Each processor takes a chunk of the data and sorts locally. 
 Then each processor takes s samples and those samples get combined into a buffer and sorted. Global splitters or pivots are selected form the sorted samples and define endpoints for buckets. each processor takes its data and filters it into each respective bucket. The buckets are sorted and combined. Finally the endpoints of each bucket are checked to verify the whole dataset is sorted. 
@@ -28,7 +29,15 @@ Then each processor takes s samples and those samples get combined into a buffer
   - Best and Worst case time complexity is O(nlogn) and space complexity is O(n).
   - For reverse and random sorted data, merge is a good choice.
   - For sorted and nearly sorted(1% random), merge sort doesn't consider the existing order so might not be      the best choice.
+  
 - Radix Sort:
+   - The Radix sort is a non-comparative integer sorting algorithm that iterates through each digit of the given elements starting from the least significant digit and progressing to the most significant digit. As the algorithm iterates the temporary results are placed in a "bucket" using an algorithm like the "count sort". These buckets are used to create the new ordering of the elements until all digits have been processed. 
+   - Through the MPI library and utilizing Grace a parallel implementation can be achieved by splitting input data into chunks then distributing them to workers. The workers will sort its chunk of data based on the current digit. After sorting, the bucket data from the count sort is redistributed across the processes. This continues until the most significant digit is reached resulting in sorted data.
+   - The Radix sort requires integers or data that can be represented with integers and a fixed range of digits, i.e., (0-9)
+   - Larger integers cause more passes and slows the algorithm
+   - Uneven distributions of input data can lead to inefficiencies due to some buckets becoming disproportionately large.
+   - Runtime: O(d*n) where d = number of digits and n = number of elements
+
 
 ### 2b. Pseudocode for each parallel algorithm
 - For MPI programs, include MPI calls you will use to coordinate between processes
@@ -195,6 +204,54 @@ Sample Sort:
 
 
 
+
+Radix Sort:
+
+```
+1. Initialize MPI, get rank, and size
+INITIALIZE MPI(MPI_Init)
+GET world_rank(MPI_Comm_rank)
+GET world_size(MPI_Comm_size)
+
+2. Generate different types of inputs listed in 2c.
+    Create input arrays of different sizes etc
+    Define length of data
+
+3. Distribute data to processes with MPI_Scatter
+    rank = 0:
+        divide n by world size to calculate chunck size
+        create arrays with chunk size and then fill
+        send the chunks out to the processes
+        MPI_Scatter(chunks) 
+
+4. Radix sort for worker
+    -iterate through each digit:
+        -each process performs local count sort:
+
+        -initialize count array representing numbers 0-9
+         array count[10] = {0}; 
+
+        -Count occurence of each digit from local chunk
+         Extract current digit with modulo (%)
+         count[current digit]++;
+
+        -Gather count data from each process and combine
+         MPI_Allreduce(total_count)
+
+        -Caluclate Cumulative count
+        cumulative[i] = cumulative[i-1] + total_count[i] 
+
+        -Redistribute the elements based on the combined count
+        Then place into processes depending on that calculation
+        MPI_Alltoall
+        
+5. Use MPI_Gather to collect sorted data
+    After processing all digits gather data
+    MPI_Gather(sorted data)
+
+6. Finalize MPI
+MPI_Finalize()
+```
 
 ### 2c. Evaluation plan - what and how will you measure and compare
 - Input sizes, Input types:
