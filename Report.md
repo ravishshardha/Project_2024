@@ -16,7 +16,6 @@ The team will communicate with discord channel
 All algorithms are going to be written and tested on grace cluster using MPI
 
 - Bitonic Sort:
-- - Bitonic Sort: Lydia Harding
     - Parallel sorting algorithm that repeatedly sorts segments of a sequence of numbers into bitonic sequences. A bitonic sequence consists of a list of numbers which is first increasing, then decreasing. In the parallel version, for each i round, sorting is done with the partner that differs in the ith bit, alternating between collecting the lower half of all elements, and collecting the higher half of all elements, then sorting in order. Once all rounds have completed, the full array is sorted.
     - Bitonic sort only works on input arrays of size 2^n.
     - Bitonic sort will make the same number of comparisons for any input array, with a complexity of O(log^2n), where n is the number of elements to be sorted.
