@@ -12,9 +12,14 @@ The team will communicate with discord channel
 
 ### 2a. Brief project description (what algorithms will you be comparing and on what architectures)
 
+
 All algorithms are going to be written and tested on grace cluster using MPI
 
 - Bitonic Sort:
+- - Bitonic Sort: Lydia Harding
+    - Parallel sorting algorithm that repeatedly sorts segments of a sequence of numbers into bitonic sequences. A bitonic sequence consists of a list of numbers which is first increasing, then decreasing. In the parallel version, for each i round, sorting is done with the partner that differs in the ith bit, alternating between collecting the lower half of all elements, and collecting the higher half of all elements, then sorting in order. Once all rounds have completed, the full array is sorted.
+    - Bitonic sort only works on input arrays of size 2^n.
+    - Bitonic sort will make the same number of comparisons for any input array, with a complexity of O(log^2n), where n is the number of elements to be sorted.
 - Sample Sort:
 - Merge Sort:
   - Divide-and-conquer sorting algorithm that splits the array into halves recursively until each sub-array contains a single element, then merges the sub-arrays to produce a sorted array.
@@ -52,6 +57,82 @@ All algorithms are going to be written and tested on grace cluster using MPI
   FREE sub_array and temp_arrays
   
   FINALIZE MPI
+```
+
+Bitonic Sort:
+
+```
+////////////////////
+// MAIN
+// MPI_Init, 
+// MPI_Comm_size(num_procs)
+// MPI_Comm_rank(rank)
+
+// Generate the input array on each processor (rand, in-order, reverse-order, or perturbed)
+
+// BITONIC SORT
+// dimensions = log2(num_proc)
+// For i = 0 to dimensions - 1:
+    // For j = i down to 0:
+        if (i + 1)st bit of rank == jth bit of rank then
+            COMP EXCHANGE MAX (j)
+        else
+            COMP EXCHANGE MIN (j)
+
+
+// MPI_Barrier to ensure all sorting is complete
+
+// VERIFY SORT
+// Check if array is sorted locally
+// Check if array end is less than start of neighbor process's array
+// If both true for all processors, array is sorted.
+
+// free array 
+
+// MPI Finalize
+// RETURN
+// END MAIN
+
+////////////////////
+// HELPER FUNCTIONS
+
+////////////////////
+// COMP EXCHANGE MIN (j)
+// partner process = rank XOR (1 << j)
+// MPI_Send MAX of array to partner (A)
+// MPI_Recv MIN from partner (B)
+
+// copy all values in array larger than MIN to send_buffer
+
+// MPI_Send send_buffer array to partner (C)
+// MPI_Recv array from partner, store in receive_buffer (D)
+
+// store smallest value from receive_buffer at end of array
+// sort array
+
+// free buffers
+// RETURN
+// END COMP EXCHANGE MIN
+////////////////////
+
+////////////////////
+// COMP EXCHANGE MAX (j)
+// partner process = rank XOR (1 << j)
+// MPI_Recv MAX from partner (A)
+// MPI_Send MIN of array to partner (B)
+
+// copy all values in array smaller than MAX to send_buffer
+
+// MPI_Recv array from partner, store in receive_buffer (C)
+// MPI_Send send_buffer array to partner (D)
+
+// store largest value from receive_buffer at start of array
+// sort array
+
+// free buffers
+// RETURN
+// END COMP EXCHANGE MAX
+////////////////////
 ```
 
 ### 2c. Evaluation plan - what and how will you measure and compare
