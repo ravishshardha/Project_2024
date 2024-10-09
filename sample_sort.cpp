@@ -43,6 +43,15 @@ std::vector<int> generateRandomUniqueArray(int numElements) {
     return arr;  
 }
 
+std::vector<int> select_samples(const std::vector<int>& local_data, int numProcs) {
+    std::vector<int> samples;
+    int step = local_data.size() / numProcs;
+    for (int i = step / 2; i < local_data.size(); i += step) {
+        samples.push_back(local_data[i]);
+    }
+    return samples;
+}
+
 void printArray(const std::vector<int>& arr, int rank) {
     printf("Processor %d :",rank);
     for (int x : arr) {
@@ -115,14 +124,158 @@ int main(int argc, char *argv[])
     
     }
     
-    // // Step 1: Sort local data
-    // std::sort(local_data.begin(), local_data.end());
+    // Step 1: Sort local data
+    std::sort(local_data.begin(), local_data.end());
 
-    // MPI_Gather(local_array.data(), local_size, MPI_INT, sorted_array.data(), local_size, MPI_INT, 0, MPI_COMM_WORLD);
+   // MPI_Gather(local_data.data(), sizeOfArray, MPI_INT, sorted_array.data(), sizeOfArray, MPI_INT, 0, MPI_COMM_WORLD);
 
-    // // Step 2: Choose p-1 samples from local data
-    // std::vector<int> local_samples = select_samples(local_data, num_procs);
+    // debug print sorted inital arrays
+    //printArray(local_data,taskid);
 
+    // Step 2: Choose p-1 samples from local data
+    std::vector<int> local_samples;
+    local_samples = select_samples(local_data, numProcs);
+
+    //printf("local samples... \n");
+
+    //printArray(local_samples,taskid);
+
+    // Step 3: Gather samples at the root process
+    std::vector<int> gathered_samples;
+
+    // sample processing will be handled by process 0
+    // gathered_samples will be length 0 for other processes
+    if (taskid == 0) {
+        gathered_samples.resize(numProcs * (numProcs - 1));
+    }
+    MPI_Gather(local_samples.data(), numProcs - 1, MPI_INT, 
+           taskid == 0 ? gathered_samples.data() : NULL, numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+    // Step 4: Sort the gathered samples and choose pivots
+    std::vector<int> pivots;
+    
+    // process/rank 0 handles the pivot selection
+    if (taskid == 0) {
+        std::sort(gathered_samples.begin(), gathered_samples.end());
+        for (int i = 1; i < numProcs; i++) {
+            pivots.push_back(gathered_samples[i * (numProcs - 1)]);
+        }
+
+        printf("pivots... \n");
+        printArray(pivots,0);
+    }
+    pivots.resize(numProcs - 1);
+
+    // Step 5: Broadcast pivots to processes
+    MPI_Bcast(pivots.data(), numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+    // Step 6: Partition local data based on pivots
+    std::vector<std::vector<int>> partitions(numProcs);
+    int last_index = 0;
+    for (int i = 0; i < numProcs - 1; i++) {
+        auto it = std::upper_bound(local_data.begin() + last_index, local_data.end(), pivots[i]);
+        partitions[i] = (std::vector<int>(local_data.begin() + last_index, it));
+        last_index = it - local_data.begin();
+    }
+    partitions[numProcs - 1].assign(local_data.begin() + last_index, local_data.end());
+
+    // Display partition sizes in each process
+    // std::cout << "Rank " << taskid << " partitions: ";
+    // for (size_t i = 0; i < partitions.size(); ++i)
+    //     std::cout << partitions[i].size() << " ";
+    // std::cout << std::endl;
+
+    // Step 7: Send partitioned data to corresponding processes
+    std::vector<int> send_counts(numProcs), recv_counts(numProcs);
+    std::vector<int> send_displs(numProcs), recv_displs(numProcs);
+    // for (int i = 0; i < numProcs; ++i) {
+    //     send_counts[i] = partitions[i].size();
+    // }
+    
+
+    // std::cout << "Rank " << taskid << " send counts: " << std::endl;
+    // for (int i = 0; i < numProcs; ++i) std::cout << send_counts[i] << " ";
+    // std::cout << "Rank " << taskid << " receive counts: ";
+    // for (int i = 0; i < numProcs; ++i) std::cout << recv_counts[i] << " ";
+    // std::cout << std::endl;
+
+    // prepare send buffer
+    // std::vector<int> send_data;
+    // for (const auto& part : partitions) {
+    //     send_data.insert(send_data.end(), part.begin(), part.end());
+    // }
+
+    // // prepare recieve buffer
+    
+    // int total_recv_size = std::accumulate(recv_counts.begin(), recv_counts.end(), 0);
+    // recv_data.resize(total_recv_size);
+    
+
+    // Calculate send counts and displacements
+    int total_send = 0;
+    for (int i = 0; i < numProcs; ++i) {
+        send_counts[i] = partitions[i].size();
+        send_displs[i] = total_send;
+        total_send += send_counts[i];
+    }
+
+    // Prepare send buffer
+    std::vector<int> send_buffer(total_send);
+    for (int i = 0, idx = 0; i < numProcs; ++i) {
+        std::copy(partitions[i].begin(), partitions[i].end(), send_buffer.begin() + idx);
+        idx += partitions[i].size();
+    }
+
+    MPI_Alltoall(send_counts.data(), 1, MPI_INT, recv_counts.data(), 1, MPI_INT, MPI_COMM_WORLD);
+
+    int total_recv = std::accumulate(recv_counts.begin(), recv_counts.end(), 0);
+    recv_displs[0] = 0;
+    for (int i = 1; i < numProcs; ++i) {
+        recv_displs[i] = recv_displs[i - 1] + recv_counts[i - 1];
+    }
+    std::vector<int> recv_data(total_recv);
+    //calcuate displacement arrays for Alltoallv
+    // std::vector<int> send_displs(numProcs), recv_displs(numProcs);
+    // send_displs[0] = 0;
+    // recv_displs[0] = 0;
+    // for (int i = 1; i < numProcs; ++i) {
+    //     send_displs[i] = send_displs[i - 1] + send_counts[i - 1];
+    //     recv_displs[i] = recv_displs[i - 1] + recv_counts[i - 1];
+    // }
+    // std::partial_sum(send_counts.begin(), send_counts.end() - 1, send_displs.begin() + 1);
+    // std::partial_sum(recv_counts.begin(), recv_counts.end() - 1, recv_displs.begin() + 1);
+
+
+    MPI_Alltoallv(send_buffer.data(), send_counts.data(), send_displs.data(), MPI_INT,
+                  recv_data.data(), recv_counts.data(), recv_displs.data(), MPI_INT, MPI_COMM_WORLD);
+
+    // Step 8: Sort the received data
+    //CALI_MARK_BEGIN("final_sort");
+    std::sort(recv_data.begin(), recv_data.end());
+    //CALI_MARK_END("final_sort");
+    
+    printf("sorted pivoted buckets...\n");
+    printArray(recv_data,taskid);
+
+    
+
+     // Step 9: Gather sorted data at the root process
+    std::vector<int> final_sorted_data;
+    
+    if (taskid == 0) {
+        final_sorted_data.resize(sizeOfArray);
+    }
+    MPI_Gather(recv_data.data(), recv_data.size(), MPI_INT,
+            taskid == 0 ? final_sorted_data.data() : NULL, recv_data.size(), MPI_INT, 0, MPI_COMM_WORLD);
+
+    // MPI_Gatherv(local_data.data(), local_data.size(), MPI_INT,
+    //         rank == 0 ? final_data.data() : NULL, recv_counts.data(), displs.data(), MPI_INT, 0, MPI_COMM_WORLD);
+
+    // Step 10: Print final results
+    if(taskid == 0){
+        printf("Final sorted data");
+        printArray(final_sorted_data,0);
+    }
 
     CALI_MARK_END(whole_computation); 
 
@@ -136,4 +289,5 @@ int main(int argc, char *argv[])
    mgr.flush();
 
    MPI_Finalize();
+   return 0;
 }
