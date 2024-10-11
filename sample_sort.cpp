@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
     if (argc == 2)
     {
-        sizeOfArray = 64; 
+        sizeOfArray = atoi(argv[1]); 
     }
     else
     {
@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
     
     }
     
-    // Step 1: Sort local data
+    // Part 1: Sort local data
     std::sort(local_data.begin(), local_data.end());
 
    // MPI_Gather(local_data.data(), sizeOfArray, MPI_INT, sorted_array.data(), sizeOfArray, MPI_INT, 0, MPI_COMM_WORLD);
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
     // debug print sorted inital arrays
     //printArray(local_data,taskid);
 
-    // Step 2: Choose p-1 samples from local data
+    // Part 2: Choose p-1 samples from local data
     std::vector<int> local_samples;
     local_samples = select_samples(local_data, numProcs);
 
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
 
     //printArray(local_samples,taskid);
 
-    // Step 3: Gather samples at the root process
+    // Part 3: Gather samples at the root process
     std::vector<int> gathered_samples;
 
     // sample processing will be handled by process 0
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
     MPI_Gather(local_samples.data(), numProcs - 1, MPI_INT, 
            taskid == 0 ? gathered_samples.data() : NULL, numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
 
-    // Step 4: Sort the gathered samples and choose pivots
+    // Part 4: Sort the gathered samples and choose pivots
     std::vector<int> pivots;
     
     // process/rank 0 handles the pivot selection
@@ -166,10 +166,10 @@ int main(int argc, char *argv[])
     }
     pivots.resize(numProcs - 1);
 
-    // Step 5: Broadcast pivots to processes
+    // Part 5: Broadcast pivots to processes
     MPI_Bcast(pivots.data(), numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
 
-    // Step 6: Partition local data based on pivots
+    // Part 6: Partition local data based on pivots
     std::vector<std::vector<int>> partitions(numProcs);
     int last_index = 0;
     for (int i = 0; i < numProcs - 1; i++) {
@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
     //     std::cout << partitions[i].size() << " ";
     // std::cout << std::endl;
 
-    // Step 7: Send partitioned data to corresponding processes
+    // Part 7: Send partitioned data to corresponding processes
     std::vector<int> send_counts(numProcs), recv_counts(numProcs);
     std::vector<int> send_displs(numProcs), recv_displs(numProcs);
     // for (int i = 0; i < numProcs; ++i) {
@@ -249,7 +249,7 @@ int main(int argc, char *argv[])
     MPI_Alltoallv(send_buffer.data(), send_counts.data(), send_displs.data(), MPI_INT,
                   recv_data.data(), recv_counts.data(), recv_displs.data(), MPI_INT, MPI_COMM_WORLD);
 
-    // Step 8: Sort the received data
+    // Part 8: Sort the received data
     //CALI_MARK_BEGIN("final_sort");
     std::sort(recv_data.begin(), recv_data.end());
     //CALI_MARK_END("final_sort");
@@ -259,19 +259,31 @@ int main(int argc, char *argv[])
 
     
 
-     // Step 9: Gather sorted data at the root process
+     // Part 9: Gather sorted data at the root process
+
+    std::vector<int> recv_sizes(numProcs);
+    MPI_Gather(&total_recv, 1, MPI_INT, recv_sizes.data(), 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+    // Calculate displacements for final gather at Rank 0
+    std::vector<int> final_displs(numProcs, 0);
+    if (taskid == 0) {
+        // Calculate displacement offsets for gathering
+        std::partial_sum(recv_sizes.begin(), recv_sizes.end() - 1, final_displs.begin() + 1);
+    }
+
+
     std::vector<int> final_sorted_data;
     
     if (taskid == 0) {
         final_sorted_data.resize(sizeOfArray);
     }
-    MPI_Gather(recv_data.data(), recv_data.size(), MPI_INT,
-            taskid == 0 ? final_sorted_data.data() : NULL, recv_data.size(), MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Gatherv(recv_data.data(), total_recv, MPI_INT, 
+            final_sorted_data.data(), recv_sizes.data(), final_displs.data(), MPI_INT, 0, MPI_COMM_WORLD);
 
     // MPI_Gatherv(local_data.data(), local_data.size(), MPI_INT,
     //         rank == 0 ? final_data.data() : NULL, recv_counts.data(), displs.data(), MPI_INT, 0, MPI_COMM_WORLD);
 
-    // Step 10: Print final results
+    // Part 10: Print final results
     if(taskid == 0){
         printf("Final sorted data");
         printArray(final_sorted_data,0);
