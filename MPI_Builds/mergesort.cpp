@@ -6,6 +6,7 @@
 #include <adiak.hpp>
 #include <caliper/cali.h>
 #include <caliper/cali-manager.h>
+#include <random>
 
 void merge(int *, int *, int, int, int);
 void mergeSort(int *, int *, int, int);
@@ -25,6 +26,11 @@ const char* comp_small = "comp_small";
 const char* comp_large = "comp_large";
 
 int main(int argc, char** argv) {
+
+    CALI_CXX_MARK_FUNCTION;
+
+    cali::ConfigManager mgr;
+    mgr.start();
     /********** Initialize MPI **********/
     int world_rank;
     int world_size;
@@ -33,19 +39,8 @@ int main(int argc, char** argv) {
     MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
-    /********** Get the array size and input type from parameters **********/
-    if (argc != 3) {
-        if (world_rank == 0) {
-            fprintf(stderr, "Usage: %s <array_size> <input_type>\n", argv[0]);
-            fprintf(stderr, "Input type can be: Random, ReverseSorted, Sorted, 1_perc_perturbed\n");
-        }
-        MPI_Finalize();
-        return -1;
-    }
-
     int n = atoi(argv[1]);
     const char* input_type = argv[2];
-
 
     /********** Create and process the array based on input type **********/
     int *original_array = NULL;
@@ -66,76 +61,19 @@ int main(int argc, char** argv) {
         printf("\n");
     }
 
-    // Set Adiak values based on input type
-    set_adiak_values(input_type, n, world_size);
-
-    // Call the main sorting process
-    process_sorting_logic(original_array, n, world_rank, world_size, input_type);
-
-    // Clean up root array
-    if (world_rank == 0) {
-        free(original_array);
-    }
-
-    /********** Finalize MPI **********/
-    MPI_Finalize();
-
-    return 0;
-}
-
-/********** Generate Arrays of Different Input Types **********/
-void generate_array(int *array, int size, const char* input_type) {
-    srand(time(NULL));
-
-    if (strcmp(input_type, "Random") == 0) {
-        // Random array
-        for (int i = 0; i < size; i++) {
-            array[i] = rand() % size;
-        }
-    } else if (strcmp(input_type, "ReverseSorted") == 0) {
-        // Reverse sorted array
-        for (int i = 0; i < size; i++) {
-            array[i] = size - i;
-        }
-    } else if (strcmp(input_type, "Sorted") == 0) {
-        // Sorted array
-        for (int i = 0; i < size; i++) {
-            array[i] = i;
-        }
-    } else if (strcmp(input_type, "1_perc_perturbed") == 0) {
-        // 1% Permuted array
-        for (int i = 0; i < size; i++) {
-            array[i] = i;
-        }
-        int permuted_count = size / 100;
-        for (int i = 0; i < permuted_count; i++) {
-            int index1 = rand() % size;
-            int index2 = rand() % size;
-            int temp = array[index1];
-            array[index1] = array[index2];
-            array[index2] = temp;
-        }
-    }
-}
-
-/********** Set Adiak Values for Metadata **********/
-void set_adiak_values(const char* input_type, int size, int world_size) {
+    /********** Set Adiak Values (moved inside main) **********/
     adiak::value("algorithm", "merge");
     adiak::value("programming_model", "mpi");
     adiak::value("data_type", "int");
     adiak::value("size_of_data_type", sizeof(int));
-    adiak::value("input_size", size);
+    adiak::value("input_size", n);
     adiak::value("input_type", input_type);
     adiak::value("num_procs", world_size);
     adiak::value("scalability", "strong");
     adiak::value("group_num", 13);
     adiak::value("implementation_source", "online and handwritten");
-}
 
-/********** Main Sorting Logic **********/
-void process_sorting_logic(int* original_array, int n, int world_rank, int world_size, const char* input_type) {
-
-    /********** Divide the array in equal-sized chunks **********/
+    /********** Main Sorting Logic (moved inside main) **********/
     int size = n / world_size;
 
     /********** Send each subarray to each process **********/
@@ -199,6 +137,60 @@ void process_sorting_logic(int* original_array, int n, int world_rank, int world
     /********** Clean up rest **********/
     free(sub_array);
     free(tmp_array);
+
+    mgr.stop();
+    mgr.flush();
+
+    /********** Finalize MPI **********/
+    MPI_Finalize();
+
+    return 0;
+}
+
+
+void generate_array(int *array, int size, const char* input_type) {
+    srand(time(NULL));
+
+    if (strcmp(input_type, "Random") == 0) {
+        // Random array
+        for (int i = 0; i < size; i++) {
+            array[i] = rand() % size;
+        }
+    } else if (strcmp(input_type, "ReverseSorted") == 0) {
+        // Reverse sorted array
+        int max_val = size * 2;  // Start with a larger value than size
+        for (int i = 0; i < size; i++) {
+            int decrement = rand() % (size / 5 + 1);  // Sometimes allows 0 decrement, creating repeated values
+            max_val -= decrement;
+            array[i] = max_val;
+        }
+    } else if (strcmp(input_type, "Sorted") == 0) {
+        // Sorted array with random values, allowing for repeats
+        int min_val = 0;
+        for (int i = 0; i < size; i++) {
+            int increment = rand() % (size / 5 + 1);  // Sometimes allows 0 increment, creating repeated values
+            min_val += increment;
+            array[i] = min_val;
+        }
+    } else if (strcmp(input_type, "1_perc_perturbed") == 0) {
+        // 1% Permuted array
+        int min_val = 0;
+        for (int i = 0; i < size; i++) {
+            int increment = rand() % (size / 5 + 1);  // Sometimes allows 0 increment
+            min_val += increment;
+            array[i] = min_val;
+        }
+
+        // Permute 1% of the array
+        int permuted_count = size / 100;
+        for (int i = 0; i < permuted_count; i++) {
+            int index1 = rand() % size;
+            int index2 = rand() % size;
+            int temp = array[index1];
+            array[index1] = array[index2];
+            array[index2] = temp;
+        }
+    }
 }
 
 
