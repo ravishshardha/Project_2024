@@ -26,18 +26,53 @@ const char* comm_large = "comm_large";
 const char* comp_small = "comp_small";
 const char* comp_large = "comp_large";
 const char* correctness_check = "correctness_check";
-const char* input_type = "random";
-const char* MPI_Init_Cali = "MPI_Init";
-const char* MPI_Gather_Cali = "MPI_Gather";
+const char* input_type = "Random";
 const char* MPI_Comm_Cali = "MPI_Comm";
-const char* MPI_Bcast_Cali = "MPI_Bcast";
-// const char* master_initialization = "master_initialization";
-// const char* master_send_recieve = "master_send_recieve";
-// const char* worker_recieve = "worker_recieve";
-// const char* worker_calculation = "worker_calculation";
-// const char* worker_send = "worker_send";
 
+void generate_array(std::vector<int>* array, int size, const char* input_type) {
+    srand(time(NULL));
 
+    if (strcmp(input_type, "Random") == 0) {
+        // Random array
+        for (int i = 0; i < size; i++) {
+            array->at(i) = rand() % size;
+        }
+    } else if (strcmp(input_type, "ReverseSorted") == 0) {
+        // Reverse sorted array
+        int max_val = size * 2;  // Start with a larger value than size
+        for (int i = 0; i < size; i++) {
+            int decrement = rand() % (size / 5 + 1);  // Sometimes allows 0 decrement, creating repeated values
+            max_val -= decrement;
+            array->at(i) = max_val;
+        }
+    } else if (strcmp(input_type, "Sorted") == 0) {
+        // Sorted array with random values, allowing for repeats
+        int min_val = 0;
+        for (int i = 0; i < size; i++) {
+            int increment = rand() % (size / 5 + 1);  // Sometimes allows 0 increment, creating repeated values
+            min_val += increment;
+            array->at(i) = min_val;
+        }
+    } else if (strcmp(input_type, "1_perc_perturbed") == 0) {
+        // 1% Permuted array
+        int min_val = 0;
+        for (int i = 0; i < size; i++) {
+            int increment = rand() % (size / 5 + 1);  // Sometimes allows 0 increment
+            min_val += increment;
+            array->at(i) = min_val;
+        }
+
+        // Permute 1% of the array
+        int permuted_count = size / 100;
+        for (int i = 0; i < permuted_count; i++) {
+            int index1 = rand() % size;
+            int index2 = rand() % size;
+            int temp = array->at(index1);
+            array->at(index1) = array->at(index2);
+            array->at(index2) = temp;
+        }
+    }
+}
 
 std::vector<int> generateRandomUniqueArray(int numElements) {
     std::vector<int> arr(numElements);
@@ -98,9 +133,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    CALI_MARK_BEGIN(MPI_Init_Cali);
     MPI_Init(&argc, &argv);
-    CALI_MARK_END(MPI_Init_Cali);
 
     int taskid, numProcs;
     CALI_MARK_BEGIN(MPI_Comm_Cali); 
@@ -125,38 +158,50 @@ int main(int argc, char *argv[])
     mgr.start();
     //CALI_MARK_BEGIN(whole_computation); 
 
-    
+    int chunk_size = sizeOfArray / numProcs;
     CALI_MARK_BEGIN(data_init_runtime); 
-    if(taskid == 0){
+    //if(taskid == 0){
         // Generate Random array (vector) of elements
-        global_data = generateRandomUniqueArray(sizeOfArray);
+        local_data.resize(chunk_size);
+        generate_array(&local_data,chunk_size,input_type );
         //printf("Size of array: %d ", sizeOfArray);
         //printArray(global_data,0);
 
         // Distribute data evenly among processes
-        int chunk_size = sizeOfArray / numProcs;
-        for (int i = 0; i < numProcs; ++i) {
-            if (i == 0) {
-                local_data.assign(global_data.begin(), global_data.begin() + chunk_size);
-            } else {
-                MPI_Send(global_data.data() + i * chunk_size, chunk_size, MPI_INT, i, 0, MPI_COMM_WORLD);
-            }
-        }
-    } else {
-        // recieve local data
-        int chunk_size = sizeOfArray / numProcs;
-        local_data.resize(chunk_size);
-        MPI_Recv(local_data.data(), chunk_size, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        
+        // for (int i = 0; i < numProcs; ++i) {
+        //     if (i == 0) {
+        //         local_data.assign(global_data.begin(), global_data.begin() + chunk_size);
+        //     } else {
+        //         MPI_Send(global_data.data() + i * chunk_size, chunk_size, MPI_INT, i, 0, MPI_COMM_WORLD);
+        //     }
+        // }
+    // } else {
+    //     // recieve local data
+    //     int chunk_size = sizeOfArray / numProcs;
+    //     local_data.resize(chunk_size);
+        //MPI_Recv(local_data.data(), chunk_size, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     
-    }
+    //}
     CALI_MARK_END(data_init_runtime); 
+
+    /********** Set Adiak Values **********/
+    adiak::value("algorithm", "sample");
+    adiak::value("programming_model", "mpi");
+    adiak::value("data_type", "int");
+    adiak::value("size_of_data_type", sizeof(int));
+    adiak::value("input_size", sizeOfArray);
+    adiak::value("input_type", input_type);
+    adiak::value("num_procs", numProcs);
+    adiak::value("scalability", "strong");
+    adiak::value("group_num", 13);
+    adiak::value("implementation_source", "AI (ChatGPT) and Online (http://users.atw.hu/parallelcomp/ch09lev1sec5.html)");
     
     // Part 1: Sort local data
     CALI_MARK_BEGIN(comp); 
     CALI_MARK_BEGIN(comp_small); 
     std::sort(local_data.begin(), local_data.end());
-    CALI_MARK_END(comp_small); 
-    CALI_MARK_END(comp); 
+    
    // MPI_Gather(local_data.data(), sizeOfArray, MPI_INT, sorted_array.data(), sizeOfArray, MPI_INT, 0, MPI_COMM_WORLD);
 
     // debug print sorted inital arrays
@@ -178,13 +223,13 @@ int main(int argc, char *argv[])
     if (taskid == 0) {
         gathered_samples.resize(numProcs * (numProcs - 1));
     }
+    CALI_MARK_END(comp_small); 
+    CALI_MARK_END(comp); 
 
     CALI_MARK_BEGIN(comm);
     CALI_MARK_BEGIN(comm_large);
-    CALI_MARK_BEGIN(MPI_Gather_Cali);
     MPI_Gather(local_samples.data(), numProcs - 1, MPI_INT, 
            taskid == 0 ? gathered_samples.data() : NULL, numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
-    CALI_MARK_END(MPI_Gather_Cali);
     CALI_MARK_END(comm_large);
     CALI_MARK_END(comm);
 
@@ -192,6 +237,8 @@ int main(int argc, char *argv[])
     std::vector<int> pivots;
     
     // process/rank 0 handles the pivot selection
+    CALI_MARK_BEGIN(comp);
+    CALI_MARK_BEGIN(comp_small);
     if (taskid == 0) {
         std::sort(gathered_samples.begin(), gathered_samples.end());
         for (int i = 1; i < numProcs; i++) {
@@ -202,17 +249,19 @@ int main(int argc, char *argv[])
         //printArray(pivots,0);
     }
     pivots.resize(numProcs - 1);
+    CALI_MARK_END(comp_small);
+    CALI_MARK_END(comp);
 
     CALI_MARK_BEGIN(comm);
     CALI_MARK_BEGIN(comm_small);
-    CALI_MARK_BEGIN(MPI_Bcast_Cali);
     // Part 5: Broadcast pivots to processes
     MPI_Bcast(pivots.data(), numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
-    CALI_MARK_END(MPI_Bcast_Cali);
     CALI_MARK_END(comm_small);
     CALI_MARK_END(comm);
 
     // Part 6: Partition local data based on pivots
+    CALI_MARK_BEGIN(comp);
+    CALI_MARK_BEGIN(comp_large);
     std::vector<std::vector<int>> partitions(numProcs);
     int last_index = 0;
     for (int i = 0; i < numProcs - 1; i++) {
@@ -221,7 +270,8 @@ int main(int argc, char *argv[])
         last_index = it - local_data.begin();
     }
     partitions[numProcs - 1].assign(local_data.begin() + last_index, local_data.end());
-
+    CALI_MARK_END(comp_large);
+    CALI_MARK_END(comp);
     // Display partition sizes in each process
     // std::cout << "Rank " << taskid << " partitions: ";
     // for (size_t i = 0; i < partitions.size(); ++i)
@@ -229,29 +279,10 @@ int main(int argc, char *argv[])
     // std::cout << std::endl;
 
     // Part 7: Send partitioned data to corresponding processes
+    CALI_MARK_BEGIN(comp);
+    CALI_MARK_BEGIN(comp_small);
     std::vector<int> send_counts(numProcs), recv_counts(numProcs);
     std::vector<int> send_displs(numProcs), recv_displs(numProcs);
-    // for (int i = 0; i < numProcs; ++i) {
-    //     send_counts[i] = partitions[i].size();
-    // }
-    
-
-    // std::cout << "Rank " << taskid << " send counts: " << std::endl;
-    // for (int i = 0; i < numProcs; ++i) std::cout << send_counts[i] << " ";
-    // std::cout << "Rank " << taskid << " receive counts: ";
-    // for (int i = 0; i < numProcs; ++i) std::cout << recv_counts[i] << " ";
-    // std::cout << std::endl;
-
-    // prepare send buffer
-    // std::vector<int> send_data;
-    // for (const auto& part : partitions) {
-    //     send_data.insert(send_data.end(), part.begin(), part.end());
-    // }
-
-    // // prepare recieve buffer
-    
-    // int total_recv_size = std::accumulate(recv_counts.begin(), recv_counts.end(), 0);
-    // recv_data.resize(total_recv_size);
     
 
     // Calculate send counts and displacements
@@ -268,6 +299,8 @@ int main(int argc, char *argv[])
         std::copy(partitions[i].begin(), partitions[i].end(), send_buffer.begin() + idx);
         idx += partitions[i].size();
     }
+    CALI_MARK_END(comp_small);
+    CALI_MARK_END(comp);
 
     CALI_MARK_BEGIN(comm);
     CALI_MARK_BEGIN(comm_small);
@@ -275,23 +308,17 @@ int main(int argc, char *argv[])
     CALI_MARK_END(comm_small);
     CALI_MARK_END(comm);
 
-
+    CALI_MARK_BEGIN(comp);
+    CALI_MARK_BEGIN(comp_small);
     int total_recv = std::accumulate(recv_counts.begin(), recv_counts.end(), 0);
     recv_displs[0] = 0;
     for (int i = 1; i < numProcs; ++i) {
         recv_displs[i] = recv_displs[i - 1] + recv_counts[i - 1];
     }
     std::vector<int> recv_data(total_recv);
-    //calcuate displacement arrays for Alltoallv
-    // std::vector<int> send_displs(numProcs), recv_displs(numProcs);
-    // send_displs[0] = 0;
-    // recv_displs[0] = 0;
-    // for (int i = 1; i < numProcs; ++i) {
-    //     send_displs[i] = send_displs[i - 1] + send_counts[i - 1];
-    //     recv_displs[i] = recv_displs[i - 1] + recv_counts[i - 1];
-    // }
-    // std::partial_sum(send_counts.begin(), send_counts.end() - 1, send_displs.begin() + 1);
-    // std::partial_sum(recv_counts.begin(), recv_counts.end() - 1, recv_displs.begin() + 1);
+    CALI_MARK_END(comp_small);
+    CALI_MARK_END(comp);
+   
 
     CALI_MARK_BEGIN(comm);
     CALI_MARK_BEGIN(comm_small);
@@ -302,7 +329,11 @@ int main(int argc, char *argv[])
 
     // Part 8: Sort the received data
     //CALI_MARK_BEGIN("final_sort");
+    CALI_MARK_BEGIN(comp);
+    CALI_MARK_BEGIN(comp_small);
     std::sort(recv_data.begin(), recv_data.end());
+    CALI_MARK_END(comp_small);
+    CALI_MARK_END(comp);
     //CALI_MARK_END("final_sort");
     
     //printf("sorted pivoted buckets...\n");
@@ -315,9 +346,7 @@ int main(int argc, char *argv[])
     std::vector<int> recv_sizes(numProcs);
     CALI_MARK_BEGIN(comm);
     CALI_MARK_BEGIN(comm_small);
-    CALI_MARK_BEGIN(MPI_Gather_Cali);
     MPI_Gather(&total_recv, 1, MPI_INT, recv_sizes.data(), 1, MPI_INT, 0, MPI_COMM_WORLD);
-    CALI_MARK_END(MPI_Gather_Cali);
     CALI_MARK_END(comm_small);
     CALI_MARK_END(comm);
 
