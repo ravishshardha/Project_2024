@@ -27,10 +27,10 @@ const char* comp_small = "comp_small";
 const char* comp_large = "comp_large";
 const char* correctness_check = "correctness_check";
 const char* input_type = "random";
-const char* MPI_Init = "MPI_Init";
-const char* MPI_Gather = "MPI_Gather";
-const char* MPI_Comm = "MPI_Comm";
-const char* MPI_Bcast = "MPI_Bcast";
+const char* MPI_Init_Cali = "MPI_Init";
+const char* MPI_Gather_Cali = "MPI_Gather";
+const char* MPI_Comm_Cali = "MPI_Comm";
+const char* MPI_Bcast_Cali = "MPI_Bcast";
 // const char* master_initialization = "master_initialization";
 // const char* master_send_recieve = "master_send_recieve";
 // const char* worker_recieve = "worker_recieve";
@@ -98,15 +98,15 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    CALI_MARK_BEGIN(MPI_Init);
+    CALI_MARK_BEGIN(MPI_Init_Cali);
     MPI_Init(&argc, &argv);
-    CALI_MARK_END(MPI_Init);
+    CALI_MARK_END(MPI_Init_Cali);
 
     int taskid, numProcs;
-    CALI_MARK_BEGIN(MPI_Comm); 
+    CALI_MARK_BEGIN(MPI_Comm_Cali); 
     MPI_Comm_rank(MPI_COMM_WORLD, &taskid); // Get the rank of the processor
     MPI_Comm_size(MPI_COMM_WORLD, &numProcs); // Get the total number of processors
-    CALI_MARK_END(MPI_Comm); 
+    CALI_MARK_END(MPI_Comm_Cali); 
 
     // check at least 2 processors are running
     int rc;
@@ -130,8 +130,8 @@ int main(int argc, char *argv[])
     if(taskid == 0){
         // Generate Random array (vector) of elements
         global_data = generateRandomUniqueArray(sizeOfArray);
-        printf("Size of array: %d ", sizeOfArray);
-        printArray(global_data,0);
+        //printf("Size of array: %d ", sizeOfArray);
+        //printArray(global_data,0);
 
         // Distribute data evenly among processes
         int chunk_size = sizeOfArray / numProcs;
@@ -181,10 +181,10 @@ int main(int argc, char *argv[])
 
     CALI_MARK_BEGIN(comm);
     CALI_MARK_BEGIN(comm_large);
-    CALI_MARK_BEGIN(MPI_Gather);
+    CALI_MARK_BEGIN(MPI_Gather_Cali);
     MPI_Gather(local_samples.data(), numProcs - 1, MPI_INT, 
            taskid == 0 ? gathered_samples.data() : NULL, numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
-    CALI_MARK_END(MPI_Gather);
+    CALI_MARK_END(MPI_Gather_Cali);
     CALI_MARK_END(comm_large);
     CALI_MARK_END(comm);
 
@@ -198,17 +198,17 @@ int main(int argc, char *argv[])
             pivots.push_back(gathered_samples[i * (numProcs - 1)]);
         }
 
-        printf("pivots... \n");
-        printArray(pivots,0);
+        //printf("pivots... \n");
+        //printArray(pivots,0);
     }
     pivots.resize(numProcs - 1);
 
     CALI_MARK_BEGIN(comm);
     CALI_MARK_BEGIN(comm_small);
-    CALI_MARK_BEGIN(MPI_Bcast);
+    CALI_MARK_BEGIN(MPI_Bcast_Cali);
     // Part 5: Broadcast pivots to processes
     MPI_Bcast(pivots.data(), numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
-    CALI_MARK_END(MPI_Bcast);
+    CALI_MARK_END(MPI_Bcast_Cali);
     CALI_MARK_END(comm_small);
     CALI_MARK_END(comm);
 
@@ -305,8 +305,8 @@ int main(int argc, char *argv[])
     std::sort(recv_data.begin(), recv_data.end());
     //CALI_MARK_END("final_sort");
     
-    printf("sorted pivoted buckets...\n");
-    printArray(recv_data,taskid);
+    //printf("sorted pivoted buckets...\n");
+    //printArray(recv_data,taskid);
 
     
 
@@ -315,9 +315,9 @@ int main(int argc, char *argv[])
     std::vector<int> recv_sizes(numProcs);
     CALI_MARK_BEGIN(comm);
     CALI_MARK_BEGIN(comm_small);
-    CALI_MARK_BEGIN(MPI_Gather);
+    CALI_MARK_BEGIN(MPI_Gather_Cali);
     MPI_Gather(&total_recv, 1, MPI_INT, recv_sizes.data(), 1, MPI_INT, 0, MPI_COMM_WORLD);
-    CALI_MARK_END(MPI_Gather);
+    CALI_MARK_END(MPI_Gather_Cali);
     CALI_MARK_END(comm_small);
     CALI_MARK_END(comm);
 
