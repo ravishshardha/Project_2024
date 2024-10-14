@@ -18,6 +18,19 @@
 
 /* Define Caliper region names */
 const char* whole_computation = "whole_computation";
+const char* data_init_runtime = "data_init_runtime";
+const char* comm = "comm";
+const char* comp = "comp";
+const char* comm_small = "comm_small";
+const char* comm_large = "comm_large";
+const char* comp_small = "comp_small";
+const char* comp_large = "comp_large";
+const char* correctness_check = "correctness_check";
+const char* input_type = "random";
+const char* MPI_Init = "MPI_Init";
+const char* MPI_Gather = "MPI_Gather";
+const char* MPI_Comm = "MPI_Comm";
+const char* MPI_Bcast = "MPI_Bcast";
 // const char* master_initialization = "master_initialization";
 // const char* master_send_recieve = "master_send_recieve";
 // const char* worker_recieve = "worker_recieve";
@@ -52,6 +65,15 @@ std::vector<int> select_samples(const std::vector<int>& local_data, int numProcs
     return samples;
 }
 
+int is_sorted(const std::vector<int>& array, int size) {
+    for (int i = 0; i < size - 1; i++) {
+        if (array[i] > array[i + 1]) {
+            return 0; // Array is not sorted
+        }
+    }
+    return 1; // Array is sorted
+}
+
 void printArray(const std::vector<int>& arr, int rank) {
     printf("Processor %d :",rank);
     for (int x : arr) {
@@ -76,11 +98,15 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    CALI_MARK_BEGIN(MPI_Init);
     MPI_Init(&argc, &argv);
+    CALI_MARK_END(MPI_Init);
 
     int taskid, numProcs;
+    CALI_MARK_BEGIN(MPI_Comm); 
     MPI_Comm_rank(MPI_COMM_WORLD, &taskid); // Get the rank of the processor
     MPI_Comm_size(MPI_COMM_WORLD, &numProcs); // Get the total number of processors
+    CALI_MARK_END(MPI_Comm); 
 
     // check at least 2 processors are running
     int rc;
@@ -97,10 +123,10 @@ int main(int argc, char *argv[])
     // Create caliper ConfigManager object
     cali::ConfigManager mgr;
     mgr.start();
-    CALI_MARK_BEGIN(whole_computation); 
+    //CALI_MARK_BEGIN(whole_computation); 
 
     
-
+    CALI_MARK_BEGIN(data_init_runtime); 
     if(taskid == 0){
         // Generate Random array (vector) of elements
         global_data = generateRandomUniqueArray(sizeOfArray);
@@ -123,10 +149,14 @@ int main(int argc, char *argv[])
         MPI_Recv(local_data.data(), chunk_size, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     
     }
+    CALI_MARK_END(data_init_runtime); 
     
     // Part 1: Sort local data
+    CALI_MARK_BEGIN(comp); 
+    CALI_MARK_BEGIN(comp_small); 
     std::sort(local_data.begin(), local_data.end());
-
+    CALI_MARK_END(comp_small); 
+    CALI_MARK_END(comp); 
    // MPI_Gather(local_data.data(), sizeOfArray, MPI_INT, sorted_array.data(), sizeOfArray, MPI_INT, 0, MPI_COMM_WORLD);
 
     // debug print sorted inital arrays
@@ -148,8 +178,15 @@ int main(int argc, char *argv[])
     if (taskid == 0) {
         gathered_samples.resize(numProcs * (numProcs - 1));
     }
+
+    CALI_MARK_BEGIN(comm);
+    CALI_MARK_BEGIN(comm_large);
+    CALI_MARK_BEGIN(MPI_Gather);
     MPI_Gather(local_samples.data(), numProcs - 1, MPI_INT, 
            taskid == 0 ? gathered_samples.data() : NULL, numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
+    CALI_MARK_END(MPI_Gather);
+    CALI_MARK_END(comm_large);
+    CALI_MARK_END(comm);
 
     // Part 4: Sort the gathered samples and choose pivots
     std::vector<int> pivots;
@@ -166,8 +203,14 @@ int main(int argc, char *argv[])
     }
     pivots.resize(numProcs - 1);
 
+    CALI_MARK_BEGIN(comm);
+    CALI_MARK_BEGIN(comm_small);
+    CALI_MARK_BEGIN(MPI_Bcast);
     // Part 5: Broadcast pivots to processes
     MPI_Bcast(pivots.data(), numProcs - 1, MPI_INT, 0, MPI_COMM_WORLD);
+    CALI_MARK_END(MPI_Bcast);
+    CALI_MARK_END(comm_small);
+    CALI_MARK_END(comm);
 
     // Part 6: Partition local data based on pivots
     std::vector<std::vector<int>> partitions(numProcs);
@@ -226,7 +269,12 @@ int main(int argc, char *argv[])
         idx += partitions[i].size();
     }
 
+    CALI_MARK_BEGIN(comm);
+    CALI_MARK_BEGIN(comm_small);
     MPI_Alltoall(send_counts.data(), 1, MPI_INT, recv_counts.data(), 1, MPI_INT, MPI_COMM_WORLD);
+    CALI_MARK_END(comm_small);
+    CALI_MARK_END(comm);
+
 
     int total_recv = std::accumulate(recv_counts.begin(), recv_counts.end(), 0);
     recv_displs[0] = 0;
@@ -245,9 +293,12 @@ int main(int argc, char *argv[])
     // std::partial_sum(send_counts.begin(), send_counts.end() - 1, send_displs.begin() + 1);
     // std::partial_sum(recv_counts.begin(), recv_counts.end() - 1, recv_displs.begin() + 1);
 
-
+    CALI_MARK_BEGIN(comm);
+    CALI_MARK_BEGIN(comm_small);
     MPI_Alltoallv(send_buffer.data(), send_counts.data(), send_displs.data(), MPI_INT,
                   recv_data.data(), recv_counts.data(), recv_displs.data(), MPI_INT, MPI_COMM_WORLD);
+    CALI_MARK_END(comm_small);
+    CALI_MARK_END(comm);
 
     // Part 8: Sort the received data
     //CALI_MARK_BEGIN("final_sort");
@@ -262,7 +313,13 @@ int main(int argc, char *argv[])
      // Part 9: Gather sorted data at the root process
 
     std::vector<int> recv_sizes(numProcs);
+    CALI_MARK_BEGIN(comm);
+    CALI_MARK_BEGIN(comm_small);
+    CALI_MARK_BEGIN(MPI_Gather);
     MPI_Gather(&total_recv, 1, MPI_INT, recv_sizes.data(), 1, MPI_INT, 0, MPI_COMM_WORLD);
+    CALI_MARK_END(MPI_Gather);
+    CALI_MARK_END(comm_small);
+    CALI_MARK_END(comm);
 
     // Calculate displacements for final gather at Rank 0
     std::vector<int> final_displs(numProcs, 0);
@@ -277,9 +334,12 @@ int main(int argc, char *argv[])
     if (taskid == 0) {
         final_sorted_data.resize(sizeOfArray);
     }
+    CALI_MARK_BEGIN(comm);
+    CALI_MARK_BEGIN(comm_large);
     MPI_Gatherv(recv_data.data(), total_recv, MPI_INT, 
             final_sorted_data.data(), recv_sizes.data(), final_displs.data(), MPI_INT, 0, MPI_COMM_WORLD);
-
+    CALI_MARK_END(comm_large);
+    CALI_MARK_END(comm);
     // MPI_Gatherv(local_data.data(), local_data.size(), MPI_INT,
     //         rank == 0 ? final_data.data() : NULL, recv_counts.data(), displs.data(), MPI_INT, 0, MPI_COMM_WORLD);
 
@@ -289,7 +349,16 @@ int main(int argc, char *argv[])
         printArray(final_sorted_data,0);
     }
 
-    CALI_MARK_END(whole_computation); 
+    /********** Correctness Check **********/
+    CALI_MARK_BEGIN(correctness_check);
+    if (is_sorted(final_sorted_data, final_sorted_data.size())) {
+        printf("Array sorted correctly for %s.\n", input_type);
+    } else {
+        printf("Array NOT sorted correctly for %s.\n", input_type);
+    }
+    CALI_MARK_END(correctness_check);
+
+    //CALI_MARK_END(whole_computation); 
 
     //printf("Whole Computation Time: %f \n", whole_computation_time);
 
