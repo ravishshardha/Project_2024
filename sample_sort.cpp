@@ -160,29 +160,9 @@ int main(int argc, char *argv[])
 
     int chunk_size = sizeOfArray / numProcs;
     CALI_MARK_BEGIN(data_init_runtime); 
-    //if(taskid == 0){
-        // Generate Random array (vector) of elements
-        local_data.resize(chunk_size);
-        generate_array(&local_data,chunk_size,input_type );
-        //printf("Size of array: %d ", sizeOfArray);
-        //printArray(global_data,0);
-
-        // Distribute data evenly among processes
+    local_data.resize(chunk_size);
+    generate_array(&local_data,chunk_size,input_type );
         
-        // for (int i = 0; i < numProcs; ++i) {
-        //     if (i == 0) {
-        //         local_data.assign(global_data.begin(), global_data.begin() + chunk_size);
-        //     } else {
-        //         MPI_Send(global_data.data() + i * chunk_size, chunk_size, MPI_INT, i, 0, MPI_COMM_WORLD);
-        //     }
-        // }
-    // } else {
-    //     // recieve local data
-    //     int chunk_size = sizeOfArray / numProcs;
-    //     local_data.resize(chunk_size);
-        //MPI_Recv(local_data.data(), chunk_size, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    
-    //}
     CALI_MARK_END(data_init_runtime); 
 
     /********** Set Adiak Values **********/
@@ -202,18 +182,11 @@ int main(int argc, char *argv[])
     CALI_MARK_BEGIN(comp_small); 
     std::sort(local_data.begin(), local_data.end());
     
-   // MPI_Gather(local_data.data(), sizeOfArray, MPI_INT, sorted_array.data(), sizeOfArray, MPI_INT, 0, MPI_COMM_WORLD);
-
-    // debug print sorted inital arrays
-    //printArray(local_data,taskid);
 
     // Part 2: Choose p-1 samples from local data
     std::vector<int> local_samples;
     local_samples = select_samples(local_data, numProcs);
 
-    //printf("local samples... \n");
-
-    //printArray(local_samples,taskid);
 
     // Part 3: Gather samples at the root process
     std::vector<int> gathered_samples;
@@ -272,12 +245,7 @@ int main(int argc, char *argv[])
     partitions[numProcs - 1].assign(local_data.begin() + last_index, local_data.end());
     CALI_MARK_END(comp_large);
     CALI_MARK_END(comp);
-    // Display partition sizes in each process
-    // std::cout << "Rank " << taskid << " partitions: ";
-    // for (size_t i = 0; i < partitions.size(); ++i)
-    //     std::cout << partitions[i].size() << " ";
-    // std::cout << std::endl;
-
+    
     // Part 7: Send partitioned data to corresponding processes
     CALI_MARK_BEGIN(comp);
     CALI_MARK_BEGIN(comp_small);
@@ -328,19 +296,12 @@ int main(int argc, char *argv[])
     CALI_MARK_END(comm);
 
     // Part 8: Sort the received data
-    //CALI_MARK_BEGIN("final_sort");
     CALI_MARK_BEGIN(comp);
     CALI_MARK_BEGIN(comp_small);
     std::sort(recv_data.begin(), recv_data.end());
     CALI_MARK_END(comp_small);
     CALI_MARK_END(comp);
-    //CALI_MARK_END("final_sort");
     
-    //printf("sorted pivoted buckets...\n");
-    //printArray(recv_data,taskid);
-
-    
-
      // Part 9: Gather sorted data at the root process
 
     std::vector<int> recv_sizes(numProcs);
@@ -369,8 +330,6 @@ int main(int argc, char *argv[])
             final_sorted_data.data(), recv_sizes.data(), final_displs.data(), MPI_INT, 0, MPI_COMM_WORLD);
     CALI_MARK_END(comm_large);
     CALI_MARK_END(comm);
-    // MPI_Gatherv(local_data.data(), local_data.size(), MPI_INT,
-    //         rank == 0 ? final_data.data() : NULL, recv_counts.data(), displs.data(), MPI_INT, 0, MPI_COMM_WORLD);
 
     // Part 10: Print final results
     if(taskid == 0){
@@ -387,9 +346,6 @@ int main(int argc, char *argv[])
     }
     CALI_MARK_END(correctness_check);
 
-    //CALI_MARK_END(whole_computation); 
-
-    //printf("Whole Computation Time: %f \n", whole_computation_time);
 
     //print arrays for debugging
     //printArray(global_data,taskid);
