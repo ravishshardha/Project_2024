@@ -348,6 +348,9 @@ CALI_MARK_END("comp");
 #### I) Calltree For Merge Sort:
 ![image](https://github.com/user-attachments/assets/18b87af2-549f-4a3e-9059-12c2d2039dd4)
 
+#### I) Calltree For Sample Sort:
+![image](https://github.com/ravishshardha/Project_2024/blob/main/p4_a2_18_sample.png)
+
 
 ### 3b. Collect Metadata
 
