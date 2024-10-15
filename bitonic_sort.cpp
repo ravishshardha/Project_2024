@@ -3,6 +3,7 @@
 
 // References: https://github.com/adrianlee/mpi-bitonic-sort/tree/master
 // https://cse.buffalo.edu/faculty/miller/Courses/CSE702/Sajid.Khan-Fall-2018.pdf
+// https://github.com/francesco-biscaccia-carrara/BitonicSort/blob/main/parallel_test.c
 // Help from Ravish Shardha (groupmate) for input generation & sort verification.
 // Include necessary packages for MPI, adiak, caliper, etc.
 #include <iostream>      // Printf
@@ -20,6 +21,7 @@ void Comp_exchange_High(int bit);
 int ComparisonFunc(const void * a, const void * b);
 int is_sorted(int *, int);
 void generate_array(int*, int, const char*);
+int comparator(const void* a, const void* b);
 
 // DEFS
 #define MASTER 0;
@@ -87,14 +89,18 @@ int main(int argc, char * argv[]){
     adiak::value("implementation_source", "online and handwritten");
 
   /********** Send each subarray to each process **********/
-    array = (int *)malloc(size * sizeof(int));
+    array_size = n / num_proc;
+    array = (int *)malloc(array_size * sizeof(int));
     CALI_MARK_BEGIN(comm);
     CALI_MARK_BEGIN(comm_large);
-    MPI_Scatter(original_array, size, MPI_INT, array, size, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Scatter(original_array, array_size, MPI_INT, array, array_size, MPI_INT, 0, MPI_COMM_WORLD);
     CALI_MARK_END(comm_large);
     CALI_MARK_END(comm);
 
   MPI_Barrier(MPI_COMM_WORLD);
+
+  // sort the local array before starting
+  qsort(array, array_size, sizeof(int), comparator);
 
   // BITONIC SORT
   int i, j;
@@ -102,13 +108,14 @@ int main(int argc, char * argv[]){
 
   for (i = 0; i < dimensions; i++){
       for (j = i; j >= 0; j--){
-          if ((((rank >> (i+1)) % 2 == 0) && (rank >> j) % 2 == 0) || 
-              (((rank >> (i+1)) % 2 != 0) && (rank >> j) % 2 != 0)) {
+          if (((rank >> (i + 1)) % 2 == 0 && (rank >> j) % 2 == 0) || 
+              ((rank >> (i + 1)) % 2 != 0 && (rank >> j) % 2 != 0)) {
             Comp_exchange_Low(j);
           }
           else {
             Comp_exchange_High(j);
           }
+      MPI_Barrier(MPI_COMM_WORLD);
       }
   }
 
@@ -124,7 +131,7 @@ int main(int argc, char * argv[]){
 
   CALI_MARK_BEGIN(comm);
   CALI_MARK_BEGIN(comm_large);
-  MPI_Gather(array, size, MPI_INT, sorted, size, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Gather(array, array_size, MPI_INT, sorted, array_size, MPI_INT, 0, MPI_COMM_WORLD);
   CALI_MARK_END(comm_large);
   CALI_MARK_END(comm);
 
@@ -212,66 +219,79 @@ void generate_array(int *array, int size, const char* input_type) {
 ////////////////////
 // IS SORTED
 // From Ravish's mergesort code
-int is_sorted(int *array, int size) {
-    for (int i = 0; i < size - 1; i++) {
-        if (array[i] > array[i + 1]) {
+int is_sorted(int *a, int s) {
+    for (int i = 0; i < s - 1; i++) {
+        if (a[i] > a[i + 1]) {
             return 0; // Array is not sorted
         }
     }
     return 1; // Array is sorted
 }
 
+int comparator(const void* a, const void* b){
+  return ( * (int * )a - * (int *)b);
+}
+
 ////////////////////
 // COMP EXCHANGE MIN (j)
-Comp_exchange_Low(){
-  // partner process = rank XOR (1 << j)
+void Comp_exchange_Low(int j){
   int partner = rank ^ (1 << j);
-
-  // MPI_Send MAX of array to partner (A)
-  // Max is stored at end of array, assumed to be in order
-  MPI_Send(&array[array_size - 1], 1, MPI_INT, partner, 0, MPI_COMM_WORLD);
-
-  // MPI_Recv MIN from partner (B)
-  int min;
-  MPI_Recv(&min, 1, MPI_INT, partner, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-
-  // copy all values in array larger than MIN to send_buffer
   int i;
-  int * send_buffer = malloc((array_size + 1) * sizeof(int));
-  int send_buf_size = 0;
+  int status = 0;
+  int * buffer_recieve = (int*)malloc((array_size) * sizeof(int));
+  
+  CALI_MARK_BEGIN(comm);
+  CALI_MARK_BEGIN(comm_small);
+  status = MPI_Sendrecv(
+        array, 
+        array_size, 
+        MPI_INT, 
+        partner, 
+        0,
+        buffer_recieve, 
+        array_size, 
+        MPI_INT, 
+        partner, 
+        0,
+        MPI_COMM_WORLD,
+        MPI_STATUS_IGNORE);
+  CALI_MARK_END(comm_small);
+  MPI_Barrier(MPI_COMM_WORLD);
+  CALI_MARK_END(comm);
+
+  if (status != 0){
+    printf("MIN Failed to sendrecv. [%d, %d]", rank, partner);
+    status = 0;
+  }
+
+  // Concatenate lists into temp
+  CALI_MARK_BEGIN(comp);
+  CALI_MARK_BEGIN(comp_small);
+  int * temp = (int*)malloc((array_size) * sizeof(int) * 2);
   for (i = 0; i < array_size; i++){
-    if (array[i] > min){
-      send_buffer[send_buf_size + 1] = array[i];
-      send_buf_size++;
-    }
-    else{
-      break;
-    }
+    temp[i] = array[i];
   }
-
-  // MPI_Send send_buffer array to partner (C)
-  MPI_Send(send_buffer, send_buf_size, MPI_INT, partner, 0, MPI_COMM_WORLD);
-
-  // MPI_Recv array from partner, store in receive_buffer (D)
-  int * receive_buffer = malloc((array_size + 1) * sizeof(int));
-  MPI_Recv(receive_buffer, array_size, MPI_INT, partner, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-
-  // store smallest value from receive_buffer at end of array
-  for (i = 1; i < receive_buffer[0] + 1; i++){
-    if (array[array_size - 1] < receive_buffer[i]){
-      array[array_size - 1] = receive_buffer[i];
-    }
-    else {
-      break;
-    }
+  for (i = 0; i < array_size; i++){
+    temp[array_size + i] = buffer_recieve[i];
   }
+  CALI_MARK_END(comp_small);
 
-  // sort local array
-  qsort(array, array_size, sizeof(int), comparator);
+  // Sort locally
+  CALI_MARK_BEGIN(comp_large);
+  qsort(temp, array_size * 2, sizeof(int), comparator);
+  CALI_MARK_END(comp_large);
+
+  // Assign array to be the lower half of the given values
+  CALI_MARK_BEGIN(comp_small);
+  for (i = 0; i < array_size; i++){
+    array[i] = temp[i];
+  }
+  CALI_MARK_END(comp_small);
+  CALI_MARK_END(comp);
 
   // free buffers
-  free(send_buffer);
-  free(receive_buffer);
+  free(buffer_recieve);
+  free(temp);
 
   return;
 }
@@ -280,62 +300,67 @@ Comp_exchange_Low(){
 
 ////////////////////
 // COMP EXCHANGE MAX (j)
-Comp_exchange_High(){
-  // partner process = rank XOR (1 << j)
+void Comp_exchange_High(int j){
   int partner = rank ^ (1 << j);
-  
-  // MPI_Recv MAX from partner (A)
-  int max;
-  MPI_Recv(&max, 1, MPI_INT, partner, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-  
-  // MPI_Send MIN of array to partner (B)
-  // Min is first in array, assuming sorted
-  MPI_Send(&array[0], 1, MPI_INT, partner, 0, MPI_COMM_WORLD);
-
-  // copy all values in array smaller than MAX to send_buffer
   int i;
-  int * send_buffer = malloc((array_size + 1) * sizeof(int));
-  int send_buf_size = 0;
-  for (i = 0; i < array_size; i++){
-    if (array[i] < max){
-      send_buffer[send_buf_size + 1] = array[i];
-      send_buf_size++;
-    }
-    else{
-      break;
-    }
-  }
-
-  // MPI_Recv array from partner, store in receive_buffer (C)
-  int * receive_buffer = malloc((array_size + 1) * sizeof(int));
-  MPI_Recv(receive_buffer, array_size, MPI_INT, partner, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+  int status = 0;
+  int * buffer_recieve = (int*)malloc((array_size) * sizeof(int));
   
-  // MPI_Send send_buffer array to partner (D)
-  MPI_Send(send_buffer, send_buf_size, MPI_INT, partner, 0, MPI_COMM_WORLD);
+  CALI_MARK_BEGIN(comm);
+  CALI_MARK_BEGIN(comm_small);
+  status = MPI_Sendrecv(
+        array, 
+        array_size, 
+        MPI_INT, 
+        partner, 
+        0,
+        buffer_recieve, 
+        array_size, 
+        MPI_INT, 
+        partner, 
+        0,
+        MPI_COMM_WORLD,
+        MPI_STATUS_IGNORE);
+  CALI_MARK_END(comm_small);
+  MPI_Barrier(MPI_COMM_WORLD);
+  CALI_MARK_END(comm);
 
-  // store largest value from receive_buffer at start of array
-  for (i = 1; i < receive_buffer[0] + 1; i++){
-    if (array[0] < receive_buffer[i]){
-      array[0] = receive_buffer[i];
-    }
-    else {
-      break;
-    }
+  if (status != 0){
+    printf("MAX Failed to sendrecv. [%d, %d]", rank, partner);
+    status = 0;
   }
 
-  // sort array
-  qsort(array, array_size, sizeof(int), comparator);
+  // Concatenate lists into temp
+  CALI_MARK_BEGIN(comp);
+  CALI_MARK_BEGIN(comp_small);
+  int * temp = (int*)malloc((array_size) * sizeof(int) * 2);
+  for (i = 0; i < array_size; i++){
+    temp[i] = array[i];
+  }
+  for (i = 0; i < array_size; i++){
+    temp[array_size + i] = buffer_recieve[i];
+  }
+  CALI_MARK_END(comp_small);
+
+  // Sort locally
+  CALI_MARK_BEGIN(comp_large);
+  qsort(temp, array_size * 2, sizeof(int), comparator);
+  CALI_MARK_END(comp_large);
+
+  // Assign array to be the higher half of the given values
+  CALI_MARK_BEGIN(comp_small);
+  for (i = 0; i < array_size; i++){
+    array[i] = temp[i + array_size];
+  }
+  CALI_MARK_END(comp_small);
+  CALI_MARK_END(comp);
   
   // free buffers
-  free(send_buffer);
-  free(receive_buffer);
+  free(buffer_recieve);
+  free(temp);
 
-  // RETURN
   return;
 }
 // END COMP EXCHANGE MAX
 ////////////////////
 
-int comparator(const void* a, const void* b){
-  return ( * (int * )a - * (int *)b);
-}
