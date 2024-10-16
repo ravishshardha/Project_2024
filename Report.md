@@ -345,7 +345,7 @@ CALI_MARK_END("comp");
 ![image](https://github.com/ravishshardha/Project_2024/blob/main/p4_a2_18_sample.png)
 
 #### I) Calltree for Bitonic Sort:
-1[image](https://github.com/ravishshardha/Project_2024/blob/bitonic_sort/MPI_Builds/bitonic_p128-a65536-tRandom_Calltree.PNG)
+![image](https://github.com/ravishshardha/Project_2024/blob/bitonic_sort/MPI_Builds/bitonic_p128-a65536-tRandom_Calltree.PNG)
 
 ### 3b. Collect Metadata
 
