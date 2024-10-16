@@ -339,12 +339,12 @@ CALI_MARK_END("comp");
 └─ 0.440 correctness_check
 ```
 #### I) Calltree For Merge Sort:
-![image](https://github.com/user-attachments/assets/18b87af2-549f-4a3e-9059-12c2d2039dd4)
+![image](https://github.com/user-attachments/assets/5e52a84f-a7ce-4625-9742-d039656d652e)
 
-#### I) Calltree For Sample Sort:
+#### II) Calltree For Sample Sort:
 ![image](https://github.com/ravishshardha/Project_2024/blob/main/p4_a2_18_sample.png)
 
-#### I) Calltree for Bitonic Sort:
+#### III) Calltree for Bitonic Sort:
 ![image](https://github.com/ravishshardha/Project_2024/blob/bitonic_sort/MPI_Builds/bitonic_p128-a65536-tRandom_Calltree.PNG)
 
 ### 3b. Collect Metadata
@@ -373,6 +373,21 @@ They will show up in the `Thicket.metadata` if the caliper file is read into Thi
 ### **See the `Builds/` directory to find the correct Caliper configurations to get the performance metrics.** They will show up in the `Thicket.dataframe` when the Caliper file is read into Thicket.
 
 We have included the metadata code mentioned in 3b in our algorithms.
+The values that we are getting in the metadata are the following:
+- Launch date of the job
+- Libraries used in our algorithm
+- Name of the cluster
+- Name of the algorithm you are using
+- The programming model used for communication which in our case is MPI
+- The datatype of input elements, which in our case is int
+- The sizeof(datatype) of input(int) elements in bytes
+- The number of elements in the input dataset/n - 2^16, 2^18, 2^20, 2^22, 2^24, 2^26, 2^28
+- The input type used for sorting("Sorted", "ReverseSorted", "Random", "1_perc_perturbed").
+- The number of processors used(MPI ranks) - 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024
+- The scalability of your algorithm. Either if we are doing strong or weak
+- Our group number, which is 13
+- The place where we got the source code of your algorithm
+
 ## 4. Performance evaluation
 
 Include detailed analysis of computation performance, communication performance. 
