@@ -87,14 +87,17 @@ Bitonic Sort:
 
 // Generate the input array on each processor (rand, in-order, reverse-order, or perturbed)
 
+// MPI_Barrier
+
 // BITONIC SORT
 // dimensions = log2(num_proc)
 // For i = 0 to dimensions - 1:
     // For j = i down to 0:
         if (i + 1)st bit of rank == jth bit of rank then
-            COMP EXCHANGE MAX (j)
-        else
             COMP EXCHANGE MIN (j)
+        else
+            COMP EXCHANGE MAX (j)
+        // MPI_Barrier to ensure steps are in sync
 
 
 // MPI_Barrier to ensure all sorting is complete
@@ -116,16 +119,11 @@ Bitonic Sort:
 ////////////////////
 // COMP EXCHANGE MIN (j)
 // partner process = rank XOR (1 << j)
-// MPI_Send MAX of array to partner (A)
-// MPI_Recv MIN from partner (B)
+// MPI_Sendrecv array with partner, store in buffer_receive
 
-// copy all values in array larger than MIN to send_buffer
-
-// MPI_Send send_buffer array to partner (C)
-// MPI_Recv array from partner, store in receive_buffer (D)
-
-// store smallest value from receive_buffer at end of array
-// sort array
+// Concatenate array and buffer receive, store as temp buffer
+// Sort temp 
+// Set array to be the lower half of temp
 
 // free buffers
 // RETURN
@@ -135,16 +133,11 @@ Bitonic Sort:
 ////////////////////
 // COMP EXCHANGE MAX (j)
 // partner process = rank XOR (1 << j)
-// MPI_Recv MAX from partner (A)
-// MPI_Send MIN of array to partner (B)
+// MPI_Sendrecv array with partner, store in buffer_receive
 
-// copy all values in array smaller than MAX to send_buffer
-
-// MPI_Recv array from partner, store in receive_buffer (C)
-// MPI_Send send_buffer array to partner (D)
-
-// store largest value from receive_buffer at start of array
-// sort array
+// Concatenate array and buffer receive, store as temp
+// Sort temp 
+// Set array to be the higher half of temp
 
 // free buffers
 // RETURN
@@ -351,6 +344,8 @@ CALI_MARK_END("comp");
 #### I) Calltree For Sample Sort:
 ![image](https://github.com/ravishshardha/Project_2024/blob/main/p4_a2_18_sample.png)
 
+#### I) Calltree for Bitonic Sort:
+1[image](https://github.com/ravishshardha/Project_2024/blob/bitonic_sort/MPI_Builds/bitonic_p128-a65536-tRandom_Calltree.PNG)
 
 ### 3b. Collect Metadata
 
