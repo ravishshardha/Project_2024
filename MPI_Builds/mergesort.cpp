@@ -29,8 +29,6 @@ int main(int argc, char** argv) {
 
     CALI_CXX_MARK_FUNCTION;
 
-    cali::ConfigManager mgr;
-    mgr.start();
     /********** Initialize MPI **********/
     int world_rank;
     int world_size;
@@ -38,6 +36,9 @@ int main(int argc, char** argv) {
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+    
+    cali::ConfigManager mgr;
+    mgr.start();
 
     int n = atoi(argv[1]);
     const char* input_type = argv[2];
@@ -61,18 +62,6 @@ int main(int argc, char** argv) {
         printf("\n");
     }
 
-    /********** Set Adiak Values (moved inside main) **********/
-    adiak::value("algorithm", "merge");
-    adiak::value("programming_model", "mpi");
-    adiak::value("data_type", "int");
-    adiak::value("size_of_data_type", sizeof(int));
-    adiak::value("input_size", n);
-    adiak::value("input_type", input_type);
-    adiak::value("num_procs", world_size);
-    adiak::value("scalability", "strong");
-    adiak::value("group_num", 13);
-    adiak::value("implementation_source", "online and handwritten");
-
     /********** Main Sorting Logic (moved inside main) **********/
     int size = n / world_size;
 
@@ -87,8 +76,8 @@ int main(int argc, char** argv) {
     /********** Perform the mergesort on each process **********/
     int *tmp_array = (int *)malloc(size * sizeof(int));
     CALI_MARK_BEGIN(comp);
-    CALI_MARK_BEGIN(comp_small);
-    mergeSort(sub_array, tmp_array, 0, size - 1);
+    CALI_MARK_BEGIN(comp_small); //comp large
+    mergeSort(sub_array, tmp_array, 0, (size - 1));
     CALI_MARK_END(comp_small);
     CALI_MARK_END(comp);
     
@@ -109,7 +98,7 @@ int main(int argc, char** argv) {
         int *other_array = (int *)malloc(n * sizeof(int));
         CALI_MARK_BEGIN(comp);
         CALI_MARK_BEGIN(comp_large);
-        mergeSort(sorted, other_array, 0, n - 1);
+        mergeSort(sorted, other_array, 0, (n - 1));
         CALI_MARK_END(comp_large);
         CALI_MARK_END(comp);
 
@@ -135,9 +124,33 @@ int main(int argc, char** argv) {
     }
 
     /********** Clean up rest **********/
+    free(original_array);
     free(sub_array);
     free(tmp_array);
 
+    /********** Synchronize all processes before profiling **********/
+    CALI_MARK_BEGIN(comm);
+    MPI_Barrier(MPI_COMM_WORLD); // Ensure all processes are done
+    CALI_MARK_END(comm);
+    
+    /********** Set Adiak Values **********/
+   	adiak::init(NULL);
+    adiak::launchdate();   
+    adiak::libraries();     
+    adiak::cmdline();       
+    adiak::clustername();   
+    adiak::value("algorithm", "merge");
+    adiak::value("programming_model", "mpi");
+    adiak::value("data_type", "int");
+    adiak::value("size_of_data_type", sizeof(int));
+    adiak::value("input_size", n);
+    adiak::value("input_type", input_type);
+    adiak::value("num_procs", world_size);
+    adiak::value("scalability", "strong");
+    adiak::value("group_num", 13);
+    adiak::value("implementation_source", "online and handwritten");
+    
+    /********** Stop Caliper Manager **********/
     mgr.stop();
     mgr.flush();
 
