@@ -47,6 +47,12 @@ int main(int argc, char * argv[]){
   cali::ConfigManager mgr;
   mgr.start();
 
+  // Check if command was run with proper vars
+  if (argc < 3) {
+    printf("Not enough arguments, stopping...");
+    return 0;
+  }
+
   // MPI Initialization & vars
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &num_proc);
@@ -69,11 +75,11 @@ int main(int argc, char * argv[]){
         CALI_MARK_END(data_init_runtime);
         
         // Print unsorted array (first 10 elements)
-        printf("Unsorted array for %s: ", input_type);
-        for (int j = 0; j < n; j++) {
-            printf("%d ", original_array[j]);
-        }
-        printf("\n");
+        // printf("Unsorted array for %s: ", input_type);
+        // for (int j = 0; j < n; j++) {
+        //     printf("%d ", original_array[j]);
+        // }
+        // printf("\n");
     }
 
   /********** Set Adiak Values (moved inside main) **********/
@@ -89,15 +95,15 @@ int main(int argc, char * argv[]){
     adiak::value("implementation_source", "online and handwritten");
 
   /********** Send each subarray to each process **********/
-    array_size = n / num_proc;
-    array = (int *)malloc(array_size * sizeof(int));
-    CALI_MARK_BEGIN(comm);
-    CALI_MARK_BEGIN(comm_large);
-    MPI_Scatter(original_array, array_size, MPI_INT, array, array_size, MPI_INT, 0, MPI_COMM_WORLD);
-    CALI_MARK_END(comm_large);
-    CALI_MARK_END(comm);
-
+  array_size = n / num_proc;
+  array = (int *)malloc(array_size * sizeof(int));
+  CALI_MARK_BEGIN(comm);
+  CALI_MARK_BEGIN(comm_large);
+  MPI_Scatter(original_array, array_size, MPI_INT, array, array_size, MPI_INT, 0, MPI_COMM_WORLD);
+  CALI_MARK_END(comm_large);
   MPI_Barrier(MPI_COMM_WORLD);
+  CALI_MARK_END(comm);
+
 
   // sort the local array before starting
   qsort(array, array_size, sizeof(int), comparator);
@@ -115,11 +121,15 @@ int main(int argc, char * argv[]){
           else {
             Comp_exchange_High(j);
           }
+      CALI_MARK_BEGIN(comm);
       MPI_Barrier(MPI_COMM_WORLD);
+      CALI_MARK_END(comm);
       }
   }
 
+  CALI_MARK_BEGIN(comm);
   MPI_Barrier(MPI_COMM_WORLD);
+  CALI_MARK_END(comm);
 
   // VERIFY SORT
 
@@ -146,11 +156,11 @@ int main(int argc, char * argv[]){
       CALI_MARK_END(correctness_check);
 
       // Print sorted array (first 10 elements)
-      printf("Sorted array for %s: ", input_type);
-      for (int j = 0; j < n; j++) {
-          printf("%d ", sorted[j]);
-      }
-      printf("\n");
+      // printf("Sorted array for %s: ", input_type);
+      // for (int j = 0; j < n; j++) {
+      //     printf("%d ", sorted[j]);
+      // }
+      // printf("\n");
 
       /********** Clean up root **********/
       free(sorted);
@@ -173,6 +183,11 @@ int main(int argc, char * argv[]){
 // From Ravish's Mergesort code
 void generate_array(int *array, int size, const char* input_type) {
     srand(time(NULL));
+
+    // if input type is NULL, default to random
+    if (input_type == NULL){
+      input_type = "Random";
+    }
 
     if (strcmp(input_type, "Random") == 0) {
         // Random array
