@@ -334,7 +334,7 @@ int main(int argc, char *argv[])
     // Part 10: Print final results
     if(taskid == 0){
         printf("Final sorted data");
-        printArray(final_sorted_data,0);
+        //printArray(final_sorted_data,0);
     }
 
     /********** Correctness Check **********/
