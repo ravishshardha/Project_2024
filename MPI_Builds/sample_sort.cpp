@@ -166,6 +166,11 @@ int main(int argc, char *argv[])
     CALI_MARK_END(data_init_runtime); 
 
     /********** Set Adiak Values **********/
+    adiak::init(NULL);
+    adiak::launchdate();    // launch date of the job
+    adiak::libraries();     // Libraries used
+    adiak::cmdline();       // Command line used to launch the job
+    adiak::clustername();   // Name of the cluster
     adiak::value("algorithm", "sample");
     adiak::value("programming_model", "mpi");
     adiak::value("data_type", "int");
