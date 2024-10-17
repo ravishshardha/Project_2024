@@ -348,7 +348,7 @@ CALI_MARK_END("comp");
 ![image](https://cdn.discordapp.com/attachments/1289259692077617192/1296185257137279068/image.png?ex=67115e17&is=67100c97&hm=6a5b426df4cfc23e64f28541a810b414c3ad892f6dc392f5784951a35d6c3d63&)
 
 #### VI) Calltree for Radix Sort:
-![image](https://cdn.discordapp.com/attachments/1281268344036524110/1296316565435711558/thing.png?ex=6711d861&is=671086e1&hm=fcb69deaba6d91d20b58398bf37cb4858643af98666aeb7de22148977640d49c&)
+![image](https://cdn.discordapp.com/attachments/1281268344036524110/1296320598678704128/image.png?ex=6711dc23&is=67108aa3&hm=b06794b26da7f35a3944a7f43b78a78902eca5d821d9150ca02f39fa80fa0ceb&)
 
 ### 3b. Collect Metadata
 
