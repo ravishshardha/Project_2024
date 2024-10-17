@@ -83,6 +83,11 @@ int main(int argc, char * argv[]){
     }
 
   /********** Set Adiak Values (moved inside main) **********/
+    adiak::init(NULL);
+    adiak::launchdate();   
+    adiak::libraries();     
+    adiak::cmdline();       
+    adiak::clustername();   
     adiak::value("algorithm", "bitonic");
     adiak::value("programming_model", "mpi");
     adiak::value("data_type", "int");
