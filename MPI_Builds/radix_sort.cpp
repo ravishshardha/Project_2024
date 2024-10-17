@@ -45,13 +45,22 @@ int main(int argc, char** argv) {
     }
 
     /********** Set Adiak Values **********/
-    adiak::value("algorithm", "radix_sort");
+    
+    adiak::init(NULL);
+    adiak::launchdate();   
+    adiak::libraries();     
+    adiak::cmdline();       
+    adiak::clustername();   
+    adiak::value("algorithm", "Radix");
     adiak::value("programming_model", "mpi");
     adiak::value("data_type", "int");
+    adiak::value("size_of_data_type", sizeof(int));
     adiak::value("input_size", n);
     adiak::value("input_type", input_type);
-    adiak::value("num_procs", world_size);
+    adiak::value("num_procs", num_proc);
     adiak::value("scalability", "strong");
+    adiak::value("group_num", 13);
+    adiak::value("implementation_source", "online and handwritten");
 
     /********** Main Sorting Logic **********/
     int size = n / world_size;
