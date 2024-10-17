@@ -342,10 +342,10 @@ CALI_MARK_END("comp");
 ![image](https://github.com/user-attachments/assets/5e52a84f-a7ce-4625-9742-d039656d652e)
 
 #### II) Calltree For Sample Sort:
-![image](https://github.com/ravishshardha/Project_2024/blob/main/sample_p4_a2_18.png)
+![image](https://cdn.discordapp.com/attachments/1289259692077617192/1296297126627643493/sample_p4_a2_18.png?ex=6711c647&is=671074c7&hm=7f35a849a680dacaa956ce38a6036a4efa5fe98844f424400fb464eb26543242&)
 
 #### III) Calltree for Bitonic Sort:
-![image](https://github.com/ravishshardha/Project_2024/blob/bitonic_sort/MPI_Builds/bitonic_p128-a65536-tRandom_Calltree.PNG)
+![image](https://cdn.discordapp.com/attachments/1289259692077617192/1296185257137279068/image.png?ex=67115e17&is=67100c97&hm=6a5b426df4cfc23e64f28541a810b414c3ad892f6dc392f5784951a35d6c3d63&)
 
 ### 3b. Collect Metadata
 
