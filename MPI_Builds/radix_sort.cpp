@@ -10,7 +10,7 @@
 
 void generate_array(int *array, int size, const char* input_type);
 int is_sorted(int *array, int size);
-void radix_sort(int *array, int size, int max_digits, int world_rank, int world_size);
+void radix_sort(int *array, int size, int world_rank, int world_size);
 void counting_sort_for_radix(int *array, int size, int place);
 
 int main(int argc, char** argv) {
@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
     adiak::value("size_of_data_type", sizeof(int));
     adiak::value("input_size", n);
     adiak::value("input_type", input_type);
-    adiak::value("num_procs", num_proc);
+    adiak::value("num_procs", world_rank);
     adiak::value("scalability", "strong");
     adiak::value("group_num", 13);
     adiak::value("implementation_source", "online and handwritten");
@@ -65,14 +65,6 @@ int main(int argc, char** argv) {
     /********** Main Sorting Logic **********/
     int size = n / world_size;
     int *send_array = (int *)malloc(size * sizeof(int));
-
-    // Calculate max_digits based on maximum possible value in array
-    int max_val = n; 
-    int max_digits = 0;
-    while (max_val != 0) {
-        max_val /= 10;
-        max_digits++;
-    }
 
     /********** Send each subarray to each process **********/
     CALI_MARK_BEGIN("comm");
@@ -83,7 +75,7 @@ int main(int argc, char** argv) {
 
     /********** Perform radix sort on each process **********/
     CALI_MARK_BEGIN("comp");
-    radix_sort(send_array, size, max_digits, world_rank, world_size); 
+    radix_sort(send_array, size, world_rank, world_size); 
     CALI_MARK_END("comp");
 
     /********** Gather the sorted subarrays into one **********/
@@ -98,25 +90,37 @@ int main(int argc, char** argv) {
     CALI_MARK_END("comm_large");
     CALI_MARK_END("comm");
 
+    if(world_rank==0){
+        printf("Gathered Array \n");
+        for(int i = 0; i < n; i++){
+            printf("%d ", sorted[i]);
+        }
+        printf("\n");
+    }
+    
+
     // Ensure the gathered array is sorted without running a final sort
     if (world_rank == 0) {
     // Merge the sorted subarrays
     int *final_sorted = (int *)malloc(n * sizeof(int));
     int *indices = (int *)calloc(world_size, sizeof(int)); // Track the current index of each subarray
-    int total_size = 0;
+    int total_size = 0; //basically current index of final sorted
 
     while (total_size < n) {
-        int min_index = -1; // Declare min_index here
-        int min_value = INT_MAX; // Declare min_value here
+        int min_index = -1; // Declare min_index here (holds the process index that the min value is from)
+        int min_value = INT_MAX; // Declare min_value here (holds smallest value across process)
 
         // Find the minimum element across the current heads of each subarray
         for (int i = 0; i < world_size; i++) {
+            //get current index of whichever process
             int current_index = indices[i];
             // Debugging output
             if (current_index < size) {
                 printf("Process %d checking sorted[%d]: %d\n", world_rank, i * size + current_index, sorted[i * size + current_index]);
             }
-            if (current_index < size && sorted[i * size + current_index] < min_value) {
+            //if current index of process is not yet finished and 
+            // i*size has to get to the offset of whichever process so the start of the second process is (1 * size) + current index of respective process
+            if (current_index < size && sorted[(i * size) + current_index] < min_value) {
                 min_value = sorted[i * size + current_index];
                 min_index = i;
             }
@@ -165,8 +169,26 @@ int main(int argc, char** argv) {
 
 
 /********** Radix Sort Function **********/
-void radix_sort(int *array, int size, int max_digits, int world_rank, int world_size) {
+void radix_sort(int *array, int size, int world_rank, int world_size) {
     int place = 1; // Start at the least significant digit
+    // Calculate max_digits based on maximum possible value in array
+    int max_num = 0;
+    for(int i = 0; i < size; i++) {
+        if(max_num < array[i]){
+            max_num = array[i];
+        }
+    }
+
+    // Calculate max_digits based on max_num
+    int max_digits = 0;
+    int temp = max_num;
+    if (max_num > 0) { // Check if max_num is positive
+        while (temp > 0) {
+            temp /= 10; // Divide by 10 to reduce max_num
+            max_digits++;  // Increment digit count
+        }
+    }
+
     CALI_MARK_BEGIN("comp");
     for (int i = 0; i < max_digits; i++) {
         CALI_MARK_BEGIN("comp_large");
@@ -174,6 +196,11 @@ void radix_sort(int *array, int size, int max_digits, int world_rank, int world_
         CALI_MARK_END("comp_large");     
         place *= 10; // Move to the next digit
     }
+    printf("Process %d: ", world_rank);
+    for(int i = 0; i < size; i++){
+        printf("%d ", array[i]);
+    }
+    printf("\n");
     CALI_MARK_END("comp");
 }
 
