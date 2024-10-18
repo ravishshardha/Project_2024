@@ -161,11 +161,13 @@ int main(int argc, char * argv[]){
       CALI_MARK_END(correctness_check);
 
       // Print sorted array (first 10 elements)
-      // printf("Sorted array for %s: ", input_type);
-      // for (int j = 0; j < n; j++) {
-      //     printf("%d ", sorted[j]);
-      // }
-      // printf("\n");
+      printf("Sorted array for %s: ", input_type);
+      int printnum = 10;
+      if (n < 10) {printnum = n;}
+      for (int j = 0; j < printnum; j++) {
+          printf("%d ", sorted[j]);
+      }
+      printf("\n");
 
       /********** Clean up root **********/
       free(sorted);
@@ -201,9 +203,9 @@ void generate_array(int *array, int size, const char* input_type) {
         }
     } else if (strcmp(input_type, "ReverseSorted") == 0) {
         // Reverse sorted array
-        int max_val = size * 2;  // Start with a larger value than size
+        int max_val = size;  // Start with a larger value than size
         for (int i = 0; i < size; i++) {
-            int decrement = rand() % (size / 5 + 1);  // Sometimes allows 0 decrement, creating repeated values
+            int decrement = rand() % 5;  // Sometimes allows 0 decrement, creating repeated values
             max_val -= decrement;
             array[i] = max_val;
         }
@@ -211,7 +213,7 @@ void generate_array(int *array, int size, const char* input_type) {
         // Sorted array with random values, allowing for repeats
         int min_val = 0;
         for (int i = 0; i < size; i++) {
-            int increment = rand() % (size / 5 + 1);  // Sometimes allows 0 increment, creating repeated values
+            int increment = rand() % 5;  // Sometimes allows 0 increment, creating repeated values
             min_val += increment;
             array[i] = min_val;
         }
@@ -219,7 +221,7 @@ void generate_array(int *array, int size, const char* input_type) {
         // 1% Permuted array
         int min_val = 0;
         for (int i = 0; i < size; i++) {
-            int increment = rand() % (size / 5 + 1);  // Sometimes allows 0 increment
+            int increment = rand() % 5;  // Sometimes allows 0 increment
             min_val += increment;
             array[i] = min_val;
         }
@@ -242,14 +244,25 @@ void generate_array(int *array, int size, const char* input_type) {
 int is_sorted(int *a, int s) {
     for (int i = 0; i < s - 1; i++) {
         if (a[i] > a[i + 1]) {
+            printf("DEBUG: Array not sorted at index %d, with [%d, %d]", s, a[i], a[i+1]);
             return 0; // Array is not sorted
         }
     }
     return 1; // Array is sorted
 }
 
-int comparator(const void* a, const void* b){
-  return ( * (int * )a - * (int *)b);
+int comparator(const void* a, const void* b) {
+    int int_a = *(int*)a;
+    int int_b = *(int*)b;
+
+    // Overflow-safe version
+    if (int_a < int_b) {
+        return -1;
+    } else if (int_a > int_b) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 ////////////////////
