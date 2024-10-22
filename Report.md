@@ -505,6 +505,88 @@ Both metrics show:
 </br>
 This similarity makes sense because both operations are sequential and performed only by the root process. This sequential process is the main bottleneck for the calculation time.
 
+### II) Sample Sort
+- #### main:
+  - Avg time/Rank:
+![Avg time for main](https://drive.google.com/file/d/1E-MlMz5hr0roSOONDWiJDBGCzL3loXfd/view?usp=drive_link)
+
+  - Min time/Rank:
+ ![Min time for main](https://drive.google.com/file/d/1PJijz8PdOOZ5HfQJODV1Iwnd2Rhb8FCM/view?usp=drive_link)
+ 
+  - Max time/Rank:
+ ![Max time for main](https://drive.google.com/file/d/1IK8940QsD2d7Z7ZIBLuOx7AuJk0NKK9X/view?usp=drive_link)
+ 
+  - Variance time/Rank:
+ ![Variance time for main](https://drive.google.com/file/d/1U2xq5_s9CdOeKZr52fftw-ZKAYno7bPi/view?usp=drive_link)
+
+  - Total time:
+  ![Total time for main](https://drive.google.com/file/d/1W61AxyA23sJVTrg51iCQieDrnegrt9vh/view?usp=drive_link)
+
+  - #### comm:
+  - Avg time/Rank:
+ ![Avg time for comm](https://drive.google.com/file/d/1WXr3qlMI7eALr20JGKNel71pboE1vVks/view?usp=drive_link)
+
+  - Min time/Rank:
+ ![Min time for comm](https://drive.google.com/file/d/1My5GJYj5VAZAzTwUd5zIaRzDwziRwRH7/view?usp=drive_link)
+
+  - Max time/Rank:
+ ![Max time for Comm](https://drive.google.com/file/d/126_a0wSVD4YzDbv97Pq_CnlDgLUCSArL/view?usp=drive_link)
+
+  - Variance time/Rank:
+ ![Variance time for comm](https://drive.google.com/file/d/1XJkZ-s4yMlkHKjSqdriz8sbPLJuKXbOn/view?usp=drive_link)
+
+   - Total time:
+  ![Total time for comm](https://drive.google.com/file/d/1dZoecDts0LQ8bM2gTOuSFtqvTwSZjnU6/view?usp=drive_link)
+
+
+- #### comp:
+  - Avg time/Rank:
+ ![Avg time for comp](https://drive.google.com/file/d/1s5ioSMnOGoUG-E7fUtQuFuxh_XMt1QYU/view?usp=drive_link)
+
+  - Min time/Rank:
+ ![Min time for comp](https://drive.google.com/file/d/1RIcDDAJlJ8JNx0Jb6kbdhlKb1joGwL5g/view?usp=drive_link)
+
+  - Max time/Rank:
+ ![Max time for comp](https://drive.google.com/file/d/10pNuTuEOE0fXpfGe9gDura7aev5VWJEI/view?usp=drive_link)
+
+  - Variance time/Rank:
+ ![Variance time for comp](https://drive.google.com/file/d/1T5BFES2tprngf-KpZlrPGRsTkYOVD1FR/view?usp=drive_link)
+
+  - Total time:
+  ![Total time for comp](https://drive.google.com/file/d/1q72wrQ4ZMBQ2Ktqs5isFdWqoXiHRKW1D/view?usp=drive_link)
+
+- #### Data generation:
+  - Avg time/Rank:
+ ![Avg time for data generation](https://drive.google.com/file/d/1O5vS1NMbIB0G7t6XSXV22giaYrCOvtrK/view?usp=drive_link)
+
+  - Min time/Rank:
+ ![Min time for data generation](https://drive.google.com/file/d/1redcx0B1ZbGO3VvAfNFVQmCuujt-fqe2/view?usp=drive_link)
+
+  - Max time/Rank:
+ ![Max time for data generation](https://drive.google.com/file/d/1nSvi45nNOawKNCsOW7rUDPz-WJ0BX0c4/view?usp=drive_link)
+
+  - Variance time/Rank:
+ ![Variance time data generation](https://drive.google.com/file/d/1OXFFMpYkvh7BWi1P-uNbvJc127SrIYXM/view?usp=drive_link)
+
+  - Total time:
+  ![Total time for data generation](https://drive.google.com/file/d/1y7IjjyO0b-49aAUuf5O6Z-u9t1Rbpf8Y/view?usp=drive_link)
+
+- #### Correctness check:
+  - Avg time/Rank:
+ ![Avg time for correct](https://drive.google.com/file/d/1pEkCLq-5YrTGke2ObqppS1Pq-QYDSDLr/view?usp=drive_link)
+
+  - Min time/Rank:
+ ![Min time for correct](https://drive.google.com/file/d/1a-reLLX37ptrD-cbZwK77Jjwc3Tk3m-o/view?usp=drive_link)
+
+  - Max time/Rank:
+ ![Max time for correct](https://drive.google.com/file/d/1N9zOMVhpQRdw0ISTuIC6WnmfKeaZ4hT3/view?usp=drive_link)
+
+  - Variance time/Rank:
+ ![Variance time correct](https://drive.google.com/file/d/16GDgq1FDEkEA9jcHF1M7nhHwBRUwQ9Co/view?usp=drive_link)
+
+  - Total time:
+  ![Total time for correct](https://drive.google.com/file/d/1N9zOMVhpQRdw0ISTuIC6WnmfKeaZ4hT3/view?usp=drive_link)
+
 ## 5. Presentation
 Plots for the presentation should be as follows:
 - For each implementation:
