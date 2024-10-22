@@ -587,6 +587,88 @@ This similarity makes sense because both operations are sequential and performed
   - Total time:
   ![Total time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277874842992681/Screenshot_2024-10-21_at_22-34-29_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=3e226b6d4649db02e51a1a89725ec5ac57dc94cdc35e7979c60c518b3f38688a&=&format=webp&quality=lossless&width=883&height=565)
 
+### III) Bitonic Sort
+- #### main:
+  - Avg time/Rank:
+![Avg time for main](https://cdn.discordapp.com/attachments/609609154952429570/1298406334596644897/image.png?ex=671972a1&is=67182121&hm=b83eff4f00c348e303e23532b2af71cdca25fafeb57bde1ff2826aa6d03cb9ee&)
+
+  - Min time/Rank:
+ ![Min time for main](https://cdn.discordapp.com/attachments/609609154952429570/1298406377332408330/image.png?ex=671972ab&is=6718212b&hm=dc711e6b19c4885ae644700c7320d28d0c0369cbffbe96357406e0531982d1f6&)
+ 
+  - Max time/Rank:
+ ![Max time for main](https://cdn.discordapp.com/attachments/609609154952429570/1298406480180940882/image.png?ex=671972c4&is=67182144&hm=0aaf5e6de31b20646c89e756a0fb943e2ef2faf21cb08b96492de602a6cce7cd&)
+ 
+  - Variance time/Rank:
+ ![Variance time for main](https://cdn.discordapp.com/attachments/609609154952429570/1298406524988686396/image.png?ex=671972ce&is=6718214e&hm=f05cb2cd974fe290872c4291ed382c8e6768e5c8875d8897329c12df8a791f18&)
+
+  - Total time:
+  ![Total time for main](https://cdn.discordapp.com/attachments/609609154952429570/1298406571075698758/image.png?ex=671972d9&is=67182159&hm=bdc563d757ceff0af8569265923f45e7f30147435b3649f2ba11504d42f93c5c&)
+
+  - #### comm:
+  - Avg time/Rank:
+ ![Avg time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1298406653535846410/image.png?ex=671972ed&is=6718216d&hm=0453ed28361c23b404a5832f815308f14e1ea0593ca98d46db4f077b4d4f6101&)
+
+  - Min time/Rank:
+ ![Min time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1298406697785622679/image.png?ex=671972f7&is=67182177&hm=5e3de8483318c1b51f15d6b086a5e7af26fe40bb27bc6de25b29cecfb65fd993&)
+
+  - Max time/Rank:
+ ![Max time for Comm](https://cdn.discordapp.com/attachments/609609154952429570/1298406759622512670/image.png?ex=67197306&is=67182186&hm=ae0f5cd7a0cffd1e0c337ee6d751a8b1135e621fde32a4690fcb2f9e57eb3992&)
+
+  - Variance time/Rank:
+ ![Variance time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1298406807336910888/image.png?ex=67197312&is=67182192&hm=4f9484fd10f6894766ae0a4727ff5468f9f814a5a1fc786d93504ae4eb183d0d&)
+
+   - Total time:
+  ![Total time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1298406878098755585/image.png?ex=67197322&is=671821a2&hm=ff96503a20c078ceabb1ff8ba15098a06e2337ab7e24cf03f74e1e5f56d21775&)
+
+
+- #### comp:
+  - Avg time/Rank:
+ ![Avg time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1298406950047842344/image.png?ex=67197334&is=671821b4&hm=a6db376c310c304257361adcb6036d7b1f6194d56411e73dbec16730f5a4e0c7&)
+
+  - Min time/Rank:
+ ![Min time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1298406994843013232/image.png?ex=6719733e&is=671821be&hm=8a8de5e890058d8827fa4dcf3260c4fae59c4b15f22d573823f6ad59ef2ef253&)
+
+  - Max time/Rank:
+ ![Max time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1298407043018788904/image.png?ex=6719734a&is=671821ca&hm=ffc411e94c250db2803e5142ea2b9385c0cd05d20ff242530eaf7b4a3913cc75&)
+
+  - Variance time/Rank:
+ ![Variance time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1298407089391145010/image.png?ex=67197355&is=671821d5&hm=f7e63d47b6da403a927f8b77b1de530bd1e3ec4c8f58893bd28efbf7dbf7b8f1&)
+
+  - Total time:
+  ![Total time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1298407149533397114/image.png?ex=67197363&is=671821e3&hm=72a23153cf3a46e942875b91c1ddfdcd1a6d66213a94a01db3a51a09519ea4cc&)
+
+- #### Data generation:
+  - Avg time/Rank:
+ ![Avg time for data generation](https://cdn.discordapp.com/attachments/609609154952429570/1298407228721860658/image.png?ex=67197376&is=671821f6&hm=20aab658844e33b641575edf1ea39ad502db5e359029fdc1c80eed15acc21521&)
+
+  - Min time/Rank:
+ ![Min time for data generation](https://cdn.discordapp.com/attachments/609609154952429570/1298407270505254932/image.png?ex=67197380&is=67182200&hm=a68e5849d81e0a6647bf92ebb2d6b4469102c60e516e545de80e949da6c6fa16&)
+
+  - Max time/Rank:
+ ![Max time for data generation](https://cdn.discordapp.com/attachments/609609154952429570/1298407316219105340/image.png?ex=6719738b&is=6718220b&hm=2902a495e2699a7c5a7e800b7a24e5426b1a1394bb1f92bf1d9285bde8c73530&)
+
+  - Variance time/Rank:
+ ![Variance time data generation](https://cdn.discordapp.com/attachments/609609154952429570/1298407357642178642/image.png?ex=67197395&is=67182215&hm=82cb4a251b00106a75a7f7d0f0a8dacabb2556fa79d18a658939a7a19537c415&)
+
+  - Total time:
+  ![Total time for data generation](https://cdn.discordapp.com/attachments/609609154952429570/1298407415947198464/image.png?ex=671973a3&is=67182223&hm=97fd7e732d396a892c1d5ae1580f77c6a27e8c3f3c98ac5198f8e4db4c324c73&)
+
+- #### Correctness check:
+  - Avg time/Rank:
+ ![Avg time for correct](https://cdn.discordapp.com/attachments/609609154952429570/1298407489188139131/image.png?ex=671973b4&is=67182234&hm=40cdfafbdc391c708284e06aa40b169f90d8b3b6a4935397e6aba2ae839a4f17&)
+
+  - Min time/Rank:
+ ![Min time for correct](https://cdn.discordapp.com/attachments/609609154952429570/1298407553767837746/image.png?ex=671973c4&is=67182244&hm=776b9d4c7ea0488bb1d3126b7256fc4813c78d98d7fc5425024abfe24f337703&)
+
+  - Max time/Rank:
+ ![Max time for correct](https://cdn.discordapp.com/attachments/609609154952429570/1298407591684341841/image.png?ex=671973cd&is=6718224d&hm=d2db3cede858eba0fb9292b17743793faf3045e167639727394c30ab2e1d2ae9&)
+
+  - Variance time/Rank:
+ ![Variance time correct](https://cdn.discordapp.com/attachments/609609154952429570/1298407638513618996/image.png?ex=671973d8&is=67182258&hm=b356be6cb956dbbb9fc6fad5f41ddd14f3735e4f86b653800d493844acc440e5&)
+
+  - Total time:
+  ![Total time for correct](https://cdn.discordapp.com/attachments/609609154952429570/1298407687108690001/image.png?ex=671973e3&is=67182263&hm=30c12c11953438fa7385196595988af41f5226445cfa3500205a48cdf90d8036&)
+
 ## 5. Presentation
 Plots for the presentation should be as follows:
 - For each implementation:
