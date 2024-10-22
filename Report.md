@@ -396,6 +396,61 @@ The values that we are getting in the metadata are the following:
 Include detailed analysis of computation performance, communication performance. 
 Include figures and explanation of your analysis.
 
+### I) Merge Sort
+- #### main:
+ -- Avg time/Rank:
+![Avg time for main](https://github.com/user-attachments/assets/c9f84fe8-4c58-43a2-98aa-dba0bbad0da2)
+
+ -- Min time/Rank:
+ ![Min time for main](https://github.com/user-attachments/assets/410d28b9-8c62-40a5-bf77-aa9d8e477c77)
+ 
+ -- Max time/Rank:
+ ![Max time for main](https://github.com/user-attachments/assets/2e8c6b89-bccb-47ec-bbb0-b04913066b40)
+ 
+ -- Variance time/Rank:
+ ![Variance time for main](https://github.com/user-attachments/assets/5835819a-9c57-484b-b1a6-abbe53e47e35)
+
+- #### comm:
+ -- Avg time/Rank:
+ ![Avg time for comm](https://github.com/user-attachments/assets/533860e0-0834-4488-85a0-c037738968b3)
+
+ -- Min time/Rank:
+ ![Min time for comm](https://github.com/user-attachments/assets/52e3efe7-66d0-4805-b7d9-39275442bd05)
+
+ -- Max time/Rank:
+ ![Max time for Comm](https://github.com/user-attachments/assets/e04dad8c-df6d-458c-82c4-98a7a852e9d6)
+
+ -- Variance time/Rank:
+ ![Variance time for comm](https://github.com/user-attachments/assets/f8088a54-66ed-433b-8a2f-e02f12476cc9)
+
+- #### comp:
+ -- Avg time/Rank:
+ ![Avg time comp](https://github.com/user-attachments/assets/e5bbcb5e-dd43-450d-b3c2-5cf6ecaaf853)
+
+ -- Min time/Rank:
+ ![Min time comp](https://github.com/user-attachments/assets/12810a9f-2f64-4c2e-b90c-2ce4a2fba1ec)
+
+ -- Max time/Rank:
+ ![Max time comp](https://github.com/user-attachments/assets/3e28d72b-9ce2-47b1-b1dd-0788bd4cd5fa)
+
+ -- Variance time/Rank:
+ ![Variance time comp](https://github.com/user-attachments/assets/783b7254-9ab9-4e5d-b834-74ac20977288)
+
+- #### data generation:
+ -- Avg time/Rank:
+![avg time data](https://github.com/user-attachments/assets/2c8656ab-bae5-4ba1-a384-6ec34c46766c)
+
+- #### correctness check:
+ -- Avg time/Rank:
+ ![Avg time for correct](https://github.com/user-attachments/assets/4215a89c-efa6-4ade-b75d-da574bb4b0e9)
+
+ -- Min time/Rank:
+ ![Min time for correct](https://github.com/user-attachments/assets/4189dc8f-342e-401c-be6c-35cd22dd64d2)
+
+ -- Max time/Rank:
+ ![Max time for correct](https://github.com/user-attachments/assets/e3dea02c-e18b-4693-9c53-aa19e64be6c1)
+
+
 ### 4a. Vary the following parameters
 For input_size's:
 - 2^16, 2^18, 2^20, 2^22, 2^24, 2^26, 2^28
