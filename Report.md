@@ -508,84 +508,84 @@ This similarity makes sense because both operations are sequential and performed
 ### II) Sample Sort
 - #### main:
   - Avg time/Rank:
-![Avg time for main](https://drive.google.com/file/d/1E-MlMz5hr0roSOONDWiJDBGCzL3loXfd/view?usp=drive_link)
+![Avg time for main](https://media.discordapp.net/attachments/1298277573901418507/1298277829489987695/Screenshot_2024-10-21_at_22-38-40_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=0b59732852da51636e98c12203bc5fcdc1ba7b40d1d4fc03e1ee47eaf5dbe516&=&format=webp&quality=lossless&width=883&height=587)
 
   - Min time/Rank:
- ![Min time for main](https://drive.google.com/file/d/1PJijz8PdOOZ5HfQJODV1Iwnd2Rhb8FCM/view?usp=drive_link)
+ ![Min time for main](https://media.discordapp.net/attachments/1298277573901418507/1298277779011272824/Screenshot_2024-10-21_at_22-41-27_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=1dd14449b41080f414d003bb24b0c1eb3d02e369c7a039505cd868ff90f0bf98&=&format=webp&quality=lossless&width=883&height=587)
  
   - Max time/Rank:
- ![Max time for main](https://drive.google.com/file/d/1IK8940QsD2d7Z7ZIBLuOx7AuJk0NKK9X/view?usp=drive_link)
+ ![Max time for main](https://media.discordapp.net/attachments/1298277573901418507/1298281093728043018/Screenshot_2024-10-21_at_22-44-12_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fdfd&is=6717ac7d&hm=2859e6001a521f194f63e1906b56de6a3948561b0e010a9cdb080350fa600f59&=&format=webp&quality=lossless&width=883&height=587)
  
   - Variance time/Rank:
- ![Variance time for main](https://drive.google.com/file/d/1U2xq5_s9CdOeKZr52fftw-ZKAYno7bPi/view?usp=drive_link)
+ ![Variance time for main](https://media.discordapp.net/attachments/1298277573901418507/1298277721981456416/Screenshot_2024-10-21_at_22-45-06_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=fdc5a92ae90419ba423bdec225336ad13b74ed0e3815b041d3d33bbeab848208&=&format=webp&quality=lossless&width=883&height=587)
 
   - Total time:
-  ![Total time for main](https://drive.google.com/drive/u/0/folders/1DBcvi_QnfVUiKBGIadKMTw5bQ7ZvYlTy)
+  ![Total time for main](https://media.discordapp.net/attachments/1298277573901418507/1298277873580380161/Screenshot_2024-10-21_at_22-31-18_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafd&is=6717a97d&hm=0bce9fef90318a7a8b469a1d5f527165546d28ca8a3747ad728ea8f86e99a04a&=&format=webp&quality=lossless&width=883&height=483)
 
   - #### comm:
   - Avg time/Rank:
- ![Avg time for comm](https://drive.google.com/file/d/1WXr3qlMI7eALr20JGKNel71pboE1vVks/view?usp=drive_link)
+ ![Avg time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277828466311189/Screenshot_2024-10-21_at_22-37-50_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=91841e2b2c33984894fc6ee7a608c5367db582a2d7b1c0ce82796201a9861fef&=&format=webp&quality=lossless&width=883&height=587)
 
   - Min time/Rank:
- ![Min time for comm](https://drive.google.com/file/d/1My5GJYj5VAZAzTwUd5zIaRzDwziRwRH7/view?usp=drive_link)
+ ![Min time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277830819315817/Screenshot_2024-10-21_at_22-40-39_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=7afffd784fb0f1456e06814f3ee1afbcf812bf52489f72577f5978c8ea909474&=&format=webp&quality=lossless&width=883&height=565)
 
   - Max time/Rank:
- ![Max time for Comm](https://drive.google.com/file/d/126_a0wSVD4YzDbv97Pq_CnlDgLUCSArL/view?usp=drive_link)
+ ![Max time for Comm](https://media.discordapp.net/attachments/1298277573901418507/1298277780357906504/Screenshot_2024-10-21_at_22-43-22_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=bbb301ae020673c04d640a236cab64cc52d591df444c5e71f757e9259e452de1&=&format=webp&quality=lossless&width=883&height=587)
 
   - Variance time/Rank:
- ![Variance time for comm](https://drive.google.com/file/d/1XJkZ-s4yMlkHKjSqdriz8sbPLJuKXbOn/view?usp=drive_link)
+ ![Variance time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277722434437182/Screenshot_2024-10-21_at_22-45-27_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=9cb27577d1b4593125b238da2a6b0d4475de51b873b2ab6d4f5c5fe488ce17c7&=&format=webp&quality=lossless&width=883&height=565)
 
    - Total time:
-  ![Total time for comm](https://drive.google.com/file/d/1dZoecDts0LQ8bM2gTOuSFtqvTwSZjnU6/view?usp=drive_link)
+  ![Total time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277874163515412/Screenshot_2024-10-21_at_22-32-00_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=d0b732ec6808d38a17fe2a14790d10b2b85e4ec882ae4d275b4afcb8dfe475af&=&format=webp&quality=lossless&width=883&height=565)
 
 
 - #### comp:
   - Avg time/Rank:
- ![Avg time for comp](https://drive.google.com/file/d/1s5ioSMnOGoUG-E7fUtQuFuxh_XMt1QYU/view?usp=drive_link)
+ ![Avg time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277829057970286/Screenshot_2024-10-21_at_22-38-07_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=d1a82601364c52c9642251bfc8f5a8e32d5ef8621ceeab340d011019feb75178&=&format=webp&quality=lossless&width=883&height=587)
 
   - Min time/Rank:
- ![Min time for comp](https://drive.google.com/file/d/1RIcDDAJlJ8JNx0Jb6kbdhlKb1joGwL5g/view?usp=drive_link)
+ ![Min time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277778562486303/Screenshot_2024-10-21_at_22-40-59_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=2f7012b554df47e42fad823ed3d3c3289ca1b6b516ebc3d8d999b9e8aea37ae4&=&format=webp&quality=lossless&width=883&height=587)
 
   - Max time/Rank:
- ![Max time for comp](https://drive.google.com/file/d/10pNuTuEOE0fXpfGe9gDura7aev5VWJEI/view?usp=drive_link)
+ ![Max time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277780651511909/Screenshot_2024-10-21_at_22-43-52_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=5405066ec05006e13ce431b2348d52478bf2f8067e0ee77084777c741f112c3a&=&format=webp&quality=lossless&width=883&height=587)
 
   - Variance time/Rank:
- ![Variance time for comp](https://drive.google.com/file/d/1T5BFES2tprngf-KpZlrPGRsTkYOVD1FR/view?usp=drive_link)
+ ![Variance time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277722744819813/Screenshot_2024-10-21_at_22-46-06_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=faa558ce53bfa2a136e73b160f46546fae52c1605a833e4904049b3dd112ffaf&=&format=webp&quality=lossless&width=883&height=483)
 
   - Total time:
-  ![Total time for comp](https://drive.google.com/file/d/1q72wrQ4ZMBQ2Ktqs5isFdWqoXiHRKW1D/view?usp=drive_link)
+  ![Total time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277874499063909/Screenshot_2024-10-21_at_22-32-58_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=80a6d20723ced000d233c22a7d6ceb93f6c3660c8a564f56ac5bdd827d8507c1&=&format=webp&quality=lossless&width=883&height=483)
 
 - #### Data generation:
   - Avg time/Rank:
- ![Avg time for data generation](https://drive.google.com/file/d/1O5vS1NMbIB0G7t6XSXV22giaYrCOvtrK/view?usp=drive_link)
+ ![Avg time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277827845689374/Screenshot_2024-10-21_at_22-36-38_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf2&is=6717a972&hm=0f592bc39d35fee2a4fbba354b3f363cf0201393c3d58c1da5ee98cea7ce9933&=&format=webp&quality=lossless&width=883&height=587)
 
   - Min time/Rank:
- ![Min time for data generation](https://drive.google.com/file/d/1redcx0B1ZbGO3VvAfNFVQmCuujt-fqe2/view?usp=drive_link)
+ ![Min time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277779401609237/Screenshot_2024-10-21_at_22-41-57_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=449ccc49f97c5ffd207b73c0358c2871f071b2def2245df89cfbef401e9014a5&=&format=webp&quality=lossless&width=883&height=587)
 
   - Max time/Rank:
- ![Max time for data generation](https://drive.google.com/file/d/1nSvi45nNOawKNCsOW7rUDPz-WJ0BX0c4/view?usp=drive_link)
+ ![Max time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277779820773539/Screenshot_2024-10-21_at_22-42-31_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=da77ab397101b2a59634f3e2dc550b4fc46c3a72c997c84c60c54ea7af28f6fe&=&format=webp&quality=lossless&width=883&height=483)
 
   - Variance time/Rank:
- ![Variance time data generation](https://drive.google.com/file/d/1OXFFMpYkvh7BWi1P-uNbvJc127SrIYXM/view?usp=drive_link)
+ ![Variance time data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277723252461649/Screenshot_2024-10-21_at_22-47-07_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fada&is=6717a95a&hm=d9592904e36fcb749515fe2f7c11a102848e4b63b9c06e599c7ac68a427f25a7&=&format=webp&quality=lossless&width=883&height=565)
 
   - Total time:
   ![Total time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277875216158820/Screenshot_2024-10-21_at_22-35-23_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=31989a85dc70506d6ccd431b67320594305643fbd4088819d8764d3f1d535e7d&=&format=webp&quality=lossless&width=996&height=662)
 
 - #### Correctness check:
   - Avg time/Rank:
- ![Avg time for correct](https://drive.google.com/file/d/1pEkCLq-5YrTGke2ObqppS1Pq-QYDSDLr/view?usp=drive_link)
+ ![Avg time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277829955289160/Screenshot_2024-10-21_at_22-39-18_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=c6003c059ca2b0be62b41ac2f15b1c3e30a4f0a80302bc7f05267556d0c26008&=&format=webp&quality=lossless&width=883&height=565)
 
   - Min time/Rank:
- ![Min time for correct](https://drive.google.com/file/d/1a-reLLX37ptrD-cbZwK77Jjwc3Tk3m-o/view?usp=drive_link)
+ ![Min time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277830295031878/Screenshot_2024-10-21_at_22-40-09_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=512f009e7e22d26e150415b9975ca5a0f684b7d5d2f33762b5fd8c86ac8f7d7d&=&format=webp&quality=lossless&width=883&height=587)
 
   - Max time/Rank:
- ![Max time for correct](https://drive.google.com/file/d/1N9zOMVhpQRdw0ISTuIC6WnmfKeaZ4hT3/view?usp=drive_link)
+ ![Max time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277780059983973/Screenshot_2024-10-21_at_22-42-58_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=dee09a5232c80c52b925623c36508b9ae741819b4e34b33199138289c446e7db&=&format=webp&quality=lossless&width=883&height=402)
 
   - Variance time/Rank:
- ![Variance time correct](https://drive.google.com/file/d/16GDgq1FDEkEA9jcHF1M7nhHwBRUwQ9Co/view?usp=drive_link)
+ ![Variance time correct](https://media.discordapp.net/attachments/1298277573901418507/1298277722992279584/Screenshot_2024-10-21_at_22-46-38_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=9073a41f26803b57324f47c30666a7b0c00337dc601ad17c5f11bde29de05761&=&format=webp&quality=lossless&width=883&height=483)
 
   - Total time:
-  ![Total time for correct](https://drive.google.com/file/d/1N9zOMVhpQRdw0ISTuIC6WnmfKeaZ4hT3/view?usp=drive_link)
+  ![Total time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277874842992681/Screenshot_2024-10-21_at_22-34-29_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=3e226b6d4649db02e51a1a89725ec5ac57dc94cdc35e7979c60c518b3f38688a&=&format=webp&quality=lossless&width=883&height=565)
 
 ## 5. Presentation
 Plots for the presentation should be as follows:
