@@ -123,13 +123,14 @@ int main(int argc, char *argv[])
 
     int sizeOfArray;
 
-    if (argc == 2)
+    if (argc == 3)
     {
         sizeOfArray = atoi(argv[1]); 
+        input_type = argv[2];
     }
     else
     {
-        printf("\n Please provide the size of the array");
+        printf("\n Please provide the size of the array and input type");
         return 0;
     }
 
