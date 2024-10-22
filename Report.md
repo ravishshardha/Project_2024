@@ -569,7 +569,7 @@ This similarity makes sense because both operations are sequential and performed
  ![Variance time data generation](https://drive.google.com/file/d/1OXFFMpYkvh7BWi1P-uNbvJc127SrIYXM/view?usp=drive_link)
 
   - Total time:
-  ![Total time for data generation](https://drive.google.com/file/d/1y7IjjyO0b-49aAUuf5O6Z-u9t1Rbpf8Y/view?usp=drive_link)
+  ![Total time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277875216158820/Screenshot_2024-10-21_at_22-35-23_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=31989a85dc70506d6ccd431b67320594305643fbd4088819d8764d3f1d535e7d&=&format=webp&quality=lossless&width=996&height=662)
 
 - #### Correctness check:
   - Avg time/Rank:
