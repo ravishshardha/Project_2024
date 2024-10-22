@@ -396,61 +396,6 @@ The values that we are getting in the metadata are the following:
 Include detailed analysis of computation performance, communication performance. 
 Include figures and explanation of your analysis.
 
-### I) Merge Sort
-- #### main:
- -- Avg time/Rank:
-![Avg time for main](https://github.com/user-attachments/assets/c9f84fe8-4c58-43a2-98aa-dba0bbad0da2)
-
- -- Min time/Rank:
- ![Min time for main](https://github.com/user-attachments/assets/410d28b9-8c62-40a5-bf77-aa9d8e477c77)
- 
- -- Max time/Rank:
- ![Max time for main](https://github.com/user-attachments/assets/2e8c6b89-bccb-47ec-bbb0-b04913066b40)
- 
- -- Variance time/Rank:
- ![Variance time for main](https://github.com/user-attachments/assets/5835819a-9c57-484b-b1a6-abbe53e47e35)
-
-- #### comm:
- -- Avg time/Rank:
- ![Avg time for comm](https://github.com/user-attachments/assets/533860e0-0834-4488-85a0-c037738968b3)
-
- -- Min time/Rank:
- ![Min time for comm](https://github.com/user-attachments/assets/52e3efe7-66d0-4805-b7d9-39275442bd05)
-
- -- Max time/Rank:
- ![Max time for Comm](https://github.com/user-attachments/assets/e04dad8c-df6d-458c-82c4-98a7a852e9d6)
-
- -- Variance time/Rank:
- ![Variance time for comm](https://github.com/user-attachments/assets/f8088a54-66ed-433b-8a2f-e02f12476cc9)
-
-- #### comp:
- -- Avg time/Rank:
- ![Avg time comp](https://github.com/user-attachments/assets/e5bbcb5e-dd43-450d-b3c2-5cf6ecaaf853)
-
- -- Min time/Rank:
- ![Min time comp](https://github.com/user-attachments/assets/12810a9f-2f64-4c2e-b90c-2ce4a2fba1ec)
-
- -- Max time/Rank:
- ![Max time comp](https://github.com/user-attachments/assets/3e28d72b-9ce2-47b1-b1dd-0788bd4cd5fa)
-
- -- Variance time/Rank:
- ![Variance time comp](https://github.com/user-attachments/assets/783b7254-9ab9-4e5d-b834-74ac20977288)
-
-- #### data generation:
- -- Avg time/Rank:
-![avg time data](https://github.com/user-attachments/assets/2c8656ab-bae5-4ba1-a384-6ec34c46766c)
-
-- #### correctness check:
- -- Avg time/Rank:
- ![Avg time for correct](https://github.com/user-attachments/assets/4215a89c-efa6-4ade-b75d-da574bb4b0e9)
-
- -- Min time/Rank:
- ![Min time for correct](https://github.com/user-attachments/assets/4189dc8f-342e-401c-be6c-35cd22dd64d2)
-
- -- Max time/Rank:
- ![Max time for correct](https://github.com/user-attachments/assets/e3dea02c-e18b-4693-9c53-aa19e64be6c1)
-
-
 ### 4a. Vary the following parameters
 For input_size's:
 - 2^16, 2^18, 2^20, 2^22, 2^24, 2^26, 2^28
@@ -483,6 +428,82 @@ perform runs that invoke algorithm2 for Sorted, ReverseSorted, and Random data).
     - Total time
     - Variance time/rank
 
+### I) Merge Sort
+- #### main:
+  - Avg time/Rank:
+![Avg time for main](https://github.com/user-attachments/assets/c9f84fe8-4c58-43a2-98aa-dba0bbad0da2)
+
+  - Min time/Rank:
+ ![Min time for main](https://github.com/user-attachments/assets/410d28b9-8c62-40a5-bf77-aa9d8e477c77)
+ 
+  - Max time/Rank:
+ ![Max time for main](https://github.com/user-attachments/assets/2e8c6b89-bccb-47ec-bbb0-b04913066b40)
+ 
+  - Variance time/Rank:
+ ![Variance time for main](https://github.com/user-attachments/assets/5835819a-9c57-484b-b1a6-abbe53e47e35)
+
+For all the input types, as the array size increases, we can see the avg, max, and min time for the main also increases. This is because, with more data, the algorithm needs to make more computations and communication.
+The stability of up to 64 processors suggests good parallelization.
+The sharp increase beyond 128 processors is likely because there's a point where adding more processors becomes counterproductive. The problem size becomes too small for each processor making the overhead of parallelization outweigh its benefits.
+All input types have similar data points/trends due to the way merge sort works. Regardless of what input type is used, merge sort still divides and conquers the data and does almost the same number of computations - with random and 1% pert doing a bit more computation. This makes the complexity O(nlogn)
+
+
+- #### comm:
+  - Avg time/Rank:
+ ![Avg time for comm](https://github.com/user-attachments/assets/533860e0-0834-4488-85a0-c037738968b3)
+
+  - Min time/Rank:
+ ![Min time for comm](https://github.com/user-attachments/assets/52e3efe7-66d0-4805-b7d9-39275442bd05)
+
+  - Max time/Rank:
+ ![Max time for Comm](https://github.com/user-attachments/assets/e04dad8c-df6d-458c-82c4-98a7a852e9d6)
+
+  - Variance time/Rank:
+ ![Variance time for comm](https://github.com/user-attachments/assets/f8088a54-66ed-433b-8a2f-e02f12476cc9)
+
+For all communication patterns, the max, min, and avg increase as the input size increases. This is expected as the algorithm has more work to do with larger datasets. So more data to scatter, gather, and wait for due to MPI barrier. This consistency makes sense because the communication costs are dependent on data size, not data arrangement. The code shows the same communication pattern (Scatter/Gather) regardless of input type.
+There's a notable uptick in communication time as the number of processors increases beyond 128 which can be caused by Network congestion with more communicating nodes, the overhead of coordinating larger numbers of processes or MPI_Scatter/MPI_Gather operations becoming more expensive with more participants.
+
+- #### comp:
+  - Avg time/Rank:
+ ![Avg time comp](https://github.com/user-attachments/assets/e5bbcb5e-dd43-450d-b3c2-5cf6ecaaf853)
+
+  - Min time/Rank:
+ ![Min time comp](https://github.com/user-attachments/assets/12810a9f-2f64-4c2e-b90c-2ce4a2fba1ec)
+
+  - Max time/Rank:
+ ![Max time comp](https://github.com/user-attachments/assets/3e28d72b-9ce2-47b1-b1dd-0788bd4cd5fa)
+
+  - Variance time/Rank:
+ ![Variance time comp](https://github.com/user-attachments/assets/783b7254-9ab9-4e5d-b834-74ac20977288)
+
+All four input types show a clear trend of decreasing avg computation time as the number of processors increases
+This is because the mergeSort function is being parallelized, with each processor handling a smaller subset (size = n/world_size) of the data. That is why 2^28 with 2 processors shows the highest time because that data is divided on only 2 processors. As the number of processors increases, the data is being uniformly divided into more processors so less time spent on computation for the smaller chunk.
+The computation time curves flatten out after around 64-128 processors, this suggests that each processor's local mergeSort operation becomes too small to benefit from further division.
+
+- #### Data generation:
+  - Avg time/Rank:
+![avg time data](https://github.com/user-attachments/assets/2c8656ab-bae5-4ba1-a384-6ec34c46766c)
+
+- #### Correctness check:
+  - Avg time/Rank:
+ ![Avg time for correct](https://github.com/user-attachments/assets/4215a89c-efa6-4ade-b75d-da574bb4b0e9)
+
+  - Min time/Rank:
+ ![Min time for correct](https://github.com/user-attachments/assets/4189dc8f-342e-401c-be6c-35cd22dd64d2)
+
+  - Max time/Rank:
+ ![Max time for correct](https://github.com/user-attachments/assets/e3dea02c-e18b-4693-9c53-aa19e64be6c1)
+
+Data initialization and correctness check time increases significantly with input size for all input types because there is more data to generate, traverse, and check.
+The root process (rank 0) handles all data generation (generate_array function) and traversing and checking if the array is sorted. This means that larger processor counts create more overhead in managing the distributed environment. 
+</br>
+Both metrics show: 
+- Exponential growth with input size
+- Similar behavior across different input types
+- Performance degradation at high processor counts (>256)
+</br>
+This similarity makes sense because both operations are sequential and performed only by the root process. This sequential process is the main bottleneck for the calculation time.
 
 ## 5. Presentation
 Plots for the presentation should be as follows:
