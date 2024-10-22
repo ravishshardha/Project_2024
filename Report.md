@@ -520,7 +520,7 @@ This similarity makes sense because both operations are sequential and performed
  ![Variance time for main](https://drive.google.com/file/d/1U2xq5_s9CdOeKZr52fftw-ZKAYno7bPi/view?usp=drive_link)
 
   - Total time:
-  ![Total time for main](https://drive.google.com/file/d/1W61AxyA23sJVTrg51iCQieDrnegrt9vh/view?usp=drive_link)
+  ![Total time for main](https://drive.google.com/drive/u/0/folders/1DBcvi_QnfVUiKBGIadKMTw5bQ7ZvYlTy)
 
   - #### comm:
   - Avg time/Rank:
