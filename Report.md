@@ -688,6 +688,116 @@ Before the 64 processor mark, the average amount of time spent on computation pe
   - Total time:
   ![Total time for correct](https://cdn.discordapp.com/attachments/609609154952429570/1298407687108690001/image.png?ex=671973e3&is=67182263&hm=30c12c11953438fa7385196595988af41f5226445cfa3500205a48cdf90d8036&)
 
+
+### IV) Radix Sort
+- #### main:
+  - Avg time/Rank:
+  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475039406030888/Radix_Sort_Performance_Avg_time_Sorted_Input_main.png?ex=6719b29d&is=6718611d&hm=337651b65a34d920540efae0a1c32f084589e64661d0afadcc601610dc583ecd&)
+
+
+  - Min time/Rank:
+  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475039884185659/Radix_Sort_Performance_Min_time_Sorted_Input_main.png?ex=6719b29e&is=6718611e&hm=819806d7aeb40508e24c4ed68d85b7c6f0f34a86fd6b7ecd90ac248353860c3f&)
+
+
+  - Max time/Rank:
+  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475040244891723/Radix_Sort_Performance_Max_time_Sorted_Input_main.png?ex=6719b29e&is=6718611e&hm=851cfd2ed4085fe54686e2e7efcbb8280f0c247e3c06453a4a8a380484b2ffaa&)
+
+
+  - Variance time/Rank:
+  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475040529973248/Radix_Sort_Performance_Variance_Sorted_Input_main.png?ex=6719b29e&is=6718611e&hm=246693b7eea44f9b9750d08baeb1bbac76058e8dd706aa52d9692de748fb2123&)
+
+
+  - Total time/Rank:
+  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475040849002567/Radix_Sort_Performance_Total_time_Sorted_Input_main.png?ex=6719b29e&is=6718611e&hm=56028275a82bf1c54dbc5cc7a8d70af177c27e69aaab3e44bd61ba053be3485e&)
+
+
+
+- #### comm:
+  - Avg time/Rank:
+  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468871371755531/Radix_Sort_Performance_Avg_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=aa2feae21392b8452ed085370b1cc834371841aa9882552ff44c1669da8e2c3d&)
+
+
+  - Min time/Rank:
+  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468871015108659/Radix_Sort_Performance_Min_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=792871fe3157a1304459bd9989bc61be719af213a2f324fb01d8907d74d369a0&)
+
+
+  - Max time/Rank:
+  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468870654267442/Radix_Sort_Performance_Max_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=901ac14dea8834c1de17932479a58fee7e20dc8b4afe67b0a93ab12de31b7ac6&)
+
+
+  - Variance time/Rank:
+  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468870323048479/Radix_Sort_Performance_Variance_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=d248df3484b626ab19c2ee0635682f41fc78cfaa70380dd952549a1914995f20&)
+
+
+  - Total time/Rank:
+  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468871765753906/Radix_Sort_Performance_Total_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=9d5f4dd39dea2f799881248bfdbe8b2f853be8cc354472f7a67adebcff25f99c&)
+
+
+
+- #### comp
+  - Avg time/Rank:
+  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487595671748618/Radix_Sort_Performance_Avg_time_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=441498ec501fe6b395cd1d60debb2d5792ec7680537e72d49f1889f8bdc01f5d&)
+
+
+  - Min time/Rank:
+  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487595365306368/Radix_Sort_Performance_Min_time_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=9f3878f8dfafb5b0661f28f450df1cfa4771b863e3e1f7f8d032dee1d5a2f026&)
+
+
+  - Max time/Rank:
+  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487595076030556/Radix_Sort_Performance_Max_time_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=bdff8c7c74ed65d80b11a5b81c97da9bec624b70d55a28a874003278aae49444&)
+
+
+  - Variance time/Rank:
+  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487594790944789/Radix_Sort_Performance_Variance_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=9183b774300a3f60a094f001e7b1014a73fc69c78d3890c7a03064949d1b34f0&)
+
+
+  - Total time/Rank:
+  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487595986194482/Radix_Sort_Performance_Total_time_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=28c3d530b01ac39340abbd7d8cd85ef0e2a58e1718653b09d3cd7452c4054777&)
+
+
+
+- #### Data Generation
+  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476239014727721/Radix_Sort_Performance_Avg_time_Sorted_Input_data.png?ex=6719b3bb&is=6718623b&hm=478115b87a45c0dd6e8b6d381b0004937502941fddcd01d35579de73bdca8e24&)
+
+
+  - Min time/Rank:
+  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476239807582280/Radix_Sort_Performance_Min_time_Sorted_Input_data.png?ex=6719b3bc&is=6718623c&hm=b75d7f78d4242c6dc24ce115ffde7f5614def9ae4ee67f5f54b2c2ad808d1ae5&)
+
+
+  - Max time/Rank:
+  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476240415621173/Radix_Sort_Performance_Max_time_Sorted_Input_data.png?ex=6719b3bc&is=6718623c&hm=8257d6e3c18d6aacd20c3eae57598292e8daea5bec23996d56de1b80c1d5fcca&)
+
+
+  - Variance time/Rank:
+  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476240868737186/Radix_Sort_Performance_Variance_Sorted_Input_data.png?ex=6719b3bc&is=6718623c&hm=696e76bae8ccab98750b6f5b4aca4f39727341ab34e47ac8892caa7092baea2b&)
+
+
+  - Total time/Rank:
+  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476238515736596/Radix_Sort_Performance_Total_time_Sorted_Input_data.png?ex=6719b3bb&is=6718623b&hm=a700924692e52e21ad351b4485304a5094e64b7ac78d8877f96fab8f19e470d6&)
+
+
+
+- #### Correctness Check:
+  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353720991794/Radix_Sort_Performance_Avg_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=6725059c5c26cae08ed09551f4d5bef232821e989a468c7645eebf7828ea5d00&)
+
+
+  - Min time/Rank:
+  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353368797244/Radix_Sort_Performance_Min_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=6e83703c13b1b6f58fbfd7fd7deb3dc02a59b85c09c351d1e929c6d7c3a53b3c&)
+
+
+  - Max time/Rank:
+  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353033125961/Radix_Sort_Performance_Max_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=d5b3598435b39daa2be6c835d441565a6d4028d875fb83564f17077fb6c92078&)
+
+
+  - Variance time/Rank:
+  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481354387886120/Radix_Sort_Performance_Variance_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=96d6a63f110dba5ab229f6b751db55f56d840a7d928cb18db474691b496b2d46&)
+
+
+  - Total time/Rank:
+  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353720991794/Radix_Sort_Performance_Avg_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=6725059c5c26cae08ed09551f4d5bef232821e989a468c7645eebf7828ea5d00&)
+
+
+
 ## 5. Presentation
 Plots for the presentation should be as follows:
 - For each implementation:
