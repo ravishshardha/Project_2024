@@ -604,6 +604,7 @@ This similarity makes sense because both operations are sequential and performed
   - Total time:
   ![Total time for main](https://cdn.discordapp.com/attachments/609609154952429570/1298406571075698758/image.png?ex=671972d9&is=67182159&hm=bdc563d757ceff0af8569265923f45e7f30147435b3649f2ba11504d42f93c5c&)
 
+Across all input types, the runtime of main remains generally consistent. This is because bitonic sort operates on its data independent of order. After 64 processes, the total time increases dramatically, and this is because of the input generation/correctness check functions, which were done all on the master process, as well as increasing communication overhead. The input generation and correctness check functions are the main bottleneck on performance, and should be parallelized. 
   - #### comm:
   - Avg time/Rank:
  ![Avg time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1298406653535846410/image.png?ex=671972ed&is=6718216d&hm=0453ed28361c23b404a5832f815308f14e1ea0593ca98d46db4f077b4d4f6101&)
@@ -621,6 +622,8 @@ This similarity makes sense because both operations are sequential and performed
   ![Total time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1298406878098755585/image.png?ex=67197322&is=671821a2&hm=ff96503a20c078ceabb1ff8ba15098a06e2337ab7e24cf03f74e1e5f56d21775&)
 
 
+Once again, after 64 processors, each processor begins spending significantly more time communicating, which indicates that 64 processors is the point where resources are utilized most effectively. Additionally, as pointed out before, there is not much of a significant difference in performance between input types. Once past the 128 processor mark, communication operations become very expensive for MPI_Scatter and MPI_Gather, due to network congestion from the large number of processors. These are only used in input generation and the correctness check at the end, and are the largest contributors to communication time. Within the sorting function, MPI_sendrecv is the only communication between processes, and this operation also adds a lot to the overall communication time with a large number of processors. This is due to the fact that there are multiple rounds where each process is communicating with its partner, and each process communicates with all other processes at least once.
+
 - #### comp:
   - Avg time/Rank:
  ![Avg time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1298406950047842344/image.png?ex=67197334&is=671821b4&hm=a6db376c310c304257361adcb6036d7b1f6194d56411e73dbec16730f5a4e0c7&)
@@ -637,6 +640,7 @@ This similarity makes sense because both operations are sequential and performed
   - Total time:
   ![Total time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1298407149533397114/image.png?ex=67197363&is=671821e3&hm=72a23153cf3a46e942875b91c1ddfdcd1a6d66213a94a01db3a51a09519ea4cc&)
 
+Before the 64 processor mark, the average amount of time spent on computation per processor is decreasing, and after the 64 processor mark, the time spent on computation per processor starts increasing. In theory, these times should be continually going down due to the size of the local array decreasing on each processor. The way that I implemented this may be to blame, due to large memory overhead caused by copying over the partner process's array, then concatenating both, sorting, and keeping the higher or lower half. The portion of the code contributing to this pattern the most is comp_large, which consists of the local sorting function, qsort. Past 64 processors, the length of the array in qsort (quick sort) may be too short for it to benefit from being parallelized.
 - #### Data generation:
   - Avg time/Rank:
  ![Avg time for data generation](https://cdn.discordapp.com/attachments/609609154952429570/1298407228721860658/image.png?ex=67197376&is=671821f6&hm=20aab658844e33b641575edf1ea39ad502db5e359029fdc1c80eed15acc21521&)
