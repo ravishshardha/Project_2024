@@ -710,7 +710,7 @@ Before the 64 processor mark, the average amount of time spent on computation pe
   - Total time/Rank:
   ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475040849002567/Radix_Sort_Performance_Total_time_Sorted_Input_main.png?ex=6719b29e&is=6718611e&hm=56028275a82bf1c54dbc5cc7a8d70af177c27e69aaab3e44bd61ba053be3485e&)
 
-
+The total times increase as both the input size increases and the proceses increase. This is due to several reasons. The first being that due to more data being present, more time must be spent sending and receiving the data to and from procesess meaning a higher communication overhead. Further, more data means a higher total computation time. In addition, more processes means that data needs to be sent to and from more locations resulting in longer runtimes. These observations are evident in the figures above. 
 
 - #### comm:
   - Avg time/Rank:
@@ -732,7 +732,7 @@ Before the 64 processor mark, the average amount of time spent on computation pe
   - Total time/Rank:
   ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468871765753906/Radix_Sort_Performance_Total_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=9d5f4dd39dea2f799881248bfdbe8b2f853be8cc354472f7a67adebcff25f99c&)
 
-
+The communication times increase as the input size increases. Further, more processes also cause an increase in time. This is due to several reasons. The first being that due to more data being present, more time must be spent sending and receiving the data to and from procesess. In addition, more processes means that data needs to be sent to and from more locations resulting in longer runtimes as evident in the figures above. 
 
 - #### comp
   - Avg time/Rank:
@@ -754,7 +754,7 @@ Before the 64 processor mark, the average amount of time spent on computation pe
   - Total time/Rank:
   ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487595986194482/Radix_Sort_Performance_Total_time_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=28c3d530b01ac39340abbd7d8cd85ef0e2a58e1718653b09d3cd7452c4054777&)
 
-
+On average the computation time should be decreasing however upon analyzing the total times for the computation this is not necessarily the case. There could be several reasons. One is the fact that our data generation function when provided with a large number also generates numbers that have a large number of digits. Therefore, since the runtime of the radix sort is dependent on the number of digits could end up increasing the computation time. The implementation might also be flawed. I realized that the algorithm has one small portion that is not parallelized, which needs to be changed before our final presentation. The high variance can be explained by the fact that different generation can lead to much different sets of data leading to differing performance rates. 
 
 - #### Data Generation
   ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476239014727721/Radix_Sort_Performance_Avg_time_Sorted_Input_data.png?ex=6719b3bb&is=6718623b&hm=478115b87a45c0dd6e8b6d381b0004937502941fddcd01d35579de73bdca8e24&)
@@ -775,7 +775,7 @@ Before the 64 processor mark, the average amount of time spent on computation pe
   - Total time/Rank:
   ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476238515736596/Radix_Sort_Performance_Total_time_Sorted_Input_data.png?ex=6719b3bb&is=6718623b&hm=a700924692e52e21ad351b4485304a5094e64b7ac78d8877f96fab8f19e470d6&)
 
-
+As the total amount of data increases it will take longer to generate the data needed for our sort this increased time can be seen above. There is little variance because the same function to generate our data is used on every iteration.
 
 - #### Correctness Check:
   ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353720991794/Radix_Sort_Performance_Avg_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=6725059c5c26cae08ed09551f4d5bef232821e989a468c7645eebf7828ea5d00&)
@@ -796,6 +796,7 @@ Before the 64 processor mark, the average amount of time spent on computation pe
   - Total time/Rank:
   ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353720991794/Radix_Sort_Performance_Avg_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=6725059c5c26cae08ed09551f4d5bef232821e989a468c7645eebf7828ea5d00&)
 
+As the total amount of data increases it will take longer to check if our output is correctly sorted as supported by the graphs above. There is little variance because the same function to check that our data sorted is used on every iteration. I was not able to obtain every sample size and process count for the data check as Grace's scheudler was over crowded leading to queues so long that no jobs could be executed. I was assured that this would not negatively affect us.
 
 
 ## 5. Presentation
