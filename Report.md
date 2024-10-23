@@ -522,6 +522,10 @@ This similarity makes sense because both operations are sequential and performed
   - Total time:
   ![Total time for main](https://media.discordapp.net/attachments/1298277573901418507/1298277873580380161/Screenshot_2024-10-21_at_22-31-18_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafd&is=6717a97d&hm=0bce9fef90318a7a8b469a1d5f527165546d28ca8a3747ad728ea8f86e99a04a&=&format=webp&quality=lossless&width=883&height=483)
 
+  Overall, for main as the input size increases, the longer sample sort takes to sort the array across all input types as shown by the higher input size dots are higher than the lower input size dots on average time per processor. 
+  before 64 processors, runtime descrases as the number of processors increase likely due to the data getting separated into more buckets and sorted quicker locally. 
+  After 64 processors, runtime increases slightly as the number of processors increase likely due to increases in communication overhead (MPI_Alltoall, MPI_Gather).
+
   - #### comm:
   - Avg time/Rank:
  ![Avg time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277828466311189/Screenshot_2024-10-21_at_22-37-50_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=91841e2b2c33984894fc6ee7a608c5367db582a2d7b1c0ce82796201a9861fef&=&format=webp&quality=lossless&width=883&height=587)
@@ -537,6 +541,9 @@ This similarity makes sense because both operations are sequential and performed
 
    - Total time:
   ![Total time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277874163515412/Screenshot_2024-10-21_at_22-32-00_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=d0b732ec6808d38a17fe2a14790d10b2b85e4ec882ae4d275b4afcb8dfe475af&=&format=webp&quality=lossless&width=883&height=565)
+
+  Similarly with main, comm time decreases as the number processors increases up until 64 processors and communication time increases after 64 processors on average per processor. Total time increaes exponentially after 64 processors, likely affecting total time a lot for main. 
+  This is likely due to message calls such as MPI_AlltoAll that send and gather from all other processors, in my case the data split by the partitions into their respective final buckets. 
 
 
 - #### comp:
@@ -555,6 +562,9 @@ This similarity makes sense because both operations are sequential and performed
   - Total time:
   ![Total time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277874499063909/Screenshot_2024-10-21_at_22-32-58_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=80a6d20723ced000d233c22a7d6ceb93f6c3660c8a564f56ac5bdd827d8507c1&=&format=webp&quality=lossless&width=883&height=483)
 
+  On average, computation time decays exponentailly on average as the number of processors increases for all input types. 
+  With the communication time taken out, one can see that operations like computing partition sizes can be done quicker in more parallel. 
+
 - #### Data generation:
   - Avg time/Rank:
  ![Avg time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277827845689374/Screenshot_2024-10-21_at_22-36-38_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf2&is=6717a972&hm=0f592bc39d35fee2a4fbba354b3f363cf0201393c3d58c1da5ee98cea7ce9933&=&format=webp&quality=lossless&width=883&height=587)
@@ -571,6 +581,9 @@ This similarity makes sense because both operations are sequential and performed
   - Total time:
   ![Total time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277875216158820/Screenshot_2024-10-21_at_22-35-23_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=31989a85dc70506d6ccd431b67320594305643fbd4088819d8764d3f1d535e7d&=&format=webp&quality=lossless&width=996&height=662)
 
+
+Data generation, much similar to computation, decays in time exponenitally as the number of processors increases on average. 
+
 - #### Correctness check:
   - Avg time/Rank:
  ![Avg time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277829955289160/Screenshot_2024-10-21_at_22-39-18_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=c6003c059ca2b0be62b41ac2f15b1c3e30a4f0a80302bc7f05267556d0c26008&=&format=webp&quality=lossless&width=883&height=565)
@@ -586,6 +599,8 @@ This similarity makes sense because both operations are sequential and performed
 
   - Total time:
   ![Total time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277874842992681/Screenshot_2024-10-21_at_22-34-29_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=3e226b6d4649db02e51a1a89725ec5ac57dc94cdc35e7979c60c518b3f38688a&=&format=webp&quality=lossless&width=883&height=565)
+
+  Similar to data generation and computation, correctness check decays in time exponenitally as the number of processors increases on average. 
 
 ### III) Bitonic Sort
 - #### main:
