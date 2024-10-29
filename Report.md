@@ -775,6 +775,17 @@ Plots for the presentation should be as follows:
 
 Analyze these plots and choose a subset to present and explain in your presentation.
 
+### I) Strong scaling
+### II) Strong Scaling Speedup
+### III) Weak Scaling
+#### Merge
+
+#### Bitonic
+
+#### Sample
+
+#### Radix
+
 ## 6. Final Report
 Submit a zip named `TeamX.zip` where `X` is your team number. The zip should contain the following files:
 - Algorithms: Directory of source code of your algorithms.
