@@ -778,35 +778,64 @@ Plots for the presentation should be as follows:
 
 Analyze these plots and choose a subset to present and explain in your presentation.
 
-### I) Strong scaling
-  - 2^16
-	- Main
-  	- comp_large
-   	- comm
-  - 2^18
-	- Main
-  	- comp_large
-   	- comm
-  - 2^20
-	- Main
-  	- comp_large
-   	- comm
-  - 2^22
-	- Main
-  	- comp_large
-   	- comm
-  - 2^24
-	- Main
-  	- comp_large
-   	- comm
-  - 2^26
-	- Main
-  	- comp_large
-   	- comm
-  - 2^28
-	- Main
-  	- comp_large
-   	- comm	       	
+### I) Strong Scaling
+
+- **2^16**
+  - **Main**
+    ![2^16 - Main](https://github.com/user-attachments/assets/55151416-480f-4cb6-953e-9f4bf3b5f870)
+  - **comp_large**
+    ![2^16 - comp_large](https://github.com/user-attachments/assets/8de30d2c-b061-4b8c-b9cc-3601c8a913d4)
+  - **comm**
+    ![2^16 - comm](https://github.com/user-attachments/assets/efbd420a-1efe-40a7-a74d-3e6b4d290c89)
+
+- **2^18**
+  - **Main**
+    ![2^18 - Main](https://github.com/user-attachments/assets/443ff9b4-4a91-4ebf-8607-b1fa22e4c087)
+  - **comp_large**
+    ![2^18 - comp_large](https://github.com/user-attachments/assets/6c64eb15-c81e-4b4b-86ae-bc230d3337e3)
+  - **comm**
+    ![2^18 - comm](https://github.com/user-attachments/assets/3990cc1e-af7d-4386-9e40-d4e67c46b1df)
+
+- **2^20**
+  - **Main**
+    ![2^20 - Main](https://github.com/user-attachments/assets/a204255c-5c84-4ca0-a545-feba8bc41825)
+  - **comp_large**
+    ![2^20 - comp_large](https://github.com/user-attachments/assets/0a2ea27d-142c-4797-8305-f147649c2b3d)
+  - **comm**
+    ![2^20 - comm](https://github.com/user-attachments/assets/286d155a-8cbf-4273-9656-e96a6776f311)
+
+- **2^22**
+  - **Main**
+    ![2^22 - Main](https://github.com/user-attachments/assets/84a32e57-0fa1-4e75-a759-0a2ff8c38943)
+  - **comp_large**
+    ![2^22 - comp_large](https://github.com/user-attachments/assets/d9215deb-648e-46cf-851e-aed109de8e9b)
+  - **comm**
+    ![2^22 - comm](https://github.com/user-attachments/assets/754d937b-c354-4865-b4f5-53b8d90b3253)
+
+- **2^24**
+  - **Main**
+    ![2^24 - Main](https://github.com/user-attachments/assets/e0dfb2c1-6d30-4385-8d5b-6d956f41ca0c)
+  - **comp_large**
+    ![2^24 - comp_large](https://github.com/user-attachments/assets/99f1a348-3c53-45ec-9b63-7e4c96966d91)
+  - **comm**
+    ![2^24 - comm](https://github.com/user-attachments/assets/517c64b8-ca47-4f00-ac73-7fa98352f9b7)
+
+- **2^26**
+  - **Main**
+    ![2^26 - Main](https://github.com/user-attachments/assets/65b23bc3-a38b-4310-8a71-8ee0b4fce03d)
+  - **comp_large**
+    ![2^26 - comp_large](https://github.com/user-attachments/assets/72f64422-c079-4a93-a4b7-0b787c4f7381)
+  - **comm**
+    ![2^26 - comm](https://github.com/user-attachments/assets/5665bd20-5cb8-450c-b63a-f87db7c5661e)
+
+- **2^28**
+  - **Main**
+    ![2^28 - Main](https://github.com/user-attachments/assets/15804c71-ecaa-432d-8a7f-e0b1402599dc)
+  - **comp_large**
+    ![2^28 - comp_large](https://github.com/user-attachments/assets/457510c4-0a49-41fb-a39a-df0d505c8213)
+  - **comm**
+    ![2^28 - comm](https://github.com/user-attachments/assets/14821acf-009f-4cb1-aa51-45fcc2c3dafd)
+
 ### II) Strong Scaling Speedup
 ### III) Weak Scaling
 #### Merge
