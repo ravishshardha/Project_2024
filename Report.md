@@ -855,11 +855,15 @@ Analyze these plots and choose a subset to present and explain in your presentat
 
 #### Radix
   - Main
+![radixmain](https://github.com/user-attachments/assets/730da29f-cd74-438a-a5d3-da0de95cca1e)
 
   - comp_large
+![radixcomp](https://github.com/user-attachments/assets/e52195bb-9bbe-4c6c-91ff-a4e57d6b5bf8)
 
   - comm
+![radixcomm](https://github.com/user-attachments/assets/04471d1c-82ae-4c18-8cec-7e76519d301f)
 
+*Note, final changes in Radix sort were made to fix bottlenecks, and caliper markers were missing for comp_large. Instead, comp is used for these graphs. The calltree was also changed such that there were duplicate sections of Comm, so the graph shows both of these sections. Despite these factors, it can still be seen that Radix sort is scaling well, when compared to Sample and Merge sort.
 
 ## 6. Final Report
 Submit a zip named `TeamX.zip` where `X` is your team number. The zip should contain the following files:
