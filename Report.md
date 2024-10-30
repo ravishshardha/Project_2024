@@ -783,33 +783,42 @@ Analyze these plots and choose a subset to present and explain in your presentat
 ### III) Weak Scaling
 #### Merge
   - Main
-![Weak scaling for main](https://cdn.discordapp.com/attachments/609609154952429570/1300937567281090570/image.png?ex=6722a806&is=67215686&hm=a1078b7ab75bfe22d0c00952214c0b83ed1ba915f737b42f8ad82565568e3132&)
+![mergemain](https://github.com/user-attachments/assets/d228eaa0-536e-4a2d-8249-fb9344993ecd)
+
   - comp_large
-![Weak scaling for comp_large](https://cdn.discordapp.com/attachments/609609154952429570/1300937625326321817/image.png?ex=6722a814&is=67215694&hm=6309c26e4e4554d138b238cff69fac94dfc945b33a9c3a1a1eec6fda563ab17b&)
+![mergecomplarge](https://github.com/user-attachments/assets/cc32c15e-1df1-40bf-b56f-e010917774ab)
+
   - comm
-![Weak scaling for comm](https://cdn.discordapp.com/attachments/609609154952429570/1300937688655990837/image.png?ex=6722a823&is=672156a3&hm=fc549b740d7521085648009abaadbeef405ff62e2eb3acbfeed4cd2a12641f9d&)
+![mergecomm](https://github.com/user-attachments/assets/724dc38f-faae-489a-b5d6-c1eb1e302d91)
+
 #### Bitonic
   - Main
-![Weak scaling for main](https://cdn.discordapp.com/attachments/609609154952429570/1300937259654320168/image.png?ex=6722a7bc&is=6721563c&hm=3953f98c1f6f726e90d2f21348e9eb2f9aa54ed354f22a6103a1884a973da56a&)
+![bitonicmain](https://github.com/user-attachments/assets/58cf473f-d9fc-4a2a-a507-db987b435bf9)
+
   - comp_large
-![Weak scaling for comp_large](https://cdn.discordapp.com/attachments/609609154952429570/1300937367095476367/image.png?ex=6722a7d6&is=67215656&hm=bd03521d2799048780d21eab3e33a1d7e2b495b25014061866da0ad5db1af034&)
+![bitoniccomplarge](https://github.com/user-attachments/assets/083b6b85-4af9-46cf-bfe7-3ecac477a83d)
+
   - comm
-![Weak scaling for comm](https://cdn.discordapp.com/attachments/609609154952429570/1300937483722428416/image.png?ex=6722a7f2&is=67215672&hm=8d338ac6c845fbcc20800d5a2537324b14661f7d6e177b0ba1f064769bd278ad&)
+![bitoniccomm](https://github.com/user-attachments/assets/424d6633-13bc-4b2b-84b0-de90a35a0efa)
+
 
 #### Sample
   - Main
-![Weak scaling for main](https://cdn.discordapp.com/attachments/609609154952429570/1300937814762061894/image.png?ex=6722a841&is=672156c1&hm=80309103e3bb53f44a2cec2b6abe0f065a894db144ada2db6fad28ba114b6e83&)
+![samplemain](https://github.com/user-attachments/assets/db0039f3-50a8-4a9a-9d79-d50453e957e9)
+
   - comp_large
-![Weak scaling for comp_large](https://cdn.discordapp.com/attachments/609609154952429570/1300937887600214036/image.png?ex=6722a852&is=672156d2&hm=5d553ec6ec4c2268405d0ae6772e3c8eb06f741b0677210c4e3feb662c340269&)
+![samplecomplarge](https://github.com/user-attachments/assets/01539efa-0ee6-424b-9105-3e6a9bf33fd4)
+
   - comm
-![Weak scaling for comm](https://cdn.discordapp.com/attachments/609609154952429570/1300937993413988382/image.png?ex=6722a86b&is=672156eb&hm=ed0f6658de6263b637b107f616c78d61abd6054135d0080576c3dc17e4323cf0&)
+![samplecomm](https://github.com/user-attachments/assets/a0944905-efd2-4ee1-984a-2a716949bd1d)
+
 #### Radix
   - Main
-![Weak scaling for main]()
+
   - comp_large
-![Weak scaling for comp_large]()
+
   - comm
-![Weak scaling for comm]()
+
 
 ## 6. Final Report
 Submit a zip named `TeamX.zip` where `X` is your team number. The zip should contain the following files:
