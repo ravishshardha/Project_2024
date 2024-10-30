@@ -6,12 +6,23 @@
 #include <caliper/cali.h>
 #include <caliper/cali-manager.h>
 #include <adiak.hpp>
-#include <climits> 
+#include <climits>
+#include <queue>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <mpi.h>
+#include <limits.h>
+#include <random>
+#include <cstring>
+
+using namespace std;
+
 
 void generate_array(int *array, int size, const char* input_type);
 int is_sorted(int *array, int size);
-void radix_sort(int *array, int size, int world_rank, int world_size);
-void counting_sort_for_radix(int *array, int size, int place);
+void count_sort(int* array, int n, int exp);
+void radix_sort(int*& LocalArray, size_t& LocalSize, int CommSize, int rank, int world_length);
 
 int main(int argc, char** argv) {
     CALI_CXX_MARK_FUNCTION;
@@ -30,41 +41,41 @@ int main(int argc, char** argv) {
 
     /********** Create and process the array based on input type **********/
     int *original_array = NULL;
-    if (world_rank == 0) {
+    if(world_rank == 0) {
         original_array = (int *)malloc(n * sizeof(int));
-        
+
         CALI_MARK_BEGIN("data_init_runtime");
         generate_array(original_array, n, input_type);
         CALI_MARK_END("data_init_runtime");
 
-        printf("Unsorted array for %s: ", input_type);
-        for (int j = 0; j < n; j++) {
-            printf("%d ", original_array[j]);
-        }
-        printf("\n");
+        // printf("Unsorted array for %s: ", input_type);
+        // for (int j = 0; j < n; j++) {
+        //     printf("%d ", original_array[j]);
+        // }
+        // printf("\n");
     }
 
     /********** Set Adiak Values **********/
-    
     adiak::init(NULL);
-    adiak::launchdate();   
-    adiak::libraries();     
-    adiak::cmdline();       
-    adiak::clustername();   
+    adiak::launchdate();
+    adiak::libraries();
+    adiak::cmdline();
+    adiak::clustername();
     adiak::value("algorithm", "Radix");
     adiak::value("programming_model", "mpi");
     adiak::value("data_type", "int");
     adiak::value("size_of_data_type", sizeof(int));
     adiak::value("input_size", n);
     adiak::value("input_type", input_type);
-    adiak::value("num_procs", world_rank);
+    adiak::value("num_procs", world_size);
     adiak::value("scalability", "strong");
     adiak::value("group_num", 13);
     adiak::value("implementation_source", "online and handwritten");
 
     /********** Main Sorting Logic **********/
-    int size = n / world_size;
+    size_t size = n / world_size;
     int *send_array = (int *)malloc(size * sizeof(int));
+    MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
     /********** Send each subarray to each process **********/
     CALI_MARK_BEGIN("comm");
@@ -74,87 +85,20 @@ int main(int argc, char** argv) {
     CALI_MARK_END("comm");
 
     /********** Perform radix sort on each process **********/
-    CALI_MARK_BEGIN("comp");
-    radix_sort(send_array, size, world_rank, world_size); 
-    CALI_MARK_END("comp");
+    // CALI_MARK_BEGIN("comp");
+    // CALI_MARK_BEGIN("comp_small");
+    radix_sort(send_array, size, world_size, world_rank, n);
+    // CALI_MARK_END("comp_small");
+    // CALI_MARK_END("comp");
 
     /********** Gather the sorted subarrays into one **********/
-    int *sorted = NULL;
-    if (world_rank == 0) {
-        sorted = (int *)malloc(n * sizeof(int));
-    }
-
-    CALI_MARK_BEGIN("comm");
-    CALI_MARK_BEGIN("comm_large");
-    MPI_Gather(send_array, size, MPI_INT, sorted, size, MPI_INT, 0, MPI_COMM_WORLD);
-    CALI_MARK_END("comm_large");
-    CALI_MARK_END("comm");
-
-    if(world_rank==0){
-        printf("Gathered Array \n");
-        for(int i = 0; i < n; i++){
-            printf("%d ", sorted[i]);
-        }
-        printf("\n");
-    }
     
 
-    // Ensure the gathered array is sorted without running a final sort
-    if (world_rank == 0) {
-    // Merge the sorted subarrays
-    int *final_sorted = (int *)malloc(n * sizeof(int));
-    int *indices = (int *)calloc(world_size, sizeof(int)); // Track the current index of each subarray
-    int total_size = 0; //basically current index of final sorted
-
-    while (total_size < n) {
-        int min_index = -1; // Declare min_index here (holds the process index that the min value is from)
-        int min_value = INT_MAX; // Declare min_value here (holds smallest value across process)
-
-        // Find the minimum element across the current heads of each subarray
-        for (int i = 0; i < world_size; i++) {
-            //get current index of whichever process
-            int current_index = indices[i];
-            // Debugging output
-            if (current_index < size) {
-                printf("Process %d checking sorted[%d]: %d\n", world_rank, i * size + current_index, sorted[i * size + current_index]);
-            }
-            //if current index of process is not yet finished and 
-            // i*size has to get to the offset of whichever process so the start of the second process is (1 * size) + current index of respective process
-            if (current_index < size && sorted[(i * size) + current_index] < min_value) {
-                min_value = sorted[i * size + current_index];
-                min_index = i;
-            }
-        }
-
-        // If a valid index is found, add the min_value to final_sorted
-        if (min_index != -1) {
-            final_sorted[total_size++] = min_value;
-            indices[min_index]++; // Move to the next element in the subarray
-        }
-    }
-
-    // Print the final sorted array for verification
-    printf("Final sorted array before checking: ");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", final_sorted[i]);
-    }
-    printf("\n");
-
-    // Final correctness check
-    if (is_sorted(final_sorted, n)) {
-        printf("Final array sorted correctly for %s.\n", input_type);
-    } else {
-        printf("Final array NOT sorted correctly for %s.\n", input_type);
-    }
-
     // Clean up root
-    free(final_sorted);
-    free(indices);
-    free(sorted);
-    free(original_array);
-}
-
-    /********** Clean up rest **********/
+    if (world_rank == 0) {
+        free(original_array);
+    }
+    
     free(send_array);
 
     /********** Stop Caliper Manager **********/
@@ -168,115 +112,243 @@ int main(int argc, char** argv) {
 
 
 
-/********** Radix Sort Function **********/
-void radix_sort(int *array, int size, int world_rank, int world_size) {
-    int place = 1; // Start at the least significant digit
-    // Calculate max_digits based on maximum possible value in array
-    int max_num = 0;
-    for(int i = 0; i < size; i++) {
-        if(max_num < array[i]){
-            max_num = array[i];
-        }
+void counting_sort(int* Array, int n, int exp) {
+    int* OutputArray = new int[n];
+    int count[10] = {0};
+
+    //fill count array
+    for(int i = 0; i < n; i++) {
+        int digit = (Array[i] / exp) % 10;
+        count[digit] += 1;
     }
 
-    // Calculate max_digits based on max_num
-    int max_digits = 0;
-    int temp = max_num;
-    if (max_num > 0) { // Check if max_num is positive
-        while (temp > 0) {
-            temp /= 10; // Divide by 10 to reduce max_num
-            max_digits++;  // Increment digit count
-        }
-    }
-
-    CALI_MARK_BEGIN("comp");
-    for (int i = 0; i < max_digits; i++) {
-        CALI_MARK_BEGIN("comp_large");
-        counting_sort_for_radix(array, size, place);
-        CALI_MARK_END("comp_large");     
-        place *= 10; // Move to the next digit
-    }
-    printf("Process %d: ", world_rank);
-    for(int i = 0; i < size; i++){
-        printf("%d ", array[i]);
-    }
-    printf("\n");
-    CALI_MARK_END("comp");
-}
-
-/********** Counting Sort for a specific digit in Radix Sort **********/
-void counting_sort_for_radix(int *array, int size, int place) {
-    int *output = (int *)malloc(size * sizeof(int));
-    int count[10] = {0}; // Reset count array for each digit
-
-    // Count the occurrences of digits at 'place'
-    for (int i = 0; i < size; i++) {
-        int digit = (array[i] / place) % 10;
-        count[digit]++;
-    }
-
-    // Change count[i] to position the digits correctly in the output array
-    for (int i = 1; i < 10; i++) {
+    //build cumulative count array
+    for(int i = 1; i < 10; i++) {
         count[i] += count[i - 1];
     }
 
-    // Build the output array
-    for (int i = size - 1; i >= 0; i--) {
-        int digit = (array[i] / place) % 10;
-        output[count[digit] - 1] = array[i];
-        count[digit]--;
+    //fill in the OutputArray array based on the cumulative array
+    for(int i = n - 1; i >= 0; i--) {
+        int digit = count[(Array[i] / exp) % 10] - 1;
+        OutputArray[digit] = Array[i];
+        count[(Array[i] / exp) % 10] -= 1;
     }
 
-    // Copy the sorted array
-    for (int i = 0; i < size; i++) {
-        array[i] = output[i];
+    //Assign passed in array with OutputArray array
+    for(int i = 0; i < n; i++) {
+        Array[i] = OutputArray[i];
     }
 
-    free(output);
+    delete[] OutputArray;
 }
+
+void radix_sort(int*& LocalArray, size_t& LocalSize, int CommSize, int rank, int n) {
+    CALI_MARK_BEGIN("comp");
+    CALI_MARK_BEGIN("comp_small");
+    int GlobalMax, GlobalMin;
+    int LocalMin = *min_element(LocalArray, LocalArray + LocalSize);
+    int LocalMax = *max_element(LocalArray, LocalArray + LocalSize);
+    
+
+    CALI_MARK_BEGIN("comm");
+    CALI_MARK_BEGIN("comm_large");
+    MPI_Allreduce(&LocalMax, &GlobalMax, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
+    MPI_Allreduce(&LocalMin, &GlobalMin, 1, MPI_INT, MPI_MIN, MPI_COMM_WORLD);
+    CALI_MARK_END("comm_large");
+    CALI_MARK_END("comm");
+    
+
+    int* CountSend = new int[CommSize]();
+    int* OffsetSend = new int[CommSize]();
+    int* CountRecv = new int[CommSize]();
+    int* OffsetRecv = new int[CommSize]();
+
+    int Range = (GlobalMax - GlobalMin + 1) / CommSize;
+
+    vector<vector<int>> buckets(CommSize);
+    for(int i = 0; i < LocalSize; i++) {
+        int value = LocalArray[i];
+        int target_proc = (value - GlobalMin) / Range;
+        if (target_proc >= CommSize) {
+            target_proc = CommSize - 1;
+        }
+        buckets[target_proc].push_back(value);
+    }
+
+    int SendTotal = 0;
+    for(int i = 0; i < CommSize; i++) {
+        CountSend[i] = buckets[i].size();
+        OffsetSend[i] = SendTotal;
+        SendTotal += CountSend[i];
+    }
+
+    int* DataSend = new int[SendTotal];
+    int index = 0;
+    for(int i = 0; i < CommSize; i++) {
+        for (size_t j = 0; j < buckets[i].size(); j++) {
+            DataSend[index++] = buckets[i][j];
+        }
+    }
+
+    CALI_MARK_BEGIN("comm");
+    CALI_MARK_BEGIN("comm_large");
+    MPI_Alltoall(CountSend, 1, MPI_INT, CountRecv, 1, MPI_INT, MPI_COMM_WORLD);
+    CALI_MARK_END("comm_large");
+    CALI_MARK_END("comm");
+
+    int RecvTotal = 0;
+    for(int i = 0; i < CommSize; i++) {
+        OffsetRecv[i] = RecvTotal;
+        RecvTotal += CountRecv[i];
+    }
+
+    int* DataRecv = new int[RecvTotal];
+    CALI_MARK_BEGIN("comm");
+    CALI_MARK_BEGIN("comm_large");
+    MPI_Alltoallv(DataSend, CountSend, OffsetSend, MPI_INT, DataRecv, CountRecv, OffsetRecv, MPI_INT, MPI_COMM_WORLD);
+    CALI_MARK_END("comm_large");
+    CALI_MARK_END("comm");
+    
+    delete[] LocalArray;
+    LocalArray = new int[RecvTotal];
+    LocalSize = RecvTotal;
+    copy(DataRecv, DataRecv + RecvTotal, LocalArray);
+
+    //run count sort for each digit
+    int max_val = *max_element(LocalArray, LocalArray + RecvTotal);
+    for(long int exp = 1; max_val / exp > 0; exp *= 10) {
+        counting_sort(LocalArray, RecvTotal, exp);
+    }
+
+
+    //Gather all subarrays after each digit is processed.
+    CALI_MARK_END("comp_small");
+    CALI_MARK_END("comp");
+
+    //Gather subarrays
+    int* GatherSizes = nullptr;
+    int* GatherOffsets = nullptr;
+
+    if (rank == 0) {
+        GatherSizes = new int[CommSize];
+        GatherOffsets = new int[CommSize];
+    }
+
+    MPI_Gather(&LocalSize, 1, MPI_INT, GatherSizes, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+    int GlobalSize = 0;
+    if (rank == 0) {
+        GatherOffsets[0] = 0;
+        GlobalSize = GatherSizes[0];
+        for (int i = 1; i < CommSize; ++i) {
+            GatherOffsets[i] = GatherOffsets[i - 1] + GatherSizes[i - 1];
+            GlobalSize += GatherSizes[i];
+        }
+    }
+
+    //Allocate memeory for final array
+    int* FinalArray = nullptr;
+    if (rank == 0) {
+        FinalArray = new int[GlobalSize];
+    }
+
+    //Gather local arrays to final
+    MPI_Request request;
+    CALI_MARK_BEGIN("comm");
+    CALI_MARK_BEGIN("comm_large");
+    MPI_Igatherv(LocalArray, LocalSize, MPI_INT, FinalArray, GatherSizes, GatherOffsets, MPI_INT, 0, MPI_COMM_WORLD, &request);
+    CALI_MARK_END("comm_large");
+    CALI_MARK_END("comm");
+
+    //Wait to complete
+    MPI_Wait(&request, MPI_STATUS_IGNORE);
+
+
+    if (rank == 0) {
+        CALI_MARK_BEGIN("correctness_check");
+        if (is_sorted(FinalArray, GlobalSize)) {
+            printf("Final array sorted correctly.\n");
+        } else {
+            printf("Final array NOT sorted correctly.\n");
+        }
+        CALI_MARK_END("correctness_check");
+        delete[] FinalArray; // Clean up
+    }
+
+    //Clean up allocated memory
+    delete[] CountRecv;
+    delete[] OffsetRecv;
+    delete[] CountSend;
+    delete[] OffsetSend;
+    delete[] DataSend;
+    delete[] DataRecv;
+    delete[] GatherSizes;
+    delete[] GatherOffsets;
+}
+
+
 
 
 
 /********** Generate array function **********/
 void generate_array(int *array, int size, const char* input_type) {
-    srand(time(NULL));
-
-    if (strcmp(input_type, "Random") == 0) {
-        for (int i = 0; i < size; i++) {
-            array[i] = rand() % size;
+    srand(time(NULL));  // Seed the random generator
+    
+    if(strcmp(input_type, "Random") == 0) {
+        //Random array with values from 0 to size-1
+        for(int i = 0; i < size; i++) {
+            array[i] = rand() % size;  //Ensure values are in the range 0 to size-1
         }
     } 
-    else if (strcmp(input_type, "ReverseSorted") == 0) {
-        int max_val = size; // Set max_val to size
-        for (int i = 0; i < size; i++) {
-            int decrement = rand() % (size / 5 + 1); // Random decrement
-            max_val -= decrement; // Decrement max_val
-            if (max_val < 0) {
-                max_val = 0; // Prevent negative values
+    else if(strcmp(input_type, "ReverseSorted") == 0) {
+        //Reverse sorted array only positive values
+        int max_val = size * 2;  
+        for(int i = 0; i < size; i++) {
+            int decrement = rand() % (size / 5 + 1);  
+            if (max_val - decrement >= 0) {
+                max_val -= decrement;  
+            } else {
+                max_val = 0;  
             }
-            array[i] = max_val; // Assign max_val to the array
+            array[i] = max_val;
+        }
+    } 
+    else if(strcmp(input_type, "Sorted") == 0) {
+        //Sorted array with random values only positive values
+        int min_val = 0; 
+        int max_increment = size / 5 + 1;  
+        for(int i = 0; i < size; i++) {
+            int increment = rand() % max_increment;
+            //Check we don't exceed the maximum positive value
+            if (min_val + increment >= 0 && min_val + increment <= INT_MAX) {
+                min_val += increment;
+            } else {
+                min_val = INT_MAX;  
             }
-    }
-
-     else if (strcmp(input_type, "Sorted") == 0) {
-        int min_val = 0;
-        for (int i = 0; i < size; i++) {
-            int increment = rand() % (size / 5 + 1);
-            min_val += increment;
             array[i] = min_val;
         }
-    } else if (strcmp(input_type, "1_perc_perturbed") == 0) {
-        int min_val = 0;
-        for (int i = 0; i < size; i++) {
-            int increment = rand() % (size / 5 + 1);
-            min_val += increment;
+    } 
+    else if(strcmp(input_type, "1_perc_perturbed") == 0) {
+        //1% Perturbed array, ensuring only positive values
+        int min_val = 0;  
+        int max_increment = size / 5 + 1;  
+        for(int i = 0; i < size; i++) {
+            int increment = rand() % max_increment;
+            //Ensure the value stays non-negative and within bounds
+            if (min_val + increment >= 0 && min_val + increment <= INT_MAX) {
+                min_val += increment;
+            } else {
+                min_val = INT_MAX;  
+            }
             array[i] = min_val;
         }
 
-        int permuted_count = size / 100;
-        for (int i = 0; i < permuted_count; i++) {
-            int index1 = rand() % size;
-            int index2 = rand() % size;
+        //Permute 1% of the array
+        int permuted_count = size / 100;  // 1% of the array
+        for(int i = 0; i < permuted_count; i++) {
+            int index1 = rand() % size;  
+            int index2 = rand() % size;  
+            //Swap the elements at the two indices
             int temp = array[index1];
             array[index1] = array[index2];
             array[index2] = temp;
@@ -284,12 +356,13 @@ void generate_array(int *array, int size, const char* input_type) {
     }
 }
 
-/********** Check if array is sorted **********/
+
+/********** Check if the array is sorted **********/
 int is_sorted(int *array, int size) {
-    for (int i = 0; i < size - 1; i++) {
-        if (array[i] > array[i + 1]) {
-            return 0; 
+    for(int i = 1; i < size; i++) {
+        if(array[i] < array[i - 1]) {
+            return 0;
         }
     }
-    return 1;
+    return 1; 
 }
