@@ -776,6 +776,34 @@ Plots for the presentation should be as follows:
 Analyze these plots and choose a subset to present and explain in your presentation.
 
 ### I) Strong scaling
+  - 2^16
+	- Main
+  	- comp_large
+   	- comm
+  - 2^18
+	- Main
+  	- comp_large
+   	- comm
+  - 2^20
+	- Main
+  	- comp_large
+   	- comm
+  - 2^22
+	- Main
+  	- comp_large
+   	- comm
+  - 2^24
+	- Main
+  	- comp_large
+   	- comm
+  - 2^26
+	- Main
+  	- comp_large
+   	- comm
+  - 2^28
+	- Main
+  	- comp_large
+   	- comm	       	
 ### II) Strong Scaling Speedup
 ### III) Weak Scaling
 #### Merge
