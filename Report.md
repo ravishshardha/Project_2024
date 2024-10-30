@@ -874,6 +874,41 @@ Analyze these plots and choose a subset to present and explain in your presentat
 **Bitonic**: At small input sizes, similar to the other algorithms, Bitonic sort does not benefit from parallelization, instead increasing the overall time spent sorting by introducing unnecessary communication overhead. Once reaching input size 2^22, the overall runtime of main stabilizes at ~2 seconds across all processor counts. Past this point, the runtime of main decreases as the number of processors increases. This suggests that the benefits of parallelization only come in after 2^22 array size, where the workload given to each processor is large enough to balance out the cost of communication time. Communication time, when compared to the other algorithms, appears to remain very stable and does not increase too significantly. Comp_large, on the other hand, appears to increase and then decrease, with its maximum point at 4 processors. This is very odd when compared to the other algorithms, which only decrease as processor count increases. This may be due to a variety of factors, the main one being how the local sorting is completed in qsort. This is the only section that comp_large is timing in Bitonic sort, and that means that the runtime is dependent on how long that function takes to run given the array size given. Since it's always sorting an array composed of 2 sorted arrays, its runtime in this section is fairly consistent across input types. When compared to other algorithms, bitonic sort has the lowest main runtime, a slightly higher computation time, and very low communication time. Bitonic sort performs the best out of all algorithms on large input sizes, and roughly the same as the others at low input sizes. 
 
 ### II) Strong Scaling Speedup
+
+#### Random
+![Screenshot 2024-10-30 152203](https://github.com/user-attachments/assets/274a1c40-a5de-4b49-95ec-c1022e7053d5)
+
+![Screenshot 2024-10-30 151911](https://github.com/user-attachments/assets/c0423b1f-fe21-4826-926a-037f9c24e8fd)
+
+![Screenshot 2024-10-30 152234](https://github.com/user-attachments/assets/3ecbb083-270d-4a5a-b3bf-02c17cbf61c9)
+
+    
+#### Reverse
+![Screenshot 2024-10-30 154142](https://github.com/user-attachments/assets/00fe567d-dd03-47f2-a7e1-f50be1daa157)
+
+![Screenshot 2024-10-30 154059](https://github.com/user-attachments/assets/1972236a-0196-4f63-a56e-2e2ed203e81a)
+    
+![Screenshot 2024-10-30 153916](https://github.com/user-attachments/assets/93547cde-51e0-47e5-ab2e-de45b75464a4)
+
+
+#### 1% Perturbed
+![Screenshot 2024-10-30 155327](https://github.com/user-attachments/assets/43833a61-cf97-4193-97fd-274c0a3beae7)
+
+![Screenshot 2024-10-30 155452](https://github.com/user-attachments/assets/107aca1b-6b62-4a07-9130-53be49e6a623)
+
+![Screenshot 2024-10-30 155408](https://github.com/user-attachments/assets/b00c9269-f47b-4ad9-a1da-53efa95a1126)
+
+
+#### Sorted
+![Screenshot 2024-10-30 160031](https://github.com/user-attachments/assets/09fad681-4fcd-42dc-bc6a-e402e18d2a61)
+
+![Screenshot 2024-10-30 155915](https://github.com/user-attachments/assets/3e54b5c7-e50b-42cf-a8ee-edc321f43fe6)
+
+  
+![Screenshot 2024-10-30 155958](https://github.com/user-attachments/assets/b97b215e-a4ec-4778-b4b0-5363abbd2544)
+
+
+
 ### III) Weak Scaling
 #### Merge
   - Main
