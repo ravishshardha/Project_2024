@@ -907,7 +907,7 @@ Analyze these plots and choose a subset to present and explain in your presentat
   
 ![Screenshot 2024-10-30 155958](https://github.com/user-attachments/assets/b97b215e-a4ec-4778-b4b0-5363abbd2544)
 
-
+**Bitonic:** Bitonic sort showed generally low values for speedup, and this is because the T(1) value (calculated as T(2)*2) was relatively low across all input sizes. The initial time being low limits the speedup value, since speedup is calculated with T(1)/T(P). Ideally, speedup will be increasing as processor count goes up, and this is true for all graphs except [main, 1% perturbed] and [comm, 1% perturbed]. An outlier among these graphs for bitonic sort is [comp, reverse], where the speedup is 120,000 at 512 processors. This very, very high number may be due to the usage of very small decimals in calculating speedup, or some error in calculation. 
 
 ### III) Weak Scaling
 #### Merge
