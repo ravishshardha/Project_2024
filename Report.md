@@ -836,6 +836,9 @@ Analyze these plots and choose a subset to present and explain in your presentat
   - **comm**
     ![2^28 - comm](https://github.com/user-attachments/assets/14821acf-009f-4cb1-aa51-45fcc2c3dafd)
 
+
+**Merge**: For smaller processor counts, there is a reduction in main time due to parallelization benefits. However, as the processor count reaches a higher range (e.g., 256 or 512), the main time stabilizes. We also see a slight increase in communication time across all input types. This increase can be attributed to communication overheads associated with increased processors outweighing the computation benefits, especially in communication-intensive algorithms. For all array sizes across all input types, computation time decreases as the number of processors increases, showing effective parallelization. However, the decrease is much more significant in the smaller array size (2^16) compared to the larger array size (2^28). This decrease can be caused by data being more uniformly divided into multiple processors. For almost all array sizes, the computation time plateaus after a certain point, likely because each processor's workload is reduced to a minimal portion and further decomposition doesn’t impact comp time significantly.
+
 ### II) Strong Scaling Speedup
 ### III) Weak Scaling
 #### Merge
@@ -867,6 +870,11 @@ Analyze these plots and choose a subset to present and explain in your presentat
 ![Weak scaling for comp_large]()
   - comm
 ![Weak scaling for comm]()
+
+**Merge:** The plots show weak scaling where the problem size increases proportionally with the number of processors. This pattern is consistent with all input_types. This shows that this implementation of merge sort has not scaled nicely because ideally, weak scaling should stay constant. This could be caused by increased communication overhead with more processors.
+The computation time shows better scaling compared to the overall time. It has lower absolute values on the y-axis (0-3.5) than the main section (0-6). Communication shows the most dramatic scaling issues. This can be because communication volume grows with processor count. Therefore, the communication component appears to be the main bottleneck limiting overall scalability.
+
+
 
 ## 6. Final Report
 Submit a zip named `TeamX.zip` where `X` is your team number. The zip should contain the following files:
