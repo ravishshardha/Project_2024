@@ -872,6 +872,41 @@ Analyze these plots and choose a subset to present and explain in your presentat
 **Merge**: For smaller processor counts, there is a reduction in main time due to parallelization benefits. However, as the processor count reaches a higher range (e.g., 256 or 512), the main time stabilizes. We also see a slight increase in communication time across all input types. This increase can be attributed to communication overheads associated with increased processors outweighing the computation benefits, especially in communication-intensive algorithms. For all array sizes across all input types, computation time decreases as the number of processors increases, showing effective parallelization. However, the decrease is much more significant in the smaller array size (2^16) compared to the larger array size (2^28). This decrease can be caused by data being more uniformly divided into multiple processors. For almost all array sizes, the computation time plateaus after a certain point, likely because each processor's workload is reduced to a minimal portion and further decomposition doesn’t impact comp time significantly.
 
 ### II) Strong Scaling Speedup
+
+#### Random
+![Screenshot 2024-10-30 152203](https://github.com/user-attachments/assets/274a1c40-a5de-4b49-95ec-c1022e7053d5)
+
+![Screenshot 2024-10-30 151911](https://github.com/user-attachments/assets/c0423b1f-fe21-4826-926a-037f9c24e8fd)
+
+![Screenshot 2024-10-30 152234](https://github.com/user-attachments/assets/3ecbb083-270d-4a5a-b3bf-02c17cbf61c9)
+
+    
+#### Reverse
+![Screenshot 2024-10-30 154142](https://github.com/user-attachments/assets/00fe567d-dd03-47f2-a7e1-f50be1daa157)
+
+![Screenshot 2024-10-30 154059](https://github.com/user-attachments/assets/1972236a-0196-4f63-a56e-2e2ed203e81a)
+    
+![Screenshot 2024-10-30 153916](https://github.com/user-attachments/assets/93547cde-51e0-47e5-ab2e-de45b75464a4)
+
+
+#### 1% Perturbed
+![Screenshot 2024-10-30 155327](https://github.com/user-attachments/assets/43833a61-cf97-4193-97fd-274c0a3beae7)
+
+![Screenshot 2024-10-30 155452](https://github.com/user-attachments/assets/107aca1b-6b62-4a07-9130-53be49e6a623)
+
+![Screenshot 2024-10-30 155408](https://github.com/user-attachments/assets/b00c9269-f47b-4ad9-a1da-53efa95a1126)
+
+
+#### Sorted
+![Screenshot 2024-10-30 160031](https://github.com/user-attachments/assets/09fad681-4fcd-42dc-bc6a-e402e18d2a61)
+
+![Screenshot 2024-10-30 155915](https://github.com/user-attachments/assets/3e54b5c7-e50b-42cf-a8ee-edc321f43fe6)
+
+  
+![Screenshot 2024-10-30 155958](https://github.com/user-attachments/assets/b97b215e-a4ec-4778-b4b0-5363abbd2544)
+
+
+
 ### III) Weak Scaling
 #### Merge
   - Main
