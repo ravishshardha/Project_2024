@@ -592,65 +592,68 @@ Data generation, much similar to computation, decays in time exponenitally as th
 ### III) Bitonic Sort
 - #### main:
   - Avg time/Rank:
-![Avg time for main](https://cdn.discordapp.com/attachments/609609154952429570/1299098673979850812/image.png?ex=671d48eb&is=671bf76b&hm=88e2cc088d7ec0304b299555d8fcc16628115317dcabd9b9c7eb08b393979314&)
+![mainavg](https://github.com/user-attachments/assets/89f351bc-c7b4-4f93-bd99-0b3b6b805e43)
 
   - Min time/Rank:
- ![Min time for main](https://cdn.discordapp.com/attachments/609609154952429570/1299098762551103548/image.png?ex=671d4901&is=671bf781&hm=d0e435fdcaae03799297fa97a9625989f9b7c044e6618f8da20c17f5b100d46f&)
- 
+![mainmin](https://github.com/user-attachments/assets/f0078656-c569-479f-836a-911c1e8e6ceb)
+
   - Max time/Rank:
- ![Max time for main](https://cdn.discordapp.com/attachments/609609154952429570/1299098849117343826/image.png?ex=671d4915&is=671bf795&hm=3e350bc8958b078c37bda3bc3a805a97f104d00f7f0fe4fe9c0c8e00876c9e17&)
- 
+![mainmax](https://github.com/user-attachments/assets/7e2bc67b-be6b-4892-a753-de594540e637)
+
   - Variance time/Rank:
- ![Variance time for main](https://cdn.discordapp.com/attachments/609609154952429570/1299098940783984641/image.png?ex=671d492b&is=671bf7ab&hm=778dbe3736384d475e207ef02015b43e743566bcce7fcc2cf46803911635893c&)
+![mainvar](https://github.com/user-attachments/assets/e3ba719c-63d6-41fe-bd3c-9d0f081c3b6f)
 
   - Total time:
-  ![Total time for main](https://cdn.discordapp.com/attachments/609609154952429570/1299099030915125308/image.png?ex=671d4941&is=671bf7c1&hm=6ed1237c88a6f4c5dd6766761bcf476200aeebf15f34046b311b3534374d723f&)
+![maintotal](https://github.com/user-attachments/assets/70e72651-e3be-4108-9e0c-7dbe7958167e)
+
 
 Across all input types, the runtime of main was shortest for 1% perturbed and sorted input, and random took the longest to complete. These differences were caused by the extra time added by the local quicksort that was performed on each round. Overall, however, the time spent in main decreased as the number of processors increased. This makes sense since the work was evenly distributed between processors as they sorted their local arrays and made swaps with their partners.
   - #### comm:
   - Avg time/Rank:
- ![Avg time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1299099307374547004/image.png?ex=671d4982&is=671bf802&hm=2effc34f7e9dfa464a06c5782959f1cb114af4e879bb00992e892108611b27ed&)
+![commavg](https://github.com/user-attachments/assets/5fb623e6-4968-43ff-b7e4-fd8e5be8ddab)
 
   - Min time/Rank:
- ![Min time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1299099381253013625/image.png?ex=671d4994&is=671bf814&hm=1c829201ed7c62ca4bad1594a921e4858d8257c4c3b246c4969151c494781086&)
+![commmin](https://github.com/user-attachments/assets/89704a34-4703-478a-ae7f-aa6c1b2a25d2)
 
   - Max time/Rank:
- ![Max time for Comm](https://cdn.discordapp.com/attachments/609609154952429570/1299099468720902194/image.png?ex=671d49a9&is=671bf829&hm=aa311f12b392e51631c831936c872727044599130bf7e6246339c0b991700774&)
+![commmax](https://github.com/user-attachments/assets/f3a8eed4-640a-4355-a7b2-7e329bd575b8)
 
   - Variance time/Rank:
- ![Variance time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1299099560945258600/image.png?ex=671d49bf&is=671bf83f&hm=bc140bc7a295089c713d5e4a6553bdc9a659e05dc62b1a3ce15db8646f48a09a&)
+![commvar](https://github.com/user-attachments/assets/18035438-3097-4c49-bc60-1c8a8e1ae3ff)
 
    - Total time:
-  ![Total time for comm](https://cdn.discordapp.com/attachments/609609154952429570/1299099670391422976/image.png?ex=671d49d9&is=671bf859&hm=e951d13eb1a43fb21467e2fcc165a1f5e1d6d02d78514a90d0bbe9944c08cda1&)
+![commtotal](https://github.com/user-attachments/assets/faf96695-f80e-4e8e-b9b4-f93dbd7ec13b)
+
 
 Generally, the amount of time spent communicating went up as the number of processors went up, which makes sense, however this increase was rather gradual. I believe this was a combination of how large the arrays being sent were with how few communications were made within the bitonic sorting function. More time was spent on communicating between processes due to the large array size being sent, because of how I implemented this algorithm. However, I did use a minimal amount of communication while sorting was happening. There were several outliers in these graphs, as can be seen in the variance graph. 
 
 
 - #### comp:
   - Avg time/Rank:
- ![Avg time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1299099772879245422/image.png?ex=671d49f1&is=671bf871&hm=018f596cb016dc53a8f7fad123af83fdfe7748cf9b08e71ffa58d16263a33937&)
+![compavg](https://github.com/user-attachments/assets/c3fe2de0-ceb7-4ed1-8e6b-5321708d4076)
 
   - Min time/Rank:
- ![Min time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1299099846183092314/image.png?ex=671d4a03&is=671bf883&hm=ab89220e00a3e86d87cf6a7384dfeb2d27bbed6100c3e5395a63ac4a167c936b&)
+![compmin](https://github.com/user-attachments/assets/412502c6-d84b-4ca0-8ebb-6fef4e145392)
 
   - Max time/Rank:
- ![Max time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1299373185673724005/image.png?ex=671cf714&is=671ba594&hm=51a0332bbc5f25e676778866422424639af85f4046faa6482a1cfc4c74b04e7f&)
+![compmax](https://github.com/user-attachments/assets/83d23b83-fb0e-4c55-970c-2cb15102a7e6)
 
   - Variance time/Rank:
- ![Variance time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1299373258491035648/image.png?ex=671cf726&is=671ba5a6&hm=332e0d125292a1c3582f52ea042153e064582c9ec3fdbdfc09b97aa7897f2e64&)
+![compvar](https://github.com/user-attachments/assets/10160a45-a8e7-4631-818e-eac339e8bfec)
 
   - Total time:
-  ![Total time for comp](https://cdn.discordapp.com/attachments/609609154952429570/1299373362849775678/image.png?ex=671cf73e&is=671ba5be&hm=5d776e6dbcca20282ce37f943ca339d667f036ae5d73957fe9191ab86f28bc75&)
+![comptotal](https://github.com/user-attachments/assets/74d20b6b-ae9a-4ae3-9915-0ffe59b167da)
+
 
   The average computation time decreased as the number of processors increased, which lines up with what we were expecting for bitonic sort. As the number of processors increases, each gets a smaller local array to swap elements with its partner. This makes it more efficient to sort locally and perform the appropriate swaps. The overall time spent on computation was increasing since there were more rounds made, and more arrays were copied, sorted, and swapped between processors.
 
 - #### Data generation:
   - Avg time/Rank:
- ![Avg time for data generation](https://cdn.discordapp.com/attachments/609609154952429570/1299373475093418004/image.png?ex=671cf759&is=671ba5d9&hm=e2b25f7e41afd9fa98215a1661af2a43e6e6e54ed66850b250db68b88ac6facc&)
+![datagen](https://github.com/user-attachments/assets/d37bca47-82bb-4383-8b7c-f86525459d64)
 
 - #### Correctness check:
   - Avg time/Rank:
- ![Avg time for correct](https://cdn.discordapp.com/attachments/609609154952429570/1299373848755703899/image.png?ex=671cf7b2&is=671ba632&hm=57357d6fdefd5ad2b21d86e7fee2b76dd8107ea079faec08b2bbfe4647668608&)
+![correctnesscheck](https://github.com/user-attachments/assets/693a8412-9dbd-43ed-b30a-7bd4d7d04934)
 
 These were our main bottlenecks, since these sections of code were not parallelized. As you can see, all input sizes have a constant time across all processor counts, which is what we were expecting.
 
