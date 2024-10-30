@@ -535,18 +535,23 @@ There is an outlier for random and sorted due to the reason described above. Thi
 
 - #### comp:
   - Avg time/Rank:
+  
  ![Avg time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277829057970286/Screenshot_2024-10-21_at_22-38-07_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=d1a82601364c52c9642251bfc8f5a8e32d5ef8621ceeab340d011019feb75178&=&format=webp&quality=lossless&width=883&height=587)
 
   - Min time/Rank:
+    
  ![Min time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277778562486303/Screenshot_2024-10-21_at_22-40-59_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=2f7012b554df47e42fad823ed3d3c3289ca1b6b516ebc3d8d999b9e8aea37ae4&=&format=webp&quality=lossless&width=883&height=587)
 
   - Max time/Rank:
+    
  ![Max time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277780651511909/Screenshot_2024-10-21_at_22-43-52_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=5405066ec05006e13ce431b2348d52478bf2f8067e0ee77084777c741f112c3a&=&format=webp&quality=lossless&width=883&height=587)
 
   - Variance time/Rank:
+    
  ![Variance time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277722744819813/Screenshot_2024-10-21_at_22-46-06_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=faa558ce53bfa2a136e73b160f46546fae52c1605a833e4904049b3dd112ffaf&=&format=webp&quality=lossless&width=883&height=483)
 
   - Total time:
+    
   ![Total time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277874499063909/Screenshot_2024-10-21_at_22-32-58_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=80a6d20723ced000d233c22a7d6ceb93f6c3660c8a564f56ac5bdd827d8507c1&=&format=webp&quality=lossless&width=883&height=483)
 
   On average, computation time decays exponentailly on average as the number of processors increases for all input types. 
@@ -554,18 +559,23 @@ There is an outlier for random and sorted due to the reason described above. Thi
 
 - #### Data generation:
   - Avg time/Rank:
+    
  ![Avg time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277827845689374/Screenshot_2024-10-21_at_22-36-38_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf2&is=6717a972&hm=0f592bc39d35fee2a4fbba354b3f363cf0201393c3d58c1da5ee98cea7ce9933&=&format=webp&quality=lossless&width=883&height=587)
 
   - Min time/Rank:
+    
  ![Min time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277779401609237/Screenshot_2024-10-21_at_22-41-57_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=449ccc49f97c5ffd207b73c0358c2871f071b2def2245df89cfbef401e9014a5&=&format=webp&quality=lossless&width=883&height=587)
 
   - Max time/Rank:
+    
  ![Max time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277779820773539/Screenshot_2024-10-21_at_22-42-31_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=da77ab397101b2a59634f3e2dc550b4fc46c3a72c997c84c60c54ea7af28f6fe&=&format=webp&quality=lossless&width=883&height=483)
 
   - Variance time/Rank:
+    
  ![Variance time data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277723252461649/Screenshot_2024-10-21_at_22-47-07_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fada&is=6717a95a&hm=d9592904e36fcb749515fe2f7c11a102848e4b63b9c06e599c7ac68a427f25a7&=&format=webp&quality=lossless&width=883&height=565)
 
   - Total time:
+    
   ![Total time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277875216158820/Screenshot_2024-10-21_at_22-35-23_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=31989a85dc70506d6ccd431b67320594305643fbd4088819d8764d3f1d535e7d&=&format=webp&quality=lossless&width=996&height=662)
 
 
@@ -573,18 +583,23 @@ Data generation, much similar to computation, decays in time exponenitally as th
 
 - #### Correctness check:
   - Avg time/Rank:
+    
  ![Avg time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277829955289160/Screenshot_2024-10-21_at_22-39-18_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=c6003c059ca2b0be62b41ac2f15b1c3e30a4f0a80302bc7f05267556d0c26008&=&format=webp&quality=lossless&width=883&height=565)
 
   - Min time/Rank:
+    
  ![Min time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277830295031878/Screenshot_2024-10-21_at_22-40-09_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=512f009e7e22d26e150415b9975ca5a0f684b7d5d2f33762b5fd8c86ac8f7d7d&=&format=webp&quality=lossless&width=883&height=587)
 
   - Max time/Rank:
+    
  ![Max time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277780059983973/Screenshot_2024-10-21_at_22-42-58_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=dee09a5232c80c52b925623c36508b9ae741819b4e34b33199138289c446e7db&=&format=webp&quality=lossless&width=883&height=402)
 
   - Variance time/Rank:
+    
  ![Variance time correct](https://media.discordapp.net/attachments/1298277573901418507/1298277722992279584/Screenshot_2024-10-21_at_22-46-38_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=9073a41f26803b57324f47c30666a7b0c00337dc601ad17c5f11bde29de05761&=&format=webp&quality=lossless&width=883&height=483)
 
   - Total time:
+    
   ![Total time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277874842992681/Screenshot_2024-10-21_at_22-34-29_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=3e226b6d4649db02e51a1a89725ec5ac57dc94cdc35e7979c60c518b3f38688a&=&format=webp&quality=lossless&width=883&height=565)
 
   Similar to data generation and computation, correctness check decays in time exponenitally as the number of processors increases on average. 
@@ -592,36 +607,46 @@ Data generation, much similar to computation, decays in time exponenitally as th
 ### III) Bitonic Sort
 - #### main:
   - Avg time/Rank:
+    
 ![mainavg](https://github.com/user-attachments/assets/89f351bc-c7b4-4f93-bd99-0b3b6b805e43)
 
   - Min time/Rank:
+    
 ![mainmin](https://github.com/user-attachments/assets/f0078656-c569-479f-836a-911c1e8e6ceb)
 
   - Max time/Rank:
+    
 ![mainmax](https://github.com/user-attachments/assets/7e2bc67b-be6b-4892-a753-de594540e637)
 
   - Variance time/Rank:
+    
 ![mainvar](https://github.com/user-attachments/assets/e3ba719c-63d6-41fe-bd3c-9d0f081c3b6f)
 
   - Total time:
+    
 ![maintotal](https://github.com/user-attachments/assets/70e72651-e3be-4108-9e0c-7dbe7958167e)
 
 
 Across all input types, the runtime of main was shortest for 1% perturbed and sorted input, and random took the longest to complete. These differences were caused by the extra time added by the local quicksort that was performed on each round. Overall, however, the time spent in main decreased as the number of processors increased. This makes sense since the work was evenly distributed between processors as they sorted their local arrays and made swaps with their partners.
   - #### comm:
   - Avg time/Rank:
+    
 ![commavg](https://github.com/user-attachments/assets/5fb623e6-4968-43ff-b7e4-fd8e5be8ddab)
 
   - Min time/Rank:
+    
 ![commmin](https://github.com/user-attachments/assets/89704a34-4703-478a-ae7f-aa6c1b2a25d2)
 
   - Max time/Rank:
+    
 ![commmax](https://github.com/user-attachments/assets/f3a8eed4-640a-4355-a7b2-7e329bd575b8)
 
   - Variance time/Rank:
+    
 ![commvar](https://github.com/user-attachments/assets/18035438-3097-4c49-bc60-1c8a8e1ae3ff)
 
    - Total time:
+     
 ![commtotal](https://github.com/user-attachments/assets/faf96695-f80e-4e8e-b9b4-f93dbd7ec13b)
 
 
@@ -630,18 +655,23 @@ Generally, the amount of time spent communicating went up as the number of proce
 
 - #### comp:
   - Avg time/Rank:
+    
 ![compavg](https://github.com/user-attachments/assets/c3fe2de0-ceb7-4ed1-8e6b-5321708d4076)
 
   - Min time/Rank:
+    
 ![compmin](https://github.com/user-attachments/assets/412502c6-d84b-4ca0-8ebb-6fef4e145392)
 
   - Max time/Rank:
+    
 ![compmax](https://github.com/user-attachments/assets/83d23b83-fb0e-4c55-970c-2cb15102a7e6)
 
   - Variance time/Rank:
+    
 ![compvar](https://github.com/user-attachments/assets/10160a45-a8e7-4631-818e-eac339e8bfec)
 
   - Total time:
+    
 ![comptotal](https://github.com/user-attachments/assets/74d20b6b-ae9a-4ae3-9915-0ffe59b167da)
 
 
@@ -649,10 +679,12 @@ Generally, the amount of time spent communicating went up as the number of proce
 
 - #### Data generation:
   - Avg time/Rank:
+    
 ![datagen](https://github.com/user-attachments/assets/d37bca47-82bb-4383-8b7c-f86525459d64)
 
 - #### Correctness check:
   - Avg time/Rank:
+    
 ![correctnesscheck](https://github.com/user-attachments/assets/693a8412-9dbd-43ed-b30a-7bd4d7d04934)
 
 These were our main bottlenecks, since these sections of code were not parallelized. As you can see, all input sizes have a constant time across all processor counts, which is what we were expecting.
@@ -843,33 +875,55 @@ Analyze these plots and choose a subset to present and explain in your presentat
 ### III) Weak Scaling
 #### Merge
   - Main
-![Weak scaling for main](https://cdn.discordapp.com/attachments/609609154952429570/1300937567281090570/image.png?ex=6722a806&is=67215686&hm=a1078b7ab75bfe22d0c00952214c0b83ed1ba915f737b42f8ad82565568e3132&)
+    
+![mergemain](https://github.com/user-attachments/assets/d228eaa0-536e-4a2d-8249-fb9344993ecd)
+
   - comp_large
-![Weak scaling for comp_large](https://cdn.discordapp.com/attachments/609609154952429570/1300937625326321817/image.png?ex=6722a814&is=67215694&hm=6309c26e4e4554d138b238cff69fac94dfc945b33a9c3a1a1eec6fda563ab17b&)
+    
+![mergecomplarge](https://github.com/user-attachments/assets/cc32c15e-1df1-40bf-b56f-e010917774ab)
+
   - comm
-![Weak scaling for comm](https://cdn.discordapp.com/attachments/609609154952429570/1300937688655990837/image.png?ex=6722a823&is=672156a3&hm=fc549b740d7521085648009abaadbeef405ff62e2eb3acbfeed4cd2a12641f9d&)
+    
+![mergecomm](https://github.com/user-attachments/assets/724dc38f-faae-489a-b5d6-c1eb1e302d91)
+
 #### Bitonic
   - Main
-![Weak scaling for main](https://cdn.discordapp.com/attachments/609609154952429570/1300937259654320168/image.png?ex=6722a7bc&is=6721563c&hm=3953f98c1f6f726e90d2f21348e9eb2f9aa54ed354f22a6103a1884a973da56a&)
+    
+![bitonicmain](https://github.com/user-attachments/assets/58cf473f-d9fc-4a2a-a507-db987b435bf9)
+
   - comp_large
-![Weak scaling for comp_large](https://cdn.discordapp.com/attachments/609609154952429570/1300937367095476367/image.png?ex=6722a7d6&is=67215656&hm=bd03521d2799048780d21eab3e33a1d7e2b495b25014061866da0ad5db1af034&)
+    
+![bitoniccomplarge](https://github.com/user-attachments/assets/083b6b85-4af9-46cf-bfe7-3ecac477a83d)
+
   - comm
-![Weak scaling for comm](https://cdn.discordapp.com/attachments/609609154952429570/1300937483722428416/image.png?ex=6722a7f2&is=67215672&hm=8d338ac6c845fbcc20800d5a2537324b14661f7d6e177b0ba1f064769bd278ad&)
+    
+![bitoniccomm](https://github.com/user-attachments/assets/424d6633-13bc-4b2b-84b0-de90a35a0efa)
+
 
 #### Sample
   - Main
-![Weak scaling for main](https://cdn.discordapp.com/attachments/609609154952429570/1300937814762061894/image.png?ex=6722a841&is=672156c1&hm=80309103e3bb53f44a2cec2b6abe0f065a894db144ada2db6fad28ba114b6e83&)
+    
+![samplemain](https://github.com/user-attachments/assets/db0039f3-50a8-4a9a-9d79-d50453e957e9)
+
   - comp_large
-![Weak scaling for comp_large](https://cdn.discordapp.com/attachments/609609154952429570/1300937887600214036/image.png?ex=6722a852&is=672156d2&hm=5d553ec6ec4c2268405d0ae6772e3c8eb06f741b0677210c4e3feb662c340269&)
+    
+![samplecomplarge](https://github.com/user-attachments/assets/01539efa-0ee6-424b-9105-3e6a9bf33fd4)
+
   - comm
-![Weak scaling for comm](https://cdn.discordapp.com/attachments/609609154952429570/1300937993413988382/image.png?ex=6722a86b&is=672156eb&hm=ed0f6658de6263b637b107f616c78d61abd6054135d0080576c3dc17e4323cf0&)
+    
+![samplecomm](https://github.com/user-attachments/assets/a0944905-efd2-4ee1-984a-2a716949bd1d)
+
 #### Radix
   - Main
-![Weak scaling for main]()
+![radixmain](https://github.com/user-attachments/assets/730da29f-cd74-438a-a5d3-da0de95cca1e)
+
   - comp_large
-![Weak scaling for comp_large]()
+![radixcomp](https://github.com/user-attachments/assets/e52195bb-9bbe-4c6c-91ff-a4e57d6b5bf8)
+
   - comm
-![Weak scaling for comm]()
+![radixcomm](https://github.com/user-attachments/assets/04471d1c-82ae-4c18-8cec-7e76519d301f)
+
+*Note, final changes in Radix sort were made to fix bottlenecks, and caliper markers were missing for comp_large. Instead, comp is used for these graphs. The calltree was also changed such that there were duplicate sections of Comm, so the graph shows both of these sections. Despite these factors, it can still be seen that Radix sort is scaling well, when compared to Sample and Merge sort.
 
 **Merge:** The plots show weak scaling where the problem size increases proportionally with the number of processors. This pattern is consistent with all input_types. This shows that this implementation of merge sort has not scaled nicely because ideally, weak scaling should stay constant. This could be caused by increased communication overhead with more processors.
 The computation time shows better scaling compared to the overall time. It has lower absolute values on the y-axis (0-3.5) than the main section (0-6). Communication shows the most dramatic scaling issues. This can be because communication volume grows with processor count. Therefore, the communication component appears to be the main bottleneck limiting overall scalability.
