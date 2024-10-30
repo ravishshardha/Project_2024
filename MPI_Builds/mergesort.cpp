@@ -54,12 +54,6 @@ int main(int argc, char** argv) {
         generate_array(original_array, n, input_type);
         CALI_MARK_END(data_init_runtime);
         
-        // Print unsorted array (first 10 elements)
-        printf("Unsorted array for %s: ", input_type);
-        for (int j = 0; j < n; j++) {
-            printf("%d ", original_array[j]);
-        }
-        printf("\n");
     }
 
     /********** Main Sorting Logic (moved inside main) **********/
@@ -111,12 +105,6 @@ int main(int argc, char** argv) {
         }
         CALI_MARK_END(correctness_check);
 
-        // Print sorted array (first 10 elements)
-        printf("Sorted array for %s: ", input_type);
-        for (int j = 0; j < n; j++) {
-            printf("%d ", sorted[j]);
-        }
-        printf("\n");
 
         /********** Clean up root **********/
         free(sorted);
@@ -255,3 +243,22 @@ void mergeSort(int *a, int *b, int l, int r) {
         merge(a, b, l, m, r);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
