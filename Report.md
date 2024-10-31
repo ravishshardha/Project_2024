@@ -342,7 +342,8 @@ CALI_MARK_END("comp");
 ![image](https://github.com/user-attachments/assets/5e52a84f-a7ce-4625-9742-d039656d652e)
 
 #### II) Calltree For Sample Sort:
-![image](https://cdn.discordapp.com/attachments/1289259692077617192/1296297126627643493/sample_p4_a2_18.png?ex=6711c647&is=671074c7&hm=7f35a849a680dacaa956ce38a6036a4efa5fe98844f424400fb464eb26543242&)
+![Screenshot 2024-10-30 212641](https://github.com/user-attachments/assets/428b3b97-f619-4b77-a318-1dd478fec2df)
+
 
 #### III) Calltree for Bitonic Sort:
 ![calltree](https://github.com/user-attachments/assets/5147e233-5f8f-483a-a47b-056c44bf9c79)
