@@ -350,7 +350,8 @@ CALI_MARK_END("comp");
 
 
 #### VI) Calltree for Radix Sort:
-![radix_calltree](https://github.com/user-attachments/assets/546326b6-db43-446a-bed5-7545bb79406c)
+![calltree](https://github.com/user-attachments/assets/5c913bb0-5c28-482d-b4b3-bbd2f466d3e5)
+
 
 
 ### 3b. Collect Metadata
