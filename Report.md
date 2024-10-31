@@ -746,65 +746,80 @@ The communication times increase as the input size increases. Further, more proc
 
 - #### comp
   - Avg time/Rank:
-  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487595671748618/Radix_Sort_Performance_Avg_time_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=441498ec501fe6b395cd1d60debb2d5792ec7680537e72d49f1889f8bdc01f5d&)
+  ![Radix_Sort_Performance_Avg_time_Sorted_Input_comp](https://github.com/user-attachments/assets/3eba957b-84bd-4bda-80a3-e2ba9b5e8724)
+
 
 
   - Min time/Rank:
-  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487595365306368/Radix_Sort_Performance_Min_time_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=9f3878f8dfafb5b0661f28f450df1cfa4771b863e3e1f7f8d032dee1d5a2f026&)
+  ![Radix_Sort_Performance_Min_time_Sorted_Input_comp](https://github.com/user-attachments/assets/44e5b141-21c4-4dd6-bf12-d31d799f17c2)
+
 
 
   - Max time/Rank:
-  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487595076030556/Radix_Sort_Performance_Max_time_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=bdff8c7c74ed65d80b11a5b81c97da9bec624b70d55a28a874003278aae49444&)
+  ![Radix_Sort_Performance_Max_time_Sorted_Input_comp](https://github.com/user-attachments/assets/049a0709-eb87-4dc8-8748-a82e34a3aefc)
+
 
 
   - Variance time/Rank:
-  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487594790944789/Radix_Sort_Performance_Variance_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=9183b774300a3f60a094f001e7b1014a73fc69c78d3890c7a03064949d1b34f0&)
+  ![Radix_Sort_Performance_Variance_Sorted_Input_comp](https://github.com/user-attachments/assets/015b2283-ee82-4cf5-81da-f22cc96fc9d6)
+
 
 
   - Total time/Rank:
-  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298487595986194482/Radix_Sort_Performance_Total_time_Sorted_Input_comp.png?ex=6719be4f&is=67186ccf&hm=28c3d530b01ac39340abbd7d8cd85ef0e2a58e1718653b09d3cd7452c4054777&)
+  ![Radix_Sort_Performance_Total_time_Sorted_Input_comp](https://github.com/user-attachments/assets/0890e4b2-7fff-451f-b867-f7cebd637978)
+
 
 On average the computation time should be decreasing however upon analyzing the total times for the computation this is not necessarily the case. There could be several reasons. One is the fact that our data generation function when provided with a large number also generates numbers that have a large number of digits. Therefore, since the runtime of the radix sort is dependent on the number of digits could end up increasing the computation time. The implementation might also be flawed. I realized that the algorithm has one small portion that is not parallelized, which needs to be changed before our final presentation. The high variance can be explained by the fact that different generation can lead to much different sets of data leading to differing performance rates. 
 
 - #### Data Generation
-  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476239014727721/Radix_Sort_Performance_Avg_time_Sorted_Input_data.png?ex=6719b3bb&is=6718623b&hm=478115b87a45c0dd6e8b6d381b0004937502941fddcd01d35579de73bdca8e24&)
+  ![Radix_Sort_Performance_Avg_time_Sorted_Input_data](https://github.com/user-attachments/assets/f5406d97-f712-4e0f-85c5-24b7aa05df7d)
+
 
 
   - Min time/Rank:
-  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476239807582280/Radix_Sort_Performance_Min_time_Sorted_Input_data.png?ex=6719b3bc&is=6718623c&hm=b75d7f78d4242c6dc24ce115ffde7f5614def9ae4ee67f5f54b2c2ad808d1ae5&)
+  ![Radix_Sort_Performance_Min_time_Sorted_Input_data](https://github.com/user-attachments/assets/d2374d76-2271-41a4-b261-94330a899eb7)
+
 
 
   - Max time/Rank:
-  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476240415621173/Radix_Sort_Performance_Max_time_Sorted_Input_data.png?ex=6719b3bc&is=6718623c&hm=8257d6e3c18d6aacd20c3eae57598292e8daea5bec23996d56de1b80c1d5fcca&)
+  ![Radix_Sort_Performance_Max_time_Sorted_Input_data](https://github.com/user-attachments/assets/23ca8090-ca04-4cfe-9966-9babd3070e0d)
+
 
 
   - Variance time/Rank:
-  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476240868737186/Radix_Sort_Performance_Variance_Sorted_Input_data.png?ex=6719b3bc&is=6718623c&hm=696e76bae8ccab98750b6f5b4aca4f39727341ab34e47ac8892caa7092baea2b&)
+  ![Radix_Sort_Performance_Variance_Sorted_Input_data](https://github.com/user-attachments/assets/c82cd1bd-d3ef-4e57-8420-9d7bbb4eba6e)
+
 
 
   - Total time/Rank:
-  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298476238515736596/Radix_Sort_Performance_Total_time_Sorted_Input_data.png?ex=6719b3bb&is=6718623b&hm=a700924692e52e21ad351b4485304a5094e64b7ac78d8877f96fab8f19e470d6&)
+  ![Radix_Sort_Performance_Total_time_Sorted_Input_data](https://github.com/user-attachments/assets/47abab63-c65b-4e76-b6b8-96d660c65acc)
+
 
 As the total amount of data increases it will take longer to generate the data needed for our sort this increased time can be seen above. There is little variance because the same function to generate our data is used on every iteration.
 
 - #### Correctness Check:
-  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353720991794/Radix_Sort_Performance_Avg_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=6725059c5c26cae08ed09551f4d5bef232821e989a468c7645eebf7828ea5d00&)
+  ![Radix_Sort_Performance_Avg_time_Sorted_Input_correct](https://github.com/user-attachments/assets/94e21e09-f204-4765-ad18-0c7381ff4e8d)
+
 
 
   - Min time/Rank:
-  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353368797244/Radix_Sort_Performance_Min_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=6e83703c13b1b6f58fbfd7fd7deb3dc02a59b85c09c351d1e929c6d7c3a53b3c&)
+  ![Radix_Sort_Performance_Min_time_Sorted_Input_correct](https://github.com/user-attachments/assets/25c09694-80d8-418c-bf72-11903dfad18e)
+
 
 
   - Max time/Rank:
-  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353033125961/Radix_Sort_Performance_Max_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=d5b3598435b39daa2be6c835d441565a6d4028d875fb83564f17077fb6c92078&)
+  ![Radix_Sort_Performance_Max_time_Sorted_Input_correct](https://github.com/user-attachments/assets/31a8d861-dfe9-4de1-8a01-ca02747f85da)
+
 
 
   - Variance time/Rank:
-  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481354387886120/Radix_Sort_Performance_Variance_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=96d6a63f110dba5ab229f6b751db55f56d840a7d928cb18db474691b496b2d46&)
+  ![Radix_Sort_Performance_Variance_Sorted_Input_correct](https://github.com/user-attachments/assets/3e497431-f7aa-4daf-90f6-e4aa897563a2)
+
 
 
   - Total time/Rank:
-  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298481353720991794/Radix_Sort_Performance_Avg_time_Sorted_Input_correct.png?ex=6719b87f&is=671866ff&hm=6725059c5c26cae08ed09551f4d5bef232821e989a468c7645eebf7828ea5d00&)
+  ![Radix_Sort_Performance_Avg_time_Sorted_Input_correct](https://github.com/user-attachments/assets/4f0596d4-28c4-4186-a11b-2d7ba994845d)
+
 
 As the total amount of data increases it will take longer to check if our output is correctly sorted as supported by the graphs above. There is little variance because the same function to check that our data sorted is used on every iteration. I was not able to obtain every sample size and process count for the data check as Grace's scheudler was over crowded leading to queues so long that no jobs could be executed. I was assured that this would not negatively affect us.
 
