@@ -697,41 +697,50 @@ These were our main bottlenecks, since these sections of code were not paralleli
 
 
   - Min time/Rank:
-  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475039884185659/Radix_Sort_Performance_Min_time_Sorted_Input_main.png?ex=6719b29e&is=6718611e&hm=819806d7aeb40508e24c4ed68d85b7c6f0f34a86fd6b7ecd90ac248353860c3f&)
+  ![Radix_Sort_Performance_Min_time_Sorted_Input_main](https://github.com/user-attachments/assets/e959818d-9dbc-4c66-8aa3-de658342cc76)
+
 
 
   - Max time/Rank:
-  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475040244891723/Radix_Sort_Performance_Max_time_Sorted_Input_main.png?ex=6719b29e&is=6718611e&hm=851cfd2ed4085fe54686e2e7efcbb8280f0c247e3c06453a4a8a380484b2ffaa&)
+  ![Radix_Sort_Performance_Max_time_Sorted_Input_main](https://github.com/user-attachments/assets/fdbbe2a5-af4a-4117-919f-aaf1af8a17df)
+
 
 
   - Variance time/Rank:
-  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475040529973248/Radix_Sort_Performance_Variance_Sorted_Input_main.png?ex=6719b29e&is=6718611e&hm=246693b7eea44f9b9750d08baeb1bbac76058e8dd706aa52d9692de748fb2123&)
+  ![Radix_Sort_Performance_Variance_Sorted_Input_main](https://github.com/user-attachments/assets/e6270fda-4609-4bbd-9a1f-7086d4699051)
+
 
 
   - Total time/Rank:
-  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475040849002567/Radix_Sort_Performance_Total_time_Sorted_Input_main.png?ex=6719b29e&is=6718611e&hm=56028275a82bf1c54dbc5cc7a8d70af177c27e69aaab3e44bd61ba053be3485e&)
+  ![Radix_Sort_Performance_Total_time_Sorted_Input_main](https://github.com/user-attachments/assets/9c2868f2-5852-4058-bdbf-825d1cffb0c9)
+
 
 The total times increase as both the input size increases and the proceses increase. This is due to several reasons. The first being that due to more data being present, more time must be spent sending and receiving the data to and from procesess meaning a higher communication overhead. Further, more data means a higher total computation time. In addition, more processes means that data needs to be sent to and from more locations resulting in longer runtimes. These observations are evident in the figures above. 
 
 - #### comm:
   - Avg time/Rank:
-  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468871371755531/Radix_Sort_Performance_Avg_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=aa2feae21392b8452ed085370b1cc834371841aa9882552ff44c1669da8e2c3d&)
+  ![Radix_Sort_Performance_Avg_time_Sorted_Input_comm](https://github.com/user-attachments/assets/a81c8b18-7d4a-489b-8315-63012c19e295)
+
 
 
   - Min time/Rank:
-  ![Min time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468871015108659/Radix_Sort_Performance_Min_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=792871fe3157a1304459bd9989bc61be719af213a2f324fb01d8907d74d369a0&)
+  ![Radix_Sort_Performance_Min_time_Sorted_Input_comm](https://github.com/user-attachments/assets/28e0891b-1841-4bf8-a9a6-442fea0c8e2d)
+
 
 
   - Max time/Rank:
   ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468870654267442/Radix_Sort_Performance_Max_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=901ac14dea8834c1de17932479a58fee7e20dc8b4afe67b0a93ab12de31b7ac6&)
 
 
+
   - Variance time/Rank:
-  ![Variance time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468870323048479/Radix_Sort_Performance_Variance_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=d248df3484b626ab19c2ee0635682f41fc78cfaa70380dd952549a1914995f20&)
+  ![Radix_Sort_Performance_Variance_Sorted_Input_comm](https://github.com/user-attachments/assets/3e329bcb-f6f1-4ed1-b7e7-5d13d21e09f9)
+
 
 
   - Total time/Rank:
-  ![Total time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468871765753906/Radix_Sort_Performance_Total_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=9d5f4dd39dea2f799881248bfdbe8b2f853be8cc354472f7a67adebcff25f99c&)
+  ![Radix_Sort_Performance_Total_time_Sorted_Input_comm](https://github.com/user-attachments/assets/616bd505-e790-46e1-94db-e511e0b36010)
+
 
 The communication times increase as the input size increases. Further, more processes also cause an increase in time. This is due to several reasons. The first being that due to more data being present, more time must be spent sending and receiving the data to and from procesess. In addition, more processes means that data needs to be sent to and from more locations resulting in longer runtimes as evident in the figures above. 
 
