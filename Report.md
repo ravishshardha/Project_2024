@@ -693,7 +693,8 @@ These were our main bottlenecks, since these sections of code were not paralleli
 ### IV) Radix Sort
 - #### main:
   - Avg time/Rank:
-  ![Avg time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298475039406030888/Radix_Sort_Performance_Avg_time_Sorted_Input_main.png?ex=6719b29d&is=6718611d&hm=337651b65a34d920540efae0a1c32f084589e64661d0afadcc601610dc583ecd&)
+  ![Avg time for correct]
+(https://github.com/user-attachments/assets/33246982-389f-4a82-a795-44470c618b38)
 
 
   - Min time/Rank:
