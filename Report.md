@@ -737,7 +737,8 @@ The total times increase as both the input size increases and the proceses incre
 
 
   - Max time/Rank:
-  ![Max time for correct](https://cdn.discordapp.com/attachments/1298468749887672370/1298468870654267442/Radix_Sort_Performance_Max_time_Sorted_Input_comm.png?ex=6719acdf&is=67185b5f&hm=901ac14dea8834c1de17932479a58fee7e20dc8b4afe67b0a93ab12de31b7ac6&)
+  ![Radix_Sort_Performance_Max_time_Sorted_Input_comm](https://github.com/user-attachments/assets/d02fdb08-5dfd-450e-a87d-b1830f3eba78)
+
 
 
 
