@@ -345,7 +345,8 @@ CALI_MARK_END("comp");
 ![image](https://cdn.discordapp.com/attachments/1289259692077617192/1296297126627643493/sample_p4_a2_18.png?ex=6711c647&is=671074c7&hm=7f35a849a680dacaa956ce38a6036a4efa5fe98844f424400fb464eb26543242&)
 
 #### III) Calltree for Bitonic Sort:
-![image](https://cdn.discordapp.com/attachments/1289259692077617192/1296185257137279068/image.png?ex=67115e17&is=67100c97&hm=6a5b426df4cfc23e64f28541a810b414c3ad892f6dc392f5784951a35d6c3d63&)
+![calltree](https://github.com/user-attachments/assets/5147e233-5f8f-483a-a47b-056c44bf9c79)
+
 
 #### VI) Calltree for Radix Sort:
 ![image](https://cdn.discordapp.com/attachments/1281268344036524110/1296320598678704128/image.png?ex=6711dc23&is=67108aa3&hm=b06794b26da7f35a3944a7f43b78a78902eca5d821d9150ca02f39fa80fa0ceb&)
