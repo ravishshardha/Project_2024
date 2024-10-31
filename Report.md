@@ -495,19 +495,21 @@ There is an outlier for random and sorted due to the reason described above. Thi
 ### II) Sample Sort
 - #### main:
   - Avg time/Rank:
-![Avg time for main](https://media.discordapp.net/attachments/1298277573901418507/1298277829489987695/Screenshot_2024-10-21_at_22-38-40_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=0b59732852da51636e98c12203bc5fcdc1ba7b40d1d4fc03e1ee47eaf5dbe516&=&format=webp&quality=lossless&width=883&height=587)
+
+![Screenshot 2024-10-21 at 22-38-40 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/bcbae6b1-99c6-4009-bebe-e93a80b2fb62)
 
   - Min time/Rank:
- ![Min time for main](https://media.discordapp.net/attachments/1298277573901418507/1298277779011272824/Screenshot_2024-10-21_at_22-41-27_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=1dd14449b41080f414d003bb24b0c1eb3d02e369c7a039505cd868ff90f0bf98&=&format=webp&quality=lossless&width=883&height=587)
- 
+ ![Screenshot 2024-10-21 at 22-41-27 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/fa990528-2f00-4884-a27c-4baf26bb3d62)
+
   - Max time/Rank:
- ![Max time for main](https://media.discordapp.net/attachments/1298277573901418507/1298281093728043018/Screenshot_2024-10-21_at_22-44-12_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fdfd&is=6717ac7d&hm=2859e6001a521f194f63e1906b56de6a3948561b0e010a9cdb080350fa600f59&=&format=webp&quality=lossless&width=883&height=587)
- 
+![Screenshot 2024-10-21 at 22-44-12 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/2e1f4a6c-6385-4d61-b8cc-1b4f0ae35832)
+
   - Variance time/Rank:
- ![Variance time for main](https://media.discordapp.net/attachments/1298277573901418507/1298277721981456416/Screenshot_2024-10-21_at_22-45-06_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=fdc5a92ae90419ba423bdec225336ad13b74ed0e3815b041d3d33bbeab848208&=&format=webp&quality=lossless&width=883&height=587)
+![Screenshot 2024-10-21 at 22-45-06 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/2281fa08-dd0f-478a-b681-bd3cc3f0defc)
 
   - Total time:
-  ![Total time for main](https://media.discordapp.net/attachments/1298277573901418507/1298277873580380161/Screenshot_2024-10-21_at_22-31-18_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafd&is=6717a97d&hm=0bce9fef90318a7a8b469a1d5f527165546d28ca8a3747ad728ea8f86e99a04a&=&format=webp&quality=lossless&width=883&height=483)
+ ![Screenshot 2024-10-21 at 22-31-18 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/57ab822f-8467-4b6c-9d8e-150e02f8c8f1)
+
 
   Overall, for main as the input size increases, the longer sample sort takes to sort the array across all input types as shown by the higher input size dots are higher than the lower input size dots on average time per processor. 
   before 64 processors, runtime descrases as the number of processors increase likely due to the data getting separated into more buckets and sorted quicker locally. 
@@ -515,19 +517,20 @@ There is an outlier for random and sorted due to the reason described above. Thi
 
   - #### comm:
   - Avg time/Rank:
- ![Avg time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277828466311189/Screenshot_2024-10-21_at_22-37-50_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=91841e2b2c33984894fc6ee7a608c5367db582a2d7b1c0ce82796201a9861fef&=&format=webp&quality=lossless&width=883&height=587)
+
+![Screenshot 2024-10-21 at 22-37-50 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/62d6c535-42b2-49fa-8e0b-525bb10ca0a4)
 
   - Min time/Rank:
- ![Min time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277830819315817/Screenshot_2024-10-21_at_22-40-39_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=7afffd784fb0f1456e06814f3ee1afbcf812bf52489f72577f5978c8ea909474&=&format=webp&quality=lossless&width=883&height=565)
+![Screenshot 2024-10-21 at 22-40-39 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/88f36ede-8f0e-4a74-aac8-8932a2ed7834)
 
   - Max time/Rank:
- ![Max time for Comm](https://media.discordapp.net/attachments/1298277573901418507/1298277780357906504/Screenshot_2024-10-21_at_22-43-22_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=bbb301ae020673c04d640a236cab64cc52d591df444c5e71f757e9259e452de1&=&format=webp&quality=lossless&width=883&height=587)
+![Screenshot 2024-10-21 at 22-43-22 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/a20f9db7-d90a-4679-9ac1-62ce2ba1affc)
 
   - Variance time/Rank:
- ![Variance time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277722434437182/Screenshot_2024-10-21_at_22-45-27_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=9cb27577d1b4593125b238da2a6b0d4475de51b873b2ab6d4f5c5fe488ce17c7&=&format=webp&quality=lossless&width=883&height=565)
+![Screenshot 2024-10-21 at 22-45-06 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/aa023bea-38ca-440c-b621-60088c983eee)
 
    - Total time:
-  ![Total time for comm](https://media.discordapp.net/attachments/1298277573901418507/1298277874163515412/Screenshot_2024-10-21_at_22-32-00_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=d0b732ec6808d38a17fe2a14790d10b2b85e4ec882ae4d275b4afcb8dfe475af&=&format=webp&quality=lossless&width=883&height=565)
+![Screenshot 2024-10-21 at 22-32-00 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/7603ea2c-c880-496d-a918-353ab298ad4e)
 
   Similarly with main, comm time decreases as the number processors increases up until 64 processors and communication time increases after 64 processors on average per processor. Total time increaes exponentially after 64 processors, likely affecting total time a lot for main. 
   This is likely due to message calls such as MPI_AlltoAll that send and gather from all other processors, in my case the data split by the partitions into their respective final buckets. 
@@ -535,72 +538,73 @@ There is an outlier for random and sorted due to the reason described above. Thi
 
 - #### comp:
   - Avg time/Rank:
-  
- ![Avg time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277829057970286/Screenshot_2024-10-21_at_22-38-07_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=d1a82601364c52c9642251bfc8f5a8e32d5ef8621ceeab340d011019feb75178&=&format=webp&quality=lossless&width=883&height=587)
+ 
+![Screenshot 2024-10-21 at 22-38-07 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/88828b01-b4b3-4bd0-bb2c-164f111411a8)
+
 
   - Min time/Rank:
-    
- ![Min time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277778562486303/Screenshot_2024-10-21_at_22-40-59_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=2f7012b554df47e42fad823ed3d3c3289ca1b6b516ebc3d8d999b9e8aea37ae4&=&format=webp&quality=lossless&width=883&height=587)
+![Screenshot 2024-10-21 at 22-40-59 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/ef0e3f4b-65dc-4119-b033-56128509ff02)
+
 
   - Max time/Rank:
-    
- ![Max time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277780651511909/Screenshot_2024-10-21_at_22-43-52_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=5405066ec05006e13ce431b2348d52478bf2f8067e0ee77084777c741f112c3a&=&format=webp&quality=lossless&width=883&height=587)
+    ![Screenshot 2024-10-21 at 22-43-52 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/fe4ea91d-e215-4567-9d75-e894f61a4591)
+
 
   - Variance time/Rank:
-    
- ![Variance time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277722744819813/Screenshot_2024-10-21_at_22-46-06_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=faa558ce53bfa2a136e73b160f46546fae52c1605a833e4904049b3dd112ffaf&=&format=webp&quality=lossless&width=883&height=483)
+    ![Screenshot 2024-10-21 at 22-45-27 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/05986ef3-d636-4739-b9b4-ac22950029d8)
+
 
   - Total time:
     
-  ![Total time for comp](https://media.discordapp.net/attachments/1298277573901418507/1298277874499063909/Screenshot_2024-10-21_at_22-32-58_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=80a6d20723ced000d233c22a7d6ceb93f6c3660c8a564f56ac5bdd827d8507c1&=&format=webp&quality=lossless&width=883&height=483)
+ ![Screenshot 2024-10-21 at 22-32-58 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/86906f4e-91c3-439e-8bdd-0bc31c747fe1)
 
   On average, computation time decays exponentailly on average as the number of processors increases for all input types. 
   With the communication time taken out, one can see that operations like computing partition sizes can be done quicker in more parallel. 
 
 - #### Data generation:
   - Avg time/Rank:
-    
- ![Avg time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277827845689374/Screenshot_2024-10-21_at_22-36-38_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf2&is=6717a972&hm=0f592bc39d35fee2a4fbba354b3f363cf0201393c3d58c1da5ee98cea7ce9933&=&format=webp&quality=lossless&width=883&height=587)
+    ![Screenshot 2024-10-21 at 22-36-38 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/b9fa5065-9760-449b-836e-6e1d2c5eff2b)
+
 
   - Min time/Rank:
     
- ![Min time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277779401609237/Screenshot_2024-10-21_at_22-41-57_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=449ccc49f97c5ffd207b73c0358c2871f071b2def2245df89cfbef401e9014a5&=&format=webp&quality=lossless&width=883&height=587)
+![Screenshot 2024-10-21 at 22-41-57 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/91effd01-15a6-4c60-b901-fcf6b17a4a74)
 
   - Max time/Rank:
     
- ![Max time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277779820773539/Screenshot_2024-10-21_at_22-42-31_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=da77ab397101b2a59634f3e2dc550b4fc46c3a72c997c84c60c54ea7af28f6fe&=&format=webp&quality=lossless&width=883&height=483)
+![Screenshot 2024-10-21 at 22-42-31 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/21cb09ab-272f-453d-b14b-ced572bb6082)
 
   - Variance time/Rank:
-    
- ![Variance time data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277723252461649/Screenshot_2024-10-21_at_22-47-07_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fada&is=6717a95a&hm=d9592904e36fcb749515fe2f7c11a102848e4b63b9c06e599c7ac68a427f25a7&=&format=webp&quality=lossless&width=883&height=565)
+![Screenshot 2024-10-21 at 22-46-06 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/55e53b5b-f7b9-49cd-8f5e-98d40e562c0c)
 
   - Total time:
     
-  ![Total time for data generation](https://media.discordapp.net/attachments/1298277573901418507/1298277875216158820/Screenshot_2024-10-21_at_22-35-23_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=31989a85dc70506d6ccd431b67320594305643fbd4088819d8764d3f1d535e7d&=&format=webp&quality=lossless&width=996&height=662)
+
+![Screenshot 2024-10-21 at 22-35-23 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/9133df89-0745-494e-882f-6b8db9530c85)
 
 
 Data generation, much similar to computation, decays in time exponenitally as the number of processors increases on average. 
 
 - #### Correctness check:
   - Avg time/Rank:
-    
- ![Avg time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277829955289160/Screenshot_2024-10-21_at_22-39-18_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=c6003c059ca2b0be62b41ac2f15b1c3e30a4f0a80302bc7f05267556d0c26008&=&format=webp&quality=lossless&width=883&height=565)
+    ![Screenshot 2024-10-21 at 22-39-18 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/a2b2d7e6-99ff-4247-be35-30da16a16aca)
+
 
   - Min time/Rank:
-    
- ![Min time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277830295031878/Screenshot_2024-10-21_at_22-40-09_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718faf3&is=6717a973&hm=512f009e7e22d26e150415b9975ca5a0f684b7d5d2f33762b5fd8c86ac8f7d7d&=&format=webp&quality=lossless&width=883&height=587)
+    ![Screenshot 2024-10-21 at 22-40-09 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/dd33550d-4589-44fa-9555-91b8ae71bb13)
+
 
   - Max time/Rank:
     
- ![Max time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277780059983973/Screenshot_2024-10-21_at_22-42-58_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fae7&is=6717a967&hm=dee09a5232c80c52b925623c36508b9ae741819b4e34b33199138289c446e7db&=&format=webp&quality=lossless&width=883&height=402)
+![Screenshot 2024-10-21 at 22-42-58 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/d2b89b8b-1f38-47f7-830b-e73ef2b3fa36)
 
   - Variance time/Rank:
     
- ![Variance time correct](https://media.discordapp.net/attachments/1298277573901418507/1298277722992279584/Screenshot_2024-10-21_at_22-46-38_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fad9&is=6717a959&hm=9073a41f26803b57324f47c30666a7b0c00337dc601ad17c5f11bde29de05761&=&format=webp&quality=lossless&width=883&height=483)
+![Screenshot 2024-10-21 at 22-46-38 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/e9636703-f7cd-4fbb-bf64-d4498fd27d56)
 
   - Total time:
-    
-  ![Total time for correct](https://media.discordapp.net/attachments/1298277573901418507/1298277874842992681/Screenshot_2024-10-21_at_22-34-29_lab2-analysis_single_trial_-_Jupyter_Notebook.png?ex=6718fafe&is=6717a97e&hm=3e226b6d4649db02e51a1a89725ec5ac57dc94cdc35e7979c60c518b3f38688a&=&format=webp&quality=lossless&width=883&height=565)
+    ![Screenshot 2024-10-21 at 22-34-29 lab2-analysis_single_trial - Jupyter Notebook](https://github.com/user-attachments/assets/c3f30d9b-9fe4-4cdf-87c6-2b8bccb1f60b)
+
 
   Similar to data generation and computation, correctness check decays in time exponenitally as the number of processors increases on average. 
 
